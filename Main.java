@@ -1,5 +1,8 @@
+
+// Deixe um tempo para pensar nos atributos das classes
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Olá do seu arquivo Java do trabalho!");
+        System.out.println("Bem vindo(a) ao sistema acadêmico da FCTE");
+
     }
 }
