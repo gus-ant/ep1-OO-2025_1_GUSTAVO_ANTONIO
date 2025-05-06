@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 // É uma classe mãe para criar as outras classes de aluno especial e aluno normal
@@ -9,15 +10,77 @@ public class Aluno {
     private List<Turma> turmasMatriculadas;
 
     // Perguntar se essa é uma maneira valida de fazer o método construtor
-    public Aluno(String nome, String matricula, String curso, String email, List<Turma> turmasMatriculadas){
+    public Aluno(String nome, String matricula, String curso, String email){
         this.nome = nome;
         this.matricula = matricula;
         this.curso = curso;
         this.email =  email;
-        this.turmasMatriculadas = turmasMatriculadas;
+        this.turmasMatriculadas = new ArrayList<>(); // Esse é o formato para criar um Array de objetos no método construtor segundo o professor
+    }
+
+    public boolean verificarCadastro() {
+        return nome != null && !nome.trim().isEmpty() &&
+               matricula != null && !matricula.trim().isEmpty() &&
+               curso != null && !curso.trim().isEmpty() &&
+               email != null && !email.trim().isEmpty();
+               // .trim tira espaços em branco da string 
+    }
+
+    public boolean matricularEmTurma(Turma turma){
+        if (!turmasMatriculadas.contains(turma)){
+            turmasMatriculadas.add(turma);
+            return true;
+        }
+        return false;
     }
 
     public void setNome(String nome){
         this.nome = nome;
     }
+    
+    public String getNome(){
+        return nome;
+    }
+    
+    public void setMatricula(String matricula){
+        this.matricula = matricula;
+    }
+    
+    public String getMatricula(){
+        return matricula;
+    }
+    
+    public void setCurso(String curso){
+        this.curso = curso;
+    }
+    
+    public String getCurso(){
+        return curso;
+    }
+    
+    public void setEmail(String email){
+        this.email = email;
+    }
+    
+    public String getEmail(){
+        return email;
+    }
+    
+    public void setTurmasMatriculadas(List<Turma> turmasMatriculadas){
+        this.turmasMatriculadas = turmasMatriculadas;
+    }
+    
+    public List<Turma> getTurmasMatriculadas(){
+        return turmasMatriculadas;
+    }
+
+    // O professor ensinou a usar add, OBS.: depois estude como usar add
+    public void adicionarTurma(Turma turma){
+        this.turmasMatriculadas.add(turma);
+    }
+
+    public List<Turma> mostrarTurmas(){
+        return this.turmasMatriculadas;
+    }
+
 }
