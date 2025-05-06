@@ -12,8 +12,6 @@ public class Main {
         
 
         Scanner sc1 = new Scanner(System.in);
-        
-        boolean continuar = true;
 
         System.out.println();
         System.out.println("Bem vindo(a) ao sistema acadêmico da FCTE");
@@ -30,7 +28,8 @@ public class Main {
         System.out.println("### Escolha a página que você quer entrar: ");
         System.out.println("Opção 1 - Modo aluno");
         System.out.println("Opção 2 - Modo disciplina/turma");
-        System.out.println("Opção 3 - Modo avaliação/frequência\n");
+        System.out.println("Opção 3 - Modo avaliação/frequência");
+        System.out.println("Opção 4 - Fechar programa\n");
 
 
         System.out.print("Digite aqui sua opção: \n");
@@ -39,6 +38,8 @@ public class Main {
         switch (escolhaPagina) {
             case 1:
                 modoAluno(sc);
+                break;
+            case 4:
                 break;
         
             default:
@@ -101,14 +102,15 @@ public class Main {
         String email = sc.nextLine();
         System.out.println("Digite 1 se o aluno for especial e deixe em branco se for normal");
         int especial = sc.nextInt();
-        String skipline = sc.nextLine();
+        String Skipline = sc.nextLine(); 
+
 
         if(especial == 1){
             
             AlunoEspecial novoAlunoEspecial = new AlunoEspecial(nomeAluno, matricula, curso, email);
             if (novoAlunoEspecial.verificarCadastro()) {
                 listaAlunosEspeciais.add(novoAlunoEspecial);
-                System.out.println("->>>>> Aluno cadastrado com sucesso!");
+                System.out.println("->>>>> Aluno Especial cadastrado com sucesso!");
                 } else {
                     
                 System.out.println("-XXXXX Todos os campos devem ser preenchidos corretamente.");
