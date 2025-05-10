@@ -39,6 +39,8 @@ public class Main {
             case 1:
                 modoAluno(sc);
                 break;
+            case 2:
+                modoDisciplina(sc);
             case 4:
                 break;
         
@@ -47,6 +49,24 @@ public class Main {
                 paginaInicial(sc);
                 break;
         }
+
+    }
+
+    public static void modoDisciplina(Scanner sc){
+
+        int escolhaPagina;
+        
+        System.out.println("---------------------\n");
+        System.out.println("Bem vindo(a) ao modo Disciplina e Turma\n");
+
+        System.out.println("###Escolha que você quer fazer:");
+        System.out.println("Opção 1 - Cadastrar disciplinas");
+        System.out.println("Opção 2 - Criar turmas");
+        System.out.println("Opção 3 - Exibir todas as turmas disponíveis\n");
+
+        System.out.print("Digite aqui sua opção: \n");
+
+        escolhaPagina = Integer.parseInt(sc.nextLine());
 
     }
 
@@ -59,9 +79,8 @@ public class Main {
 
         System.out.println("###Escolha que você quer fazer:");
         System.out.println("Opção 1 - Cadastrar aluno");
-        System.out.println("Opção 2 - Matricular aluno");
-        System.out.println("Opção 3 - Trancar disciplinas");
-        System.out.println("Opção 4 - Exibir todos os alunos\n");
+        System.out.println("Opção 2 - Trancar disciplinas");
+        System.out.println("Opção 3 - Exibir todos os alunos\n");
 
         System.out.print("Digite aqui sua opção: \n");
 
@@ -71,7 +90,7 @@ public class Main {
             case 1:
                 cadastrarAluno(sc);
                 break;
-            case 4:
+            case 3:
                 mostrarAlunos();
                 break;
             default:
