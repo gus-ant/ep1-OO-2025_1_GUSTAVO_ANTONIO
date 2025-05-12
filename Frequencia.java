@@ -18,5 +18,23 @@ public class Frequencia {
     public boolean aprovadoPorFrequencia() {
         return calcularFrequencia() >= (75/100);
     }
+
+    public int getNumeroTotalDeAulas() {
+        return numeroTotalDeAulas;
+    }
+
+    public void setNumeroTotalDeAulas(int numeroTotalDeAulas) {
+        this.numeroTotalDeAulas = numeroTotalDeAulas;
+    }
+
+    public int getPresencas() {
+        return presencas;
+    }
+
+    public void setPresencas(int presencas) {
+        this.presencas = presencas;
+    }
+
+    
     
 }

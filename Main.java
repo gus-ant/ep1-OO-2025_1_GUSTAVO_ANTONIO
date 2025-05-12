@@ -1,16 +1,14 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.List;
 
 // Deixe um tempo para pensar nos atributos das classes
 public class Main {
-
+    int escolhaPagina;
     static ArrayList<Aluno> listaAlunos = new ArrayList<>();
     static ArrayList<AlunoEspecial> listaAlunosEspeciais = new ArrayList<>();
 
     public static void main(String[] args) {
         
-
         Scanner sc1 = new Scanner(System.in);
 
         System.out.println();
@@ -21,8 +19,7 @@ public class Main {
     }
 
     public static void paginaInicial(Scanner sc){
-        
-        int escolhaPagina;
+        int escolhaPagina = 0;
 
         System.out.println("---------------------\n");
         System.out.println("### Escolha a página que você quer entrar: ");
@@ -40,7 +37,7 @@ public class Main {
                 modoAluno(sc);
                 break;
             case 2:
-                modoDisciplina(sc);
+                modoDisciplina(sc, escolhaPagina);
             case 4:
                 break;
         
@@ -52,9 +49,9 @@ public class Main {
 
     }
 
-    public static void modoDisciplina(Scanner sc){
+    public static void modoDisciplina(Scanner sc, int escolhaPagina){
 
-        int escolhaPagina;
+        escolhaPagina = 0;
         
         System.out.println("---------------------\n");
         System.out.println("Bem vindo(a) ao modo Disciplina e Turma\n");
@@ -68,6 +65,22 @@ public class Main {
 
         escolhaPagina = Integer.parseInt(sc.nextLine());
 
+    }
+
+    public static void cadastrarDisciplinas(Scanner sc){
+        int escolhaPagina = 0;
+        
+        System.out.println("---------------------\n");
+        System.out.println("Bem vindo(a) ao modo Disciplina e Turma\n");
+
+        System.out.println("###Escolha que você quer fazer:");
+        System.out.println("Opção 1 - Cadastrar disciplinas");
+        System.out.println("Opção 2 - Criar turmas");
+        System.out.println("Opção 3 - Exibir todas as turmas disponíveis\n");
+
+        System.out.print("Digite aqui sua opção: \n");
+
+        escolhaPagina = Integer.parseInt(sc.nextLine());
     }
 
     public static void modoAluno(Scanner sc){
@@ -105,8 +118,9 @@ public class Main {
             System.out.println("\nEmail: " + aluno.getEmail());
             System.out.println("\nMatrícula: " + aluno.getMatricula());
             System.out.println("\nCurso: " + aluno.getCurso());
-
         }
+
+        
     }
 
     public static void cadastrarAluno(Scanner sc){
@@ -119,7 +133,7 @@ public class Main {
         String curso = sc.nextLine();
         System.out.println("Digite o email do novo aluno: ");
         String email = sc.nextLine();
-        System.out.println("Digite 1 se o aluno for especial e deixe em branco se for normal");
+        System.out.println("Digite 1 se o aluno for especial e 0 se for normal");
         int especial = sc.nextInt();
         String Skipline = sc.nextLine(); 
 
@@ -127,10 +141,12 @@ public class Main {
         if(especial == 1){
             
             AlunoEspecial novoAlunoEspecial = new AlunoEspecial(nomeAluno, matricula, curso, email);
+            
             if (novoAlunoEspecial.verificarCadastro()) {
                 listaAlunosEspeciais.add(novoAlunoEspecial);
                 System.out.println("->>>>> Aluno Especial cadastrado com sucesso!");
-                } else {
+                } 
+                else {
                     
                 System.out.println("-XXXXX Todos os campos devem ser preenchidos corretamente.");
                 } 
@@ -140,10 +156,10 @@ public class Main {
 
             if (novoAluno.verificarCadastro()) {
                 listaAlunos.add(novoAluno);
-                System.out.println("->>>>> Aluno cadastrado com sucesso!");
+                System.out.println("\n->>>>> Aluno cadastrado com sucesso!");
                 } else {
                     
-                System.out.println("-XXXXX Todos os campos devem ser preenchidos corretamente.");
+                System.out.println("\n-XXXXX Todos os campos devem ser preenchidos corretamente.\n");
                 } 
         }
 
