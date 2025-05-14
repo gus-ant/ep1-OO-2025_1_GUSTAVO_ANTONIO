@@ -73,4 +73,4 @@ O enunciado do trabalho pode ser encontrado aqui:
 
 ## Contato
 
-- [Opcional: E-mail pessoal do aluno.]
+- Email: gus.ant.rod.10@gmail.com

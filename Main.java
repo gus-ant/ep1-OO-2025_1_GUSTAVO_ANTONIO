@@ -93,7 +93,9 @@ public class Main {
         System.out.println("###Escolha que você quer fazer:");
         System.out.println("Opção 1 - Cadastrar aluno");
         System.out.println("Opção 2 - Trancar disciplinas");
-        System.out.println("Opção 3 - Exibir todos os alunos\n");
+        System.out.println("Opção 3 - Exibir todos os alunos");
+        System.out.println("Opção 4 - Voltar para a página Inicial\n");
+
 
         System.out.print("Digite aqui sua opção: \n");
 
@@ -106,7 +108,10 @@ public class Main {
             case 3:
                 mostrarAlunos();
                 break;
+            case 4:
+                paginaInicial(sc);
             default:
+                modoAluno(sc);
                 break;
         }
     }
