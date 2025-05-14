@@ -9,13 +9,16 @@ public class Aluno {
     private String email;
     private List<Turma> turmasMatriculadas;
 
-    // Perguntar se essa é uma maneira valida de fazer o método construtor
+    
     public Aluno(String nome, String matricula, String curso, String email){
         this.nome = nome;
         this.matricula = matricula;
         this.curso = curso;
         this.email =  email;
-        this.turmasMatriculadas = new ArrayList<>(); // Esse é o formato para criar um Array de objetos no método construtor segundo o professor
+        this.turmasMatriculadas = new ArrayList<>(); 
+        // Deixar a parte de alunos em turmas para ser guardada na turma
+        // Quando pegar os dados da turma, sobre quantos alunos tem e a frequencia de cada um, colocar 
+        // Esse é o formato para criar um Array de objetos no método construtor segundo o professor
     }
 
     public boolean verificarCadastro() {
