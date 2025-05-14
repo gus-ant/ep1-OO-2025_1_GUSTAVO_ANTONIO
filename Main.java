@@ -68,7 +68,7 @@ public class Main {
     }
 
     public static void cadastrarDisciplinas(Scanner sc){
-        int escolhaPagina = 0;
+        int escolhaPagina;
         
         System.out.println("---------------------\n");
         System.out.println("Bem vindo(a) ao modo Disciplina e Turma\n");
