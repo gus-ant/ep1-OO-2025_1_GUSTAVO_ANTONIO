@@ -8,6 +8,8 @@ public class Aluno {
     private String curso;
     private String email;
     private List<Turma> turmasMatriculadas;
+    private Avaliacao avaliacao;
+    private double frequencia;   // Entre 0.0 e 1.0
 
     
     public Aluno(String nome, String matricula, String curso, String email){

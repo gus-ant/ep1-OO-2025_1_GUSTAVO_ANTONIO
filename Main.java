@@ -38,7 +38,9 @@ public class Main {
                 break;
             case 2:
                 modoDisciplina(sc, escolhaPagina);
+            
             case 4:
+                modoAvaliacaoFrequencia(sc);
                 break;
         
             default:
@@ -48,6 +50,50 @@ public class Main {
         }
 
     }
+
+    public static void modoAvaliacaoFrequencia(Scanner sc) {
+
+        int escolhaPagina;
+    
+        System.out.println("---------------------\n");
+        System.out.println("Bem-vindo(a) ao modo Avaliação/Frequência\n");
+    
+        System.out.println("### Escolha o que você quer fazer:");
+        System.out.println("Opção 1 - Lançar notas dos alunos");
+        System.out.println("Opção 2 - Lançar presença dos alunos");
+        System.out.println("Opção 3 - Exibir boletim de um aluno");
+        System.out.println("Opção 4 - Gerar relatórios");
+        System.out.println("Opção 5 - Voltar para a página inicial\n");
+    
+        System.out.print("Digite aqui sua opção: ");
+        escolhaPagina = Integer.parseInt(sc.nextLine());
+    
+        switch (escolhaPagina) {
+            case 1:
+                //lancarNotas(sc);
+                break;
+            case 2:
+                //lancarPresenca(sc);
+                break;
+            case 3:
+                //exibirBoletimAluno(sc);
+                break;
+            case 4:
+                //gerarRelatorios(sc);
+                break;
+            case 5:
+                paginaInicial(sc);
+                return;
+            default:
+                System.out.println("Opção inválida! Tente novamente.\n");
+                break;
+        }
+    
+        modoAvaliacaoFrequencia(sc); 
+    }
+
+    
+    
 
     public static void modoDisciplina(Scanner sc, int escolhaPagina){
 

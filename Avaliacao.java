@@ -4,6 +4,7 @@ public class Avaliacao {
     private double p3;
     private double lista;
     private double seminario;
+    private int media; // 0 para simples, 1 para ponderada
 
     public Avaliacao(double p1, double p2, double p3, double lista, double seminario) {
         this.p1 = p1;
@@ -11,6 +12,7 @@ public class Avaliacao {
         this.p3 = p3;
         this.lista = lista;
         this.seminario = seminario;
+        this.media = 0;
     }
 
 
@@ -24,5 +26,9 @@ public class Avaliacao {
         }
     }
     
+
+    public boolean aprovado(double frequencia) {
+        return CalculoMedia(true) >= 5.0 && frequencia >= 0.75;
+    }
 
 }
