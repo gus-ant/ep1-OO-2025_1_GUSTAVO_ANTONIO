@@ -1,10 +1,12 @@
+import java.util.Scanner;
+
 public class Avaliacao {
     private double p1;
     private double p2;
     private double p3;
     private double lista;
     private double seminario;
-    private int media; // 0 para simples, 1 para ponderada
+    private int TipoMedia; // 0 para simples, 1 para ponderada
 
     public Avaliacao(double p1, double p2, double p3, double lista, double seminario) {
         this.p1 = p1;
@@ -12,13 +14,22 @@ public class Avaliacao {
         this.p3 = p3;
         this.lista = lista;
         this.seminario = seminario;
-        this.media = 0;
+        this.TipoMedia = 0;
+    }
+
+    
+    
+
+
+    public Avaliacao() {
     }
 
 
-    public double CalculoMedia(boolean ponderada){
+
+
+    public double CalculoMedia(int tipoMedia){
         
-        if (ponderada){
+        if (tipoMedia == 0){
             return (p1 + p2 + p3 + lista + seminario) / 5;
         }
         else{
@@ -28,7 +39,106 @@ public class Avaliacao {
     
 
     public boolean aprovado(double frequencia) {
-        return CalculoMedia(true) >= 5.0 && frequencia >= 0.75;
+        return CalculoMedia(this.TipoMedia) >= 5.0 && frequencia >= 0.75;
+    }
+
+
+
+
+
+    public double getP1() {
+        return p1;
+    }
+
+
+
+
+
+    public void setP1(double p1) {
+        this.p1 = p1;
+    }
+
+
+
+
+
+    public double getP2() {
+        return p2;
+    }
+
+
+
+
+
+    public void setP2(double p2) {
+        this.p2 = p2;
+    }
+
+
+
+
+
+    public double getP3() {
+        return p3;
+    }
+
+
+
+
+
+    public void setP3(double p3) {
+        this.p3 = p3;
+    }
+
+
+
+
+
+    public double getLista() {
+        return lista;
+    }
+
+
+
+
+
+    public void setLista(double lista) {
+        this.lista = lista;
+    }
+
+
+
+
+
+    public double getSeminario() {
+        return seminario;
+    }
+
+
+
+
+
+    public void setSeminario(double seminario) {
+        this.seminario = seminario;
+    }
+
+
+
+
+
+    public int getTipoMedia() {
+        return TipoMedia;
+    }
+
+
+
+
+
+    public void setTipoMedia(int tipoMedia) {
+        TipoMedia = tipoMedia;
     }
 
 }
+
+
+

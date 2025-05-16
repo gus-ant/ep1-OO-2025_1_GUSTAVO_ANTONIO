@@ -92,6 +92,43 @@ public class Main {
         modoAvaliacaoFrequencia(sc); 
     }
 
+    public static void lancarNotasEFrequencia(Turma turma, Scanner sc){
+        for (Aluno aluno : turma.getAlunosMatriculados()) {
+            System.out.println("Aluno: " + aluno.getNome());
+    
+            Avaliacao avaliacao = new Avaliacao();
+    
+            System.out.print("Tipo de média (0 = Normal, 2 = ponderada): ");
+            avaliacao.setTipoMedia(Integer.parseInt(sc.nextLine()));
+    
+            System.out.print("Nota P1: ");
+            avaliacao.setP1(Double.parseDouble(sc.nextLine()));
+    
+            System.out.print("Nota P2: ");
+            avaliacao.setP2(Double.parseDouble(sc.nextLine()));
+    
+            System.out.print("Nota P3: ");
+            avaliacao.setP3(Double.parseDouble(sc.nextLine()));
+    
+            System.out.print("Nota das listas: ");
+            avaliacao.setLista(Double.parseDouble(sc.nextLine()));
+    
+            System.out.print("Nota do seminário: ");
+            avaliacao.setSeminario(Double.parseDouble(sc.nextLine()));
+    
+            aluno.setAvaliacao(avaliacao);
+    
+            System.out.print("Frequência do aluno (0.0 a 1.0): ");
+            aluno.setFrequencia(Double.parseDouble(sc.nextLine()));
+    
+            System.out.println("Média final: " + avaliacao.CalculoMedia(avaliacao.getTipoMedia()));
+            if (avaliacao.aprovado(aluno.getFrequencia())) {
+                System.out.println("Aluno aprovado ✅");
+            } else {
+                System.out.println("Aluno reprovado ❌");
+            }
+            System.out.println("--------------------------");}
+        }
     
     
 

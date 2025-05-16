@@ -10,7 +10,7 @@ public class Aluno {
     private List<Turma> turmasMatriculadas;
     private Avaliacao avaliacao;
     private double frequencia;   // Entre 0.0 e 1.0
-
+    
     
     public Aluno(String nome, String matricula, String curso, String email){
         this.nome = nome;
@@ -86,6 +86,22 @@ public class Aluno {
 
     public List<Turma> mostrarTurmas(){
         return this.turmasMatriculadas;
+    }
+
+    public Avaliacao getAvaliacao() {
+        return avaliacao;
+    }
+
+    public void setAvaliacao(Avaliacao avaliacao) {
+        this.avaliacao = avaliacao;
+    }
+
+    public double getFrequencia() {
+        return frequencia;
+    }
+
+    public void setFrequencia(double frequencia) {
+        this.frequencia = frequencia;
     }
 
 }
