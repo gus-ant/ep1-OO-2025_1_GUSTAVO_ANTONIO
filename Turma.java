@@ -10,8 +10,17 @@ public class Turma {
     private String horario;
     private int capacidadeMaxima;
     private List<Aluno> alunosMatriculados; // aluno(objetos), não nomes
+    private String codigoDaTurma;
 
     
+    public String getCodigoDaTurma() {
+        return codigoDaTurma;
+    }
+
+    public void setCodigoDaTurma(String codigo) {
+        this.codigoDaTurma = codigo;
+    }
+
     public Turma(String professor, String semestre, String formaAvaliacao, boolean presencial, String sala,
             String horario, int capacidadeMaxima, List<Aluno> alunosMatriculados) {
         this.professor = professor;
@@ -24,7 +33,7 @@ public class Turma {
         this.alunosMatriculados = alunosMatriculados;
     }
 
-    
+
     public String getProfessor() {
         return professor;
     }

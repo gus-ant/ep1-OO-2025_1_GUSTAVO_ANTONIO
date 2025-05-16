@@ -1,11 +1,14 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 // Deixe um tempo para pensar nos atributos das classes
 public class Main {
     int escolhaPagina;
+    public static List<Disciplina> disciplinas = new ArrayList<>();
     static ArrayList<Aluno> listaAlunos = new ArrayList<>();
     static ArrayList<AlunoEspecial> listaAlunosEspeciais = new ArrayList<>();
+    static List<Turma> turmas = new ArrayList<>();
 
     public static void main(String[] args) {
         
@@ -60,17 +63,17 @@ public class Main {
     
         System.out.println("### Escolha o que você quer fazer:");
         System.out.println("Opção 1 - Lançar notas dos alunos");
-        System.out.println("Opção 2 - Lançar presença dos alunos");
-        System.out.println("Opção 3 - Exibir boletim de um aluno");
-        System.out.println("Opção 4 - Gerar relatórios");
-        System.out.println("Opção 5 - Voltar para a página inicial\n");
+        System.out.println("Opção 2 - Exibir boletim de um aluno");
+        System.out.println("Opção 3 - Gerar relatórios");
+        System.out.println("Opção 4 - Voltar para a página inicial\n");
     
         System.out.print("Digite aqui sua opção: ");
         escolhaPagina = Integer.parseInt(sc.nextLine());
     
         switch (escolhaPagina) {
             case 1:
-                //lancarNotas(sc);
+
+                lancarNotasEFrequencia(null, sc);
                 break;
             case 2:
                 //lancarPresenca(sc);
@@ -85,7 +88,7 @@ public class Main {
                 paginaInicial(sc);
                 return;
             default:
-                System.out.println("Opção inválida! Tente novamente.\n");
+                System.out.println("### Desculpe, não existe essa opção, tente novamente. \n");
                 break;
         }
     
@@ -93,6 +96,7 @@ public class Main {
     }
 
     public static void lancarNotasEFrequencia(Turma turma, Scanner sc){
+
         for (Aluno aluno : turma.getAlunosMatriculados()) {
             System.out.println("Aluno: " + aluno.getNome());
     
@@ -148,23 +152,48 @@ public class Main {
 
         escolhaPagina = Integer.parseInt(sc.nextLine());
 
-    }
-
-    public static void cadastrarDisciplinas(Scanner sc){
-        int escolhaPagina;
+        switch (escolhaPagina) {
+            case 1:
+                cadastrarDisciplina(sc);
+                break;
         
-        System.out.println("---------------------\n");
-        System.out.println("Bem vindo(a) ao modo Disciplina e Turma\n");
+            default:
+                break;
+        }
 
-        System.out.println("###Escolha que você quer fazer:");
-        System.out.println("Opção 1 - Cadastrar disciplinas");
-        System.out.println("Opção 2 - Criar turmas");
-        System.out.println("Opção 3 - Exibir todas as turmas disponíveis\n");
-
-        System.out.print("Digite aqui sua opção: \n");
-
-        escolhaPagina = Integer.parseInt(sc.nextLine());
     }
+
+    public static void cadastrarDisciplina(Scanner sc) {
+        System.out.println("\n### Cadastro de Disciplina ###");
+    
+        System.out.print("Nome da disciplina: ");
+        String nome = sc.nextLine();
+    
+        System.out.print("Código da disciplina (ex: MAT101): ");
+        String codigo = sc.nextLine();
+    
+        System.out.print("Carga horária (em horas): ");
+        int cargaHoraria = Integer.parseInt(sc.nextLine());
+    
+        System.out.print("Quantos pré-requisitos essa disciplina possui? ");
+        int qtdPre = Integer.parseInt(sc.nextLine());
+    
+        List<String> preRequisitos = new ArrayList<>();
+    
+        for (int i = 0; i < qtdPre; i++) {
+            System.out.print("Código do pré-requisito " + (i + 1) + ": ");
+            String pre = sc.nextLine();
+            preRequisitos.add(pre);}
+
+        List<Turma> turmasVazias = new ArrayList<>();
+
+        Disciplina nova = new Disciplina(nome, codigo, cargaHoraria, preRequisitos, turmasVazias);
+        disciplinas.add(nova);
+    
+        System.out.println("\n✅ Disciplina cadastrada com sucesso!");
+
+        }
+
 
     public static void modoAluno(Scanner sc){
 
