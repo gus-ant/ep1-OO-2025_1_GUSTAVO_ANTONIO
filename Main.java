@@ -30,8 +30,6 @@ public class Main {
         System.out.println("Opção 2 - Modo disciplina/turma");
         System.out.println("Opção 3 - Modo avaliação/frequência");
         System.out.println("Opção 4 - Fechar programa\n");
-
-
         System.out.print("Digite aqui sua opção: \n");
         escolhaPagina = Integer.parseInt(sc.nextLine());
 
@@ -77,10 +75,7 @@ public class Main {
                 lancarNotasEFrequencia(sc);
                 break;
             case 2:
-                //lancarPresenca(sc);
-                break;
-            case 3:
-                //exibirBoletimAluno(sc);
+                exibirBoletimAluno(sc, listaAlunos);
                 break;
             case 4:
                 paginaInicial(sc);
@@ -91,6 +86,68 @@ public class Main {
         }
     
         modoAvaliacaoFrequencia(sc); 
+
+    }
+
+    public static void exibirBoletimAluno(Scanner sc, List<Aluno> alunos){
+        System.out.println("Digite a matrícula do aluno: ");
+        String matricula = sc.nextLine();
+
+        Aluno alunoEncontrado = null;
+
+        for (Aluno aluno : alunos) {
+            if (aluno.getMatricula().equalsIgnoreCase(matricula)) {
+                alunoEncontrado = aluno;
+                break;
+            }
+        }
+
+        if (alunoEncontrado == null) {
+            System.out.println("Aluno não encontrado.");
+            return;
+        }
+    
+        System.out.println("\n--- Boletim de " + alunoEncontrado.getNome() + " ---");
+    
+        List<Turma> turmas = alunoEncontrado.getTurmasMatriculadas();
+        if (turmas.isEmpty()) {
+            System.out.println("O aluno não está matriculado em nenhuma turma.");
+            return;
+        }
+    
+        for (Turma turma : turmas) {
+            Avaliacao avaliacao = alunoEncontrado.getAvaliacao();
+            Double frequencia = alunoEncontrado.getFrequencia();
+    
+            if (avaliacao == null || frequencia == null) {
+                System.out.println("Turma " + turma.getCodigoDaTurma() + " - Dados incompletos.");
+                continue;
+            }
+    
+            double media = avaliacao.CalculoMedia(avaliacao.getTipoMedia());
+            boolean aprovadoPorNota = media >= 5.0;
+            boolean aprovadoPorFrequencia = frequencia >= 0.75;
+            
+            String status;
+
+            if (!aprovadoPorFrequencia) {
+                status = "Reprovado por falta";
+            } else if (!aprovadoPorNota) {
+                status = "Reprovado por nota";
+            } else {
+                status = "Aprovado";
+            }
+    
+            System.out.println("\nTurma: " + turma.getCodigoDaTurma() +
+                               "\nDisciplina: " + turma.getNomeDisciplina() +
+                               "\nProfessor: " + turma.getProfessor() +
+                               "\nSemestre: " + turma.getSemestre() +
+                               "\nNota final: " + String.format("%.2f", media) +
+                               "\nFrequência: " + String.format("%.2f", frequencia * 100) + "%" +
+                               "\nStatus: " + status);
+        }
+
+
     }
 
 
@@ -158,14 +215,14 @@ public class Main {
         System.out.println("---------------------\n");
         System.out.println("Bem vindo(a) ao modo Disciplina e Turma\n");
 
-        System.out.println("###Escolha que você quer fazer:");
+        System.out.println("###Escolha que você quer fazer: ###");
         System.out.println("Opção 1 - Cadastrar disciplinas");
         System.out.println("Opção 2 - Criar turmas");
-        System.out.println("Opção 3 - Exibir todas as disciplinas\n");
+        System.out.println("Opção 3 - Exibir todas as disciplinas");
         System.out.println("Opção 4 - Exibir todas as turmas cadastradas");
         System.out.println("Opção 5 - Voltar para a página inicial");
 
-        System.out.print("Digite aqui sua opção: \n");
+        System.out.print("Digite aqui sua opção: ");
 
         escolhaPagina = Integer.parseInt(sc.nextLine());
 
@@ -239,7 +296,7 @@ public class Main {
         Turma novaTurma = new Turma(professor, semestre, formaAvaliacao, presencial, sala, horario,
                                     capacidadeMaxima, alunosMatriculados, codigoDaTurma);
     
-        // Adicionar à lista geral de turmas e na disciplina
+        // .add serve como um append, para adicionar à lista geral de turmas e na disciplina
         turmas.add(novaTurma);
         disciplinaSelecionada.getTurmas().add(novaTurma);
     
@@ -251,6 +308,7 @@ public class Main {
         }
     }
 
+    
     public static void exibirTurmas() {
         System.out.println("\n### Turmas Cadastradas ###");
         for (Turma t : turmas) {
@@ -313,7 +371,7 @@ public class Main {
                 cadastrarAluno(sc);
                 break;
             case 3:
-                mostrarAlunos();
+                mostrarAlunos(sc);
                 break;
             case 4:
                 paginaInicial(sc);
@@ -323,20 +381,49 @@ public class Main {
         }
     }
 
-    public static void mostrarAlunos(){
+    public static void mostrarAlunos(Scanner sc){
+
+        if(listaAlunos.size() == 0 | listaAlunosEspeciais.size()==0){
+            System.out.println("\nNão há alunos cadastrados no momento \n");
+        }
+
+        System.out.println("Alunos Normais: ");
+
         for(Aluno aluno : listaAlunos){
             System.out.println("\n-------------\n");
             System.out.println("\nNome: " + aluno.getNome());
             System.out.println("\nEmail: " + aluno.getEmail());
             System.out.println("\nMatrícula: " + aluno.getMatricula());
             System.out.println("\nCurso: " + aluno.getCurso());
+            for(Turma turma: aluno.getTurmasMatriculadas()){
+                System.out.println("Código da turma: " + turma.getCodigoDaTurma());
+                System.out.println(turma.getProfessor());
+                System.out.println(turma.getHorario());
+            }
         }
+
+        System.out.println("Alunos Especiais: \n");
+
+        for(AlunoEspecial aluno : listaAlunosEspeciais){
+            System.out.println("-------------");
+            System.out.println("\nNome: " + aluno.getNome());
+            System.out.println("\nEmail: " + aluno.getEmail());
+            System.out.println("\nMatrícula: " + aluno.getMatricula());
+            System.out.println("\nCurso: " + aluno.getCurso());
+            for(Turma turma: aluno.getTurmasMatriculadas()){
+                System.out.println("Código da turma: " + turma.getCodigoDaTurma());
+                System.out.println(turma.getProfessor());
+                System.out.println(turma.getHorario());
+            }
+        }
+
+        paginaInicial(sc);
 
         
     }
 
     public static void cadastrarAluno(Scanner sc){
-        System.out.println("---------------------\n");
+        System.out.println("\n---------------------\n");
         System.out.println("Digite o nome do novo aluno: ");
         String nomeAluno = sc.nextLine();
         System.out.println("Digite a matrícula do novo aluno: ");
@@ -379,4 +466,3 @@ public class Main {
     }
 
 }  
-

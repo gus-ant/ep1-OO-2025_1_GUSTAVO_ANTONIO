@@ -15,16 +15,11 @@ public class Avaliacao {
         this.lista = lista;
         this.seminario = seminario;
         this.TipoMedia = 0;
-    }
-
-    
-    
+    } 
 
 
     public Avaliacao() {
     }
-
-
 
 
     public double CalculoMedia(int tipoMedia){
@@ -49,9 +44,6 @@ public class Avaliacao {
     public double getP1() {
         return p1;
     }
-
-
-
 
 
     public void setP1(double p1) {

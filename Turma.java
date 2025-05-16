@@ -11,6 +11,8 @@ public class Turma {
     private int capacidadeMaxima;
     private List<Aluno> alunosMatriculados; // aluno(objetos), não nomes
     private String codigoDaTurma;
+    private String nomeDisciplina;
+
 
     
     public String getCodigoDaTurma() {
@@ -32,7 +34,6 @@ public class Turma {
         this.capacidadeMaxima = capacidadeMaxima;
         this.alunosMatriculados = alunosMatriculados;
         this.codigoDaTurma = codigoDaTurma;
-
     }
 
 
@@ -83,6 +84,14 @@ public class Turma {
     }
     public void setAlunosMatriculados(List<Aluno> alunosMatriculados) {
         this.alunosMatriculados = alunosMatriculados;
+    }
+
+    public String getNomeDisciplina() {
+        return nomeDisciplina;
+    }
+
+    public void setNomeDisciplina(String nomeDisciplina) {
+        this.nomeDisciplina = nomeDisciplina;
     }
 
     
