@@ -22,7 +22,7 @@ public class Turma {
     }
 
     public Turma(String professor, String semestre, String formaAvaliacao, boolean presencial, String sala,
-            String horario, int capacidadeMaxima, List<Aluno> alunosMatriculados) {
+            String horario, int capacidadeMaxima, List<Aluno> alunosMatriculados, String codigoDaTurma) {
         this.professor = professor;
         this.semestre = semestre;
         this.formaAvaliacao = formaAvaliacao;
@@ -31,6 +31,8 @@ public class Turma {
         this.horario = horario;
         this.capacidadeMaxima = capacidadeMaxima;
         this.alunosMatriculados = alunosMatriculados;
+        this.codigoDaTurma = codigoDaTurma;
+
     }
 
 

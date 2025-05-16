@@ -42,8 +42,10 @@ public class Main {
             case 2:
                 modoDisciplina(sc, escolhaPagina);
             
-            case 4:
+            case 3:
                 modoAvaliacaoFrequencia(sc);
+                break;
+            case 4:
                 break;
         
             default:
@@ -72,8 +74,7 @@ public class Main {
     
         switch (escolhaPagina) {
             case 1:
-
-                lancarNotasEFrequencia(null, sc);
+                lancarNotasEFrequencia(sc);
                 break;
             case 2:
                 //lancarPresenca(sc);
@@ -82,9 +83,6 @@ public class Main {
                 //exibirBoletimAluno(sc);
                 break;
             case 4:
-                //gerarRelatorios(sc);
-                break;
-            case 5:
                 paginaInicial(sc);
                 return;
             default:
@@ -95,14 +93,31 @@ public class Main {
         modoAvaliacaoFrequencia(sc); 
     }
 
-    public static void lancarNotasEFrequencia(Turma turma, Scanner sc){
+
+    public static Turma buscarTurmaPorCodigo(String codigo) {
+        for (Turma t : turmas) {
+            if (t.getCodigoDaTurma().equalsIgnoreCase(codigo)) {
+                return t;
+            }
+        }
+        return null;
+    }
+
+    
+    public static void lancarNotasEFrequencia(Scanner sc){
+
+        System.out.println("Escreva o código da turma que você quer lançar notas: ");
+
+        String codigo = sc.nextLine();
+
+        Turma turma = buscarTurmaPorCodigo(codigo);
 
         for (Aluno aluno : turma.getAlunosMatriculados()) {
             System.out.println("Aluno: " + aluno.getNome());
     
             Avaliacao avaliacao = new Avaliacao();
     
-            System.out.print("Tipo de média (0 = Normal, 2 = ponderada): ");
+            System.out.print("Tipo de média (0 = Normal, 1 = ponderada): ");
             avaliacao.setTipoMedia(Integer.parseInt(sc.nextLine()));
     
             System.out.print("Nota P1: ");
@@ -122,7 +137,7 @@ public class Main {
     
             aluno.setAvaliacao(avaliacao);
     
-            System.out.print("Frequência do aluno (0.0 a 1.0): ");
+            System.out.print("Frequência do aluno (0% a 100%): ");
             aluno.setFrequencia(Double.parseDouble(sc.nextLine()));
     
             System.out.println("Média final: " + avaliacao.CalculoMedia(avaliacao.getTipoMedia()));
@@ -146,7 +161,9 @@ public class Main {
         System.out.println("###Escolha que você quer fazer:");
         System.out.println("Opção 1 - Cadastrar disciplinas");
         System.out.println("Opção 2 - Criar turmas");
-        System.out.println("Opção 3 - Exibir todas as turmas disponíveis\n");
+        System.out.println("Opção 3 - Exibir todas as disciplinas\n");
+        System.out.println("Opção 4 - Exibir todas as turmas cadastradas");
+        System.out.println("Opção 5 - Voltar para a página inicial");
 
         System.out.print("Digite aqui sua opção: \n");
 
@@ -156,13 +173,91 @@ public class Main {
             case 1:
                 cadastrarDisciplina(sc);
                 break;
-        
+            case 2:
+                cadastrarTurma(sc);
+            case 3:
+                exibirDisciplinas(sc);
+                break;
+            case 4:
+                exibirTurmas();
             default:
+                paginaInicial(sc);
                 break;
         }
 
     }
 
+    public static void cadastrarTurma(Scanner sc) {
+        System.out.println("\n### Cadastro de Turma ###");
+    
+        System.out.print("Código da disciplina para esta turma: ");
+        String codigoDisciplina = sc.nextLine();
+    
+        // Procurar disciplina
+        Disciplina disciplinaSelecionada = null;
+        for (Disciplina d : disciplinas) {
+            if (d.getCodigo().equalsIgnoreCase(codigoDisciplina)) {
+                disciplinaSelecionada = d;
+                break;
+            }
+        }
+    
+        if (disciplinaSelecionada == null) {
+            System.out.println("❌ Disciplina não encontrada. Cadastre a disciplina antes.");
+            return;
+        }
+    
+        System.out.print("Nome do professor: ");
+        String professor = sc.nextLine();
+    
+        System.out.print("Semestre (ex: 2025.1): ");
+        String semestre = sc.nextLine();
+    
+        System.out.println("Escolha a forma de avaliação:");
+        System.out.println("1 - Média simples (P1 + P2 + P3 + L + S) / 5");
+        System.out.println("2 - Média ponderada (P1 + P2*2 + P3*3 + L + S) / 8");
+        String escolhaForma = sc.nextLine();
+        String formaAvaliacao = escolhaForma.equals("1") ? "simples" : "ponderada";
+    
+        System.out.print("A turma é presencial? (s/n): ");
+        boolean presencial = sc.nextLine().equalsIgnoreCase("s");
+    
+        System.out.print("Sala: ");
+        String sala = sc.nextLine();
+    
+        System.out.print("Horário: ");
+        String horario = sc.nextLine();
+    
+        System.out.print("Capacidade máxima de alunos: ");
+        int capacidadeMaxima = Integer.parseInt(sc.nextLine());
+    
+        System.out.print("Código da turma (ex: T01): ");
+        String codigoDaTurma = sc.nextLine();
+    
+        List<Aluno> alunosMatriculados = new ArrayList<>();
+    
+        Turma novaTurma = new Turma(professor, semestre, formaAvaliacao, presencial, sala, horario,
+                                    capacidadeMaxima, alunosMatriculados, codigoDaTurma);
+    
+        // Adicionar à lista geral de turmas e na disciplina
+        turmas.add(novaTurma);
+        disciplinaSelecionada.getTurmas().add(novaTurma);
+    
+        System.out.println("\n✅ Turma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome());}
+
+    public static void exibirDisciplinas(Scanner sc){
+        for (Disciplina d : disciplinas){
+            System.out.println("\nCódigo: " + d.getCodigo() + " | Nome: " + d.getNome());
+        }
+    }
+
+    public static void exibirTurmas() {
+        System.out.println("\n### Turmas Cadastradas ###");
+        for (Turma t : turmas) {
+            System.out.println("Código: " + t.getCodigoDaTurma() + " | Professor: " + t.getProfessor() + " | Semestre: " + t.getSemestre() + " | Forma de Avaliação: " + t.getFormaAvaliacao());
+        }
+    }
+    
     public static void cadastrarDisciplina(Scanner sc) {
         System.out.println("\n### Cadastro de Disciplina ###");
     

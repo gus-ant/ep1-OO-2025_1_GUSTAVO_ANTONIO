@@ -39,7 +39,7 @@ public class Avaliacao {
     
 
     public boolean aprovado(double frequencia) {
-        return CalculoMedia(this.TipoMedia) >= 5.0 && frequencia >= 0.75;
+        return CalculoMedia(this.TipoMedia) >= 5.0 && (frequencia/100) >= (0.75);
     }
 
 
