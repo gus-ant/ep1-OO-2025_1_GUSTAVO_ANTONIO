@@ -90,7 +90,8 @@ public class Main {
     }
 
     public static void menuRelatorios(Scanner sc, List<Turma> turmas, List<Disciplina> disciplinas, List<Aluno> alunos){
-        // É preciso 
+        // É preciso fazer esse menu para acessar o relatório de aluno, turma e Disciplina
+        
         System.out.println("\n--- Página de Relatórios ---");
         System.out.println("Opção 1 - Relatório por Turma");
         System.out.println("Opção 2 - Relatório por Disciplina");
