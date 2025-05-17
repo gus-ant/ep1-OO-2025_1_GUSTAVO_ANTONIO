@@ -89,6 +89,36 @@ public class Main {
 
     }
 
+    public static void menuRelatorios(Scanner sc, List<Turma> turmas, List<Disciplina> disciplinas, List<Aluno> alunos){
+        // É preciso 
+        System.out.println("\n--- Página de Relatórios ---");
+        System.out.println("Opção 1 - Relatório por Turma");
+        System.out.println("Opção 2 - Relatório por Disciplina");
+        System.out.println("Opção 3 - Relatório por Professor");
+        System.out.println("Opção 4 - Voltar");
+
+        System.out.print("Escolha uma opção: ");
+        int opcao = Integer.parseInt(sc.nextLine());
+
+        switch (opcao) {
+        case 1:
+            //relatorioPorTurma(sc, turmas, alunos);
+            break;
+        case 2:
+            //relatorioPorDisciplina(sc, disciplinas);
+            break;
+        case 3:
+            //relatorioPorProfessor(sc, turmas);
+            break;
+        case 4:
+            return;
+        default:
+            System.out.println("Opção inválida.");
+            //menuExibirRelatorios(sc, turmas, disciplinas, alunos);
+    }
+
+    }
+
     public static void exibirBoletimAluno(Scanner sc, List<Aluno> alunos){
         System.out.println("Digite a matrícula do aluno: ");
         String matricula = sc.nextLine();
@@ -300,7 +330,8 @@ public class Main {
         turmas.add(novaTurma);
         disciplinaSelecionada.getTurmas().add(novaTurma);
     
-        System.out.println("\n✅ Turma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome());}
+        System.out.println("\nTurma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome());}
+
 
     public static void exibirDisciplinas(Scanner sc){
         for (Disciplina d : disciplinas){
