@@ -91,7 +91,7 @@ public class Main {
 
     public static void menuRelatorios(Scanner sc, List<Turma> turmas, List<Disciplina> disciplinas, List<Aluno> alunos){
         // É preciso fazer esse menu para acessar o relatório de aluno, turma e Disciplina
-        
+
         System.out.println("\n--- Página de Relatórios ---");
         System.out.println("Opção 1 - Relatório por Turma");
         System.out.println("Opção 2 - Relatório por Disciplina");
@@ -103,13 +103,13 @@ public class Main {
 
         switch (opcao) {
         case 1:
-            //relatorioPorTurma(sc, turmas, alunos);
+            relatorioPorTurma(sc, turmas, alunos);
             break;
         case 2:
-            //relatorioPorDisciplina(sc, disciplinas);
+            relatorioPorDisciplina(sc, disciplinas);
             break;
         case 3:
-            //relatorioPorProfessor(sc, turmas);
+            relatorioPorProfessor(sc, turmas);
             break;
         case 4:
             return;
@@ -119,6 +119,82 @@ public class Main {
     }
 
     }
+
+    public static void relatorioPorTurma(Scanner sc, List<Turma> turmas, List<Aluno> alunos){
+        System.out.print("Digite o código da turma: ");
+        String codigo = sc.nextLine();
+
+        Turma turmaSelecionada = null;
+        for (Turma t : turmas) {
+            if (t.getCodigoDaTurma().equalsIgnoreCase(codigo)) {
+                turmaSelecionada = t;
+                break;
+            }
+        }
+
+        if (turmaSelecionada == null) {
+            System.out.println("Turma não encontrada.");
+            return;
+        }
+
+        System.out.println("\n--- Relatório da Turma " + turmaSelecionada.getCodigoDaTurma() + " ---");
+
+        for (Aluno aluno : turmaSelecionada.getAlunosMatriculados()) {
+        Avaliacao av = aluno.getAvaliacao();
+        Double freq = aluno.getFrequencia();
+
+        if (av == null || freq == null) continue;
+
+        double media = av.CalculoMedia();
+        boolean notaOk = media >= 5.0;
+        boolean freqOk = freq >= 0.75;
+        String status = (!freqOk) ? "Reprovado por falta" : (!notaOk ? "Reprovado por nota" : "Aprovado");
+
+        System.out.printf("Aluno: %s | Média: %.2f | Frequência: %.2f%% | %s\n",
+                aluno.getNome(), media, freq * 100, status);
+    }
+
+    }
+
+    public static void relatorioPorDisciplina(Scanner sc, List<Disciplina> disciplinas) {
+        System.out.print("Digite o código da disciplina: ");
+        String cod = sc.nextLine();
+    
+        Disciplina d = null;
+        for (Disciplina disc : disciplinas) {
+            if (disc.getCodigo().equalsIgnoreCase(cod)) {
+                d = disc;
+                break;
+            }
+        }
+    
+        if (d == null) {
+            System.out.println("Disciplina não encontrada.");
+            return;
+        }
+    
+        System.out.println("\n--- Relatório da Disciplina " + d.getNome() + " ---");
+        for (Turma turma : d.getTurmas()) {
+            System.out.println("Turma: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor());
+        }
+    }
+    
+    
+    public static void relatorioPorProfessor(Scanner sc, List<Turma> turmas) {
+        System.out.print("Digite o nome do professor: ");
+        String nome = sc.nextLine();
+    
+        System.out.println("\n--- Relatório do Professor " + nome + " ---");
+    
+        for (Turma turma : turmas) {
+            if (turma.getProfessor().equalsIgnoreCase(nome)) {
+                System.out.println("Turma: " + turma.getCodigoDaTurma() +
+                                   " | Disciplina: " + turma.getNomeDisciplina() +
+                                   " | Semestre: " + turma.getSemestre());
+            }
+        }
+    }
+    
 
     public static void exibirBoletimAluno(Scanner sc, List<Aluno> alunos){
         System.out.println("Digite a matrícula do aluno: ");
@@ -155,7 +231,7 @@ public class Main {
                 continue;
             }
     
-            double media = avaliacao.CalculoMedia(avaliacao.getTipoMedia());
+            double media = avaliacao.CalculoMedia();
             boolean aprovadoPorNota = media >= 5.0;
             boolean aprovadoPorFrequencia = frequencia >= 0.75;
             
@@ -199,6 +275,11 @@ public class Main {
         String codigo = sc.nextLine();
 
         Turma turma = buscarTurmaPorCodigo(codigo);
+        
+        if(turma == null){
+            System.err.println("Essa turma não existe, tente cadastrar uma nova turma \n");
+            modoAvaliacaoFrequencia(sc);
+        }
 
         for (Aluno aluno : turma.getAlunosMatriculados()) {
             System.out.println("Aluno: " + aluno.getNome());
@@ -228,7 +309,7 @@ public class Main {
             System.out.print("Frequência do aluno (0% a 100%): ");
             aluno.setFrequencia(Double.parseDouble(sc.nextLine()));
     
-            System.out.println("Média final: " + avaliacao.CalculoMedia(avaliacao.getTipoMedia()));
+            System.out.println("Média final: " + avaliacao.CalculoMedia());
             if (avaliacao.aprovado(aluno.getFrequencia())) {
                 System.out.println("Aluno aprovado ✅");
             } else {

@@ -1,4 +1,4 @@
-import java.util.Scanner;
+
 
 public class Avaliacao {
     private double p1;
@@ -19,12 +19,17 @@ public class Avaliacao {
 
 
     public Avaliacao() {
+        this.p1 = 0;
+        this.p2 = 0;
+        this.p3 = 0;
+        this.lista = 0;
+        this.seminario = 0;
+        this.TipoMedia = 0;
     }
 
-
-    public double CalculoMedia(int tipoMedia){
+    public double CalculoMedia(){
         
-        if (tipoMedia == 0){
+        if (this.TipoMedia == 0){
             return (p1 + p2 + p3 + lista + seminario) / 5;
         }
         else{
@@ -34,7 +39,7 @@ public class Avaliacao {
     
 
     public boolean aprovado(double frequencia) {
-        return CalculoMedia(this.TipoMedia) >= 5.0 && (frequencia/100) >= (0.75);
+        return CalculoMedia() >= 5.0 && (frequencia/100) >= (0.75);
     }
 
 

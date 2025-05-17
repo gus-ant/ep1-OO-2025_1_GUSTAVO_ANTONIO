@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // É uma classe mãe para criar as outras classes de aluno especial e aluno normal
 public class Aluno {
@@ -9,15 +11,20 @@ public class Aluno {
     private String email;
     private List<Turma> turmasMatriculadas;
     private Avaliacao avaliacao;
-    private double frequencia;   // Entre 0.0 e 1.0
-    
-    
+    private double frequencia;   // Entre 0.0 e 1.0  
+    // Mapa de turma para avaliação
+    private Map<Turma, Avaliacao> avaliacoes;
+    // Mapa de turma para frequência
+    private Map<Turma, Double> frequencias;
+
     public Aluno(String nome, String matricula, String curso, String email){
         this.nome = nome;
         this.matricula = matricula;
         this.curso = curso;
         this.email =  email;
         this.turmasMatriculadas = new ArrayList<>(); 
+        this.avaliacoes = new HashMap<>();
+        this.frequencias = new HashMap<>();
         // Deixar a parte de alunos em turmas para ser guardada na turma
         // Quando pegar os dados da turma, sobre quantos alunos tem e a frequencia de cada um, colocar 
         // Esse é o formato para criar um Array de objetos no método construtor segundo o professor
@@ -37,6 +44,30 @@ public class Aluno {
             return true;
         }
         return false;
+    }
+
+    public Map<Turma, Avaliacao> getAvaliacoes() {
+        return avaliacoes;
+    }
+
+    public void setAvaliacoes(Map<Turma, Avaliacao> avaliacoes) {
+        this.avaliacoes = avaliacoes;
+    }
+
+    public Map<Turma, Double> getFrequencias() {
+        return frequencias;
+    }
+
+    public void setFrequencias(Map<Turma, Double> frequencias) {
+        this.frequencias = frequencias;
+    }
+
+    public void adicionarAvaliacao(Turma turma, Avaliacao avaliacao) {
+        this.avaliacoes.put(turma, avaliacao);
+    }
+
+    public void adicionarFrequencia(Turma turma, double frequencia) {
+        this.frequencias.put(turma, frequencia);
     }
 
     public void setNome(String nome){
