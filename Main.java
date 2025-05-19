@@ -52,8 +52,7 @@ public class Main {
                 case 3:
                     modoAvaliacaoFrequencia(sc);
                     break;
-                case 4:
-                    
+                case 4:  
                     break;
             
                 default:
@@ -587,7 +586,15 @@ public class Main {
     
         System.out.print("Código da disciplina (ex: MAT101): ");
         String codigo = sc.nextLine();
-    
+
+        for(Disciplina p : disciplinas){
+            if(p.getCodigo().equals(codigo)){
+                System.out.println("❌ Uma disciplina com esse código já foi cadastrada ");
+                cadastrarDisciplina(sc);
+                
+            }
+        }
+
         System.out.print("Carga horária (em horas): ");
         int cargaHoraria = Integer.parseInt(sc.nextLine());
     
@@ -598,8 +605,22 @@ public class Main {
     
         for (int i = 0; i < qtdPre; i++) {
             System.out.print("Código do pré-requisito " + (i + 1) + ": ");
+
             String pre = sc.nextLine();
-            preRequisitos.add(pre);}
+            
+            for(Disciplina p1 : disciplinas){
+                if(p1.getCodigo().equals(pre)){
+                    preRequisitos.add(pre);
+                    
+                }
+                else{
+                    System.out.println("❌ Essa disciplina de pré-requisito não foi cadastrada ");
+                    cadastrarDisciplina(sc);
+                }
+            }
+
+            preRequisitos.add(pre);
+        }
 
         List<Turma> turmasVazias = new ArrayList<>();
 
@@ -607,9 +628,9 @@ public class Main {
         disciplinas.add(nova);
     
         System.out.println("\n✅ Disciplina cadastrada com sucesso!");
-
-        paginaInicial(sc);
-        }
+        modoAvaliacaoFrequencia(sc);
+    
+    }
 
 
     public static void modoAluno(Scanner sc){
