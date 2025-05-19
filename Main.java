@@ -759,15 +759,22 @@ public class Main {
         System.out.println("Alunos Especiais: \n");
 
         for(AlunoEspecial aluno : listaAlunosEspeciais){
-            System.out.println("-------------\n");
-            System.out.println("\nNome: " + aluno.getNome());
-            System.out.println("\nEmail: " + aluno.getEmail());
-            System.out.println("\nMatrícula: " + aluno.getMatricula());
-            System.out.println("\nCurso: " + aluno.getCurso());
+            System.out.println("\n-------------\n");
+            System.out.println("Nome: " + aluno.getNome() + " | Email: " + aluno.getEmail() + " | Matrícula: " 
+            + aluno.getMatricula() + " | Curso: " + aluno.getCurso() );
+        
+            System.out.println("\nTurmas que o aluno está cursando:");
+
             for(Turma turma: aluno.getTurmasMatriculadas()){
-                System.out.println("Código da turma: " + turma.getCodigoDaTurma());
-                System.out.println(turma.getProfessor());
-                System.out.println(turma.getHorario());
+                System.out.println("\nCódigo da turma: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor() + " | Horário: " + turma.getHorario());
+
+            }
+
+            System.out.println("\nTurmas que o aluno foi aprovado:");
+
+            for (String t : aluno.getTurmasAprovadas()){
+                Turma t1 = buscarTurmaPorCodigo(t);
+                System.out.println("\nCódigo da turma: " + t1.getCodigoDaTurma() + " | Disciplina: "+ t1.getDisciplina().getNome());
             }
         }
 
