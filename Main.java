@@ -118,14 +118,21 @@ public class Main {
             System.out.println("❌ Turma não encontrada.");
             return;
         }
+
+        if (aluno instanceof AlunoEspecial) {
+            if (aluno.getTurmasMatriculadas().size() >= 2) {
+                System.out.println("❌ Alunos especiais só pode se matricular em até 2 turmas.");
+                return;
+            }
+        }
     
-        // Verifica duplicidade
+        // Verificar se o aluno já está matriculado
         if (aluno.getTurmasMatriculadas().contains(turmaSelecionada)) {
             System.out.println("❌ Aluno já matriculado nesta turma.");
             return;
         }
     
-        // Verifica se há vaga
+        
         if (turmaSelecionada.getAlunosMatriculados().size() >= turmaSelecionada.getCapacidadeMaxima()) {
             System.out.println("❌ Turma sem vagas disponíveis.");
             return;
@@ -162,14 +169,14 @@ public class Main {
         if (!temTodosOsPreRequisitos) {
             System.out.println("❌ Aluno não possui os pré-requisitos para esta disciplina.");
             return;
-            // No java, a negação é !
+            // No java, a negação é "!""
         }
     
         
         aluno.getTurmasMatriculadas().add(turmaSelecionada);
         turmaSelecionada.getAlunosMatriculados().add(aluno);
     
-        System.out.println("✅ Aluno matriculado com sucesso na turma: " + turmaSelecionada + " de " + turmaSelecionada.getDisciplina().getNome() + "!");
+        System.out.println("✅ Aluno matriculado com sucesso na turma: " + turmaSelecionada.getCodigoDaTurma() + " de " + turmaSelecionada.getDisciplina().getNome() + "!");
     }
     
 
@@ -633,10 +640,15 @@ public class Main {
 
         Aluno aluno = buscarAlunoPorMatricula(matricula);
 
+        if (aluno.equals(null)){
+            System.out.println("❌ Aluno não encontrado ");
+        }
+
         List<Turma> turmasMatriculadas = aluno.getTurmasMatriculadas();
 
+
         if (turmasMatriculadas.isEmpty()) {
-            System.out.println("ℹ️ Aluno não está matriculado em nenhuma turma.");
+            System.out.println("ℹ️ Aluno não está matriculado em nenhuma turma ");
             return;
         }
         
@@ -650,7 +662,7 @@ public class Main {
         int escolha = Integer.parseInt(sc.nextLine());
 
         if (escolha < 1 || escolha > turmasMatriculadas.size()) {
-            System.out.println("❌ Escolha inválida.");
+            System.out.println("❌ Escolha inválida");
             return;
         }
 
@@ -665,8 +677,10 @@ public class Main {
 
     public static void mostrarAlunos(Scanner sc){
 
-        if(listaAlunos.size() == 0 | listaAlunosEspeciais.size()==0){
+        if(listaAlunos.size() == 0 && listaAlunosEspeciais.size()==0){
             System.out.println("\n❌ Não há alunos cadastrados no momento \n");
+            modoAluno(sc);
+            
         }
 
         System.out.println("\n-------------\n");
