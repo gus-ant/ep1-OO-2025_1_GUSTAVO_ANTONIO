@@ -11,7 +11,7 @@ public class Turma {
     private int capacidadeMaxima;
     private List<Aluno> alunosMatriculados; // aluno(objetos), não nomes
     private String codigoDaTurma;
-    private String nomeDisciplina;
+    private Disciplina disciplina;
 
 
     
@@ -23,17 +23,18 @@ public class Turma {
         this.codigoDaTurma = codigo;
     }
 
-    public Turma(String professor, String semestre, String formaAvaliacao, boolean presencial, String sala,
-            String horario, int capacidadeMaxima, List<Aluno> alunosMatriculados, String codigoDaTurma) {
+    public Turma(String professor, String semestre, String formaAvaliacao, boolean presencial,
+            String horario, int capacidadeMaxima, List<Aluno> alunosMatriculados, String codigoDaTurma, Disciplina disciplina) {
         this.professor = professor;
         this.semestre = semestre;
         this.formaAvaliacao = formaAvaliacao;
         this.presencial = presencial;
-        this.sala = sala;
+        this.sala = "";
         this.horario = horario;
         this.capacidadeMaxima = capacidadeMaxima;
         this.alunosMatriculados = alunosMatriculados;
         this.codigoDaTurma = codigoDaTurma;
+        this.disciplina = disciplina;
     }
 
 
@@ -86,12 +87,12 @@ public class Turma {
         this.alunosMatriculados = alunosMatriculados;
     }
 
-    public String getNomeDisciplina() {
-        return nomeDisciplina;
+    public Disciplina getDisciplina() {
+        return disciplina;
     }
 
-    public void setNomeDisciplina(String nomeDisciplina) {
-        this.nomeDisciplina = nomeDisciplina;
+    public void setDisciplina(Disciplina nomeDisciplina) {
+        this.disciplina = nomeDisciplina;
     }
 
     
