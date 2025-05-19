@@ -195,6 +195,10 @@ public class Main {
     
         System.out.print("Digite aqui sua opção: ");
         escolhaPagina = Integer.parseInt(sc.nextLine());
+
+
+        // Uso de try exception
+        try {
     
         switch (escolhaPagina) {
             case 1:
@@ -211,10 +215,17 @@ public class Main {
                 break;
             default:
                 System.out.println("❌ Desculpe, não existe essa opção, tente novamente. \n");
+                paginaInicial(sc);
                 break;
+        
+            
         }
+
+    } catch (NumberFormatException e) {
+        System.out.println("❌ Entrada inválida. Por favor, digite apenas números.");
+        paginaInicial(sc); 
+    }
     
-        modoAvaliacaoFrequencia(sc); 
 
     }
 
@@ -230,6 +241,7 @@ public class Main {
         System.out.print("Digite aqui sua opção: ");
         int opcao = Integer.parseInt(sc.nextLine());
 
+        try{
         switch (opcao) {
         case 1:
             relatorioPorTurma(sc, turmas, alunos);
@@ -245,7 +257,16 @@ public class Main {
         default:
             System.out.println("Opção inválida.");
             //menuExibirRelatorios(sc, turmas, disciplinas, alunos);
-    }
+
+        }
+    
+
+} catch (NumberFormatException e) {
+    System.out.println("❌ Entrada inválida. Por favor, digite apenas números.");
+    paginaInicial(sc); 
+}
+    
+    
 
     }
 
@@ -663,7 +684,7 @@ public class Main {
         System.out.print("Digite aqui sua opção: ");
 
         escolhaPagina = Integer.parseInt(sc.nextLine());
-
+        try{
         switch (escolhaPagina) {
             case 1:
                 cadastrarAluno(sc);
@@ -680,6 +701,12 @@ public class Main {
                 paginaInicial(sc);
                 break;
         }
+    
+
+} catch (NumberFormatException e) {
+    System.out.println("\n❌ Entrada inválida. Por favor, digite apenas números.");
+    paginaInicial(sc); 
+}
     }
 
     public static void trancarDisciplina(Scanner sc){
