@@ -53,6 +53,7 @@ public class Main {
                     modoAvaliacaoFrequencia(sc);
                     break;
                 case 4:
+                    
                     break;
             
                 default:
@@ -521,12 +522,9 @@ public class Main {
     
         System.out.print("A turma é presencial? (s/n): ");
         boolean presencial = sc.nextLine().equalsIgnoreCase("s");
-
-        if (presencial == true){
-            System.out.print("Sala: ");
-            String sala = sc.nextLine();
-        }
-    
+        
+        
+        
     
         System.out.print("Horário: ");
         String horario = sc.nextLine();
@@ -538,19 +536,36 @@ public class Main {
         String codigoDaTurma = sc.nextLine();
     
         List<Aluno> alunosMatriculados = new ArrayList<>();
+        
+        if (presencial == true){
+            System.out.print("Sala: ");
+            String sala = sc.nextLine();
+            Turma novaTurma = new Turma(professor, semestre, formaAvaliacao, presencial, horario,
+                                    capacidadeMaxima, alunosMatriculados, codigoDaTurma, disciplinaSelecionada, sala);
+            turmas.add(novaTurma);
+            disciplinaSelecionada.getTurmas().add(novaTurma);
+        
+            System.out.println("\n✅ Turma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome());
+
+            modoDisciplina(sc, capacidadeMaxima);}
+        
+        
     
         Turma novaTurma = new Turma(professor, semestre, formaAvaliacao, presencial, horario,
                                     capacidadeMaxima, alunosMatriculados, codigoDaTurma, disciplinaSelecionada);
         
-    
         // .add serve como um append, para adicionar à lista geral de turmas e na disciplina
         turmas.add(novaTurma);
         disciplinaSelecionada.getTurmas().add(novaTurma);
     
-        System.out.println("\n✅ Turma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome());}
+        System.out.println("\n✅ Turma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome()); 
+        modoDisciplina(sc, capacidadeMaxima);
+    }
+
 
 
     public static void exibirDisciplinas(Scanner sc){
+        System.out.println("\n### Disciplinas disponíveis: ");
         for (Disciplina d : disciplinas){
             System.out.println("\nCódigo: " + d.getCodigo() + " | Nome: " + d.getNome());
         }

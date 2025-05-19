@@ -13,7 +13,6 @@ public class Turma {
     private String codigoDaTurma;
     private Disciplina disciplina;
 
-
     
     public String getCodigoDaTurma() {
         return codigoDaTurma;
@@ -23,6 +22,23 @@ public class Turma {
         this.codigoDaTurma = codigo;
     }
 
+    // Sobrecarga para turma presencial
+    public Turma(String professor, String semestre, String formaAvaliacao, boolean presencial,
+            String horario, int capacidadeMaxima, List<Aluno> alunosMatriculados, String codigoDaTurma, Disciplina disciplina, String sala) {
+        this.professor = professor;
+        this.semestre = semestre;
+        this.formaAvaliacao = formaAvaliacao;
+        this.presencial = presencial;
+        this.sala = "";
+        this.horario = horario;
+        this.capacidadeMaxima = capacidadeMaxima;
+        this.alunosMatriculados = alunosMatriculados;
+        this.codigoDaTurma = codigoDaTurma;
+        this.disciplina = disciplina;
+        this.sala = sala;
+    }
+
+    // Sobrecarga para turma remota
     public Turma(String professor, String semestre, String formaAvaliacao, boolean presencial,
             String horario, int capacidadeMaxima, List<Aluno> alunosMatriculados, String codigoDaTurma, Disciplina disciplina) {
         this.professor = professor;
@@ -36,7 +52,6 @@ public class Turma {
         this.codigoDaTurma = codigoDaTurma;
         this.disciplina = disciplina;
     }
-
 
     public String getProfessor() {
         return professor;
