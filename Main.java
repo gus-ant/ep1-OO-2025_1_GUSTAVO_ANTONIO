@@ -169,7 +169,7 @@ public class Main {
         aluno.getTurmasMatriculadas().add(turmaSelecionada);
         turmaSelecionada.getAlunosMatriculados().add(aluno);
     
-        System.out.println("✅ Aluno matriculado com sucesso!");
+        System.out.println("✅ Aluno matriculado com sucesso na turma: " + turmaSelecionada + " de " + turmaSelecionada.getDisciplina().getNome() + "!");
     }
     
 
@@ -613,6 +613,9 @@ public class Main {
             case 1:
                 cadastrarAluno(sc);
                 break;
+            case 2:
+                trancarDisciplina(sc);
+                break;
             case 3:
                 mostrarAlunos(sc);
                 break;
@@ -635,7 +638,29 @@ public class Main {
         if (turmasMatriculadas.isEmpty()) {
             System.out.println("ℹ️ Aluno não está matriculado em nenhuma turma.");
             return;
-    }
+        }
+        
+        System.out.println("\n📚 Turmas matriculadas:");
+        for (int i = 0; i < turmasMatriculadas.size(); i++) {
+            Turma t = turmasMatriculadas.get(i);
+            System.out.printf("%d - %s (%s)\n", i + 1, t.getDisciplina().getNome(), t.getCodigoDaTurma());
+        }
+
+        System.out.print("Digite o número da turma que deseja trancar: ");
+        int escolha = Integer.parseInt(sc.nextLine());
+
+        if (escolha < 1 || escolha > turmasMatriculadas.size()) {
+            System.out.println("❌ Escolha inválida.");
+            return;
+        }
+
+        Turma turmaParaTrancar = turmasMatriculadas.get(escolha - 1);
+
+        aluno.getTurmasMatriculadas().remove(turmaParaTrancar);
+        turmaParaTrancar.getAlunosMatriculados().remove(aluno);
+
+        System.out.println("✅ Trancamento realizado com sucesso!");
+
     }
 
     public static void mostrarAlunos(Scanner sc){
