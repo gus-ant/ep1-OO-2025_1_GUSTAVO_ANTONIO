@@ -441,8 +441,20 @@ public class Main {
             System.out.println("Média final: " + avaliacao.CalculoMedia());
             if (avaliacao.aprovado(aluno.getFrequencia())) {
                 System.out.println("Aluno aprovado ✅");
+                List<String> turmasAprovadas = aluno.getTurmasAprovadas();
+                turmasAprovadas.add(codigo);
+                aluno.setTurmasAprovadas(null);
             } else {
                 System.out.println("Aluno reprovado ❌");
+                List<Turma> turmasMatriculadas = aluno.getTurmasMatriculadas();
+                
+                for(Turma t1 : aluno.getTurmasMatriculadas()){
+                    if(t1.equals(turma)){
+                        turmasMatriculadas.remove(t1);
+                        aluno.setTurmasMatriculadas(turmasMatriculadas);
+                    }
+                }
+
             }
             System.out.println("--------------------------");}
         }
@@ -572,7 +584,7 @@ public class Main {
 
     
     public static void exibirTurmas() {
-        System.out.println("\n### Turmas Cadastradas ###");
+        System.out.println("\n### Turmas Cadastradas ");
         for (Turma t : turmas) {
             System.out.println("Código: " + t.getCodigoDaTurma() + " | Professor: " + t.getProfessor() + " | Semestre: " + t.getSemestre() + " | Forma de Avaliação: " + t.getFormaAvaliacao());
         }
@@ -628,7 +640,7 @@ public class Main {
         disciplinas.add(nova);
     
         System.out.println("\n✅ Disciplina cadastrada com sucesso!");
-        modoAvaliacaoFrequencia(sc);
+        modoDisciplina(sc,0);
     
     }
 
@@ -722,18 +734,27 @@ public class Main {
         System.out.println("\n-------------\n");
         System.out.println("Alunos Normais: ");
 
+
         for(Aluno aluno : listaAlunos){
             System.out.println("\n-------------\n");
-            System.out.println("\nNome: " + aluno.getNome());
-            System.out.println("\nEmail: " + aluno.getEmail());
-            System.out.println("\nMatrícula: " + aluno.getMatricula());
-            System.out.println("\nCurso: " + aluno.getCurso());
+            System.out.println("Nome: " + aluno.getNome() + " | Email: " + aluno.getEmail() + " | Matrícula: " 
+            + aluno.getMatricula() + " | Curso: " + aluno.getCurso() );
+        
+            System.out.println("\nTurmas que o aluno está cursando:");
+
             for(Turma turma: aluno.getTurmasMatriculadas()){
-                System.out.println("Código da turma: " + turma.getCodigoDaTurma());
-                System.out.println(turma.getProfessor());
-                System.out.println(turma.getHorario());
+                System.out.println("\nCódigo da turma: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor() + " | Horário: " + turma.getHorario());
+
+            }
+
+            System.out.println("\nTurmas que o aluno foi aprovado:");
+
+            for (String t : aluno.getTurmasAprovadas()){
+                Turma t1 = buscarTurmaPorCodigo(t);
+                System.out.println("\nCódigo da turma: " + t1.getCodigoDaTurma() + " | Disciplina: "+ t1.getDisciplina().getNome());
             }
         }
+
         System.out.println("\n-------------\n");
         System.out.println("Alunos Especiais: \n");
 

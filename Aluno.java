@@ -16,6 +16,7 @@ public class Aluno {
     private Map<Turma, Avaliacao> avaliacoes;
     // Mapa de turma para frequência
     private Map<Turma, Double> frequencias;
+    private List<String> turmasAprovadas;
 
     public Aluno(String nome, String matricula, String curso, String email){
         this.nome = nome;
@@ -25,11 +26,14 @@ public class Aluno {
         this.turmasMatriculadas = new ArrayList<>(); 
         this.avaliacoes = new HashMap<>();
         this.frequencias = new HashMap<>();
+        this.turmasAprovadas = new ArrayList<>();
         // Deixar a parte de alunos em turmas para ser guardada na turma
         // Quando pegar os dados da turma, sobre quantos alunos tem e a frequencia de cada um, colocar 
         // Esse é o formato para criar um Array de objetos no método construtor segundo o professor
     }
 
+
+    
     public boolean verificarCadastro() {
         return nome != null && !nome.trim().isEmpty() &&
                matricula != null && !matricula.trim().isEmpty() &&
@@ -133,6 +137,18 @@ public class Aluno {
 
     public void setFrequencia(double frequencia) {
         this.frequencia = frequencia;
+    }
+
+
+
+    public List<String> getTurmasAprovadas() {
+        return turmasAprovadas;
+    }
+
+
+
+    public void setTurmasAprovadas(List<String> turmasAprovadas) {
+        this.turmasAprovadas = turmasAprovadas;
     }
 
 }
