@@ -78,7 +78,6 @@ public class Main {
                 return aluno;
             }
             
-            
         }
 
         for(AlunoEspecial alunoe : listaAlunosEspeciais){
@@ -625,8 +624,18 @@ public class Main {
         }
     }
 
-    public static void trancarMateria(Scanner sc){
+    public static void trancarDisciplina(Scanner sc){
+        System.out.println("Digite a matrícula do aluno: ");
+        String matricula = sc.nextLine();
 
+        Aluno aluno = buscarAlunoPorMatricula(matricula);
+
+        List<Turma> turmasMatriculadas = aluno.getTurmasMatriculadas();
+
+        if (turmasMatriculadas.isEmpty()) {
+            System.out.println("ℹ️ Aluno não está matriculado em nenhuma turma.");
+            return;
+    }
     }
 
     public static void mostrarAlunos(Scanner sc){
@@ -670,6 +679,8 @@ public class Main {
 
         
     }
+
+
 
     public static void cadastrarAluno(Scanner sc){
         System.out.println("\n---------------------\n");
