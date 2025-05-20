@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 // Na turma, existe uma lista de alunos(objetos), que estão matriculados
@@ -13,6 +14,38 @@ public class Turma {
     private String codigoDaTurma;
     private Disciplina disciplina;
 
+
+    public String toString(Disciplina d) {
+        return d.getCodigo() + ";" + professor + ";" + semestre + ";" + formaAvaliacao + ";" +
+               presencial + ";" + horario + ";" + capacidadeMaxima + ";" + codigoDaTurma + ";" + sala;
+    }
+
+    
+    public static Turma fromString(String linha, Disciplina disciplina) {
+        String[] partes = linha.split(";");
+        if (partes.length < 9) {
+            throw new IllegalArgumentException("Linha de turma mal formatada: " + linha);
+        }
+
+        String professor = partes[1];
+        String semestre = partes[2];
+        String formaAvaliacao = partes[3];
+        boolean presencial = Boolean.parseBoolean(partes[4]);
+        String horario = partes[5];
+        int capacidadeMaxima = Integer.parseInt(partes[6]);
+        String codigoDaTurma = partes[7];
+        String sala = partes[8];
+
+        List<Aluno> alunosMatriculados = new ArrayList<>();
+
+        if (presencial) {
+            return new Turma(professor, semestre, formaAvaliacao, true, horario, capacidadeMaxima,
+                    alunosMatriculados, codigoDaTurma, disciplina, sala);
+        } else {
+            return new Turma(professor, semestre, formaAvaliacao, false, horario, capacidadeMaxima,
+                    alunosMatriculados, codigoDaTurma, disciplina);
+        }
+    } 
     
     public String getCodigoDaTurma() {
         return codigoDaTurma;

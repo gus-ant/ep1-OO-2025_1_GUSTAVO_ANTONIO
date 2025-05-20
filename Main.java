@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -5,6 +11,9 @@ import java.util.Scanner;
 // Colocar emojis para facilitar o usuário de ver se os cadastros foram ou não bem sucedidos
 
 // Deixe um tempo para pensar nos atributos das classes
+
+
+
 public class Main {
     int escolhaPagina;
     public static List<Disciplina> disciplinas = new ArrayList<>();
@@ -48,11 +57,11 @@ public class Main {
                     break;
                 case 2:
                     modoDisciplina(sc, escolhaPagina);
-                
                 case 3:
                     modoAvaliacaoFrequencia(sc);
                     break;
-                case 4:  
+                case 4: 
+
                     break;
             
                 default:
@@ -84,12 +93,65 @@ public class Main {
             if(alunoe.getMatricula().equals(matricula)){
                 return alunoe;
             }
-            
-            
         }
         return null;
         
     }
+
+    public static void salvarTurmas(){
+        try (PrintWriter writer = new PrintWriter("turmas.txt")) {
+            for (Turma t : turmas) {
+                writer.println(t.toString());
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar Turma: " + e.getMessage());
+        }
+    }
+
+    public static void carregarTurmas(Disciplina disciplina) {
+        turmas.clear();
+        
+        File file = new File("turmas.txt");
+        if (!file.exists()) return;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                turmas.add(Turma.fromString(linha, disciplina));
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar Turmas: " + e.getMessage());
+        }
+    }
+
+    public static void salvarDisciplinas() {
+        try (PrintWriter writer = new PrintWriter("disciplinas.txt")) {
+            for (Disciplina d : disciplinas) {
+                writer.println(d.toString());
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar disciplinas: " + e.getMessage());
+        }
+    }
+
+
+    public static void carregarDisciplinas() {
+        disciplinas.clear();
+        
+        File file = new File("disciplinas.txt");
+        if (!file.exists()) return;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                disciplinas.add(Disciplina.fromString(linha));
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar disciplinas: " + e.getMessage());
+        }
+    }
+
+    
 
     public static void matricularAluno(Scanner sc) {
 
@@ -511,7 +573,7 @@ public class Main {
                 exibirDisciplinas(sc);
                 break;
             case 4:
-                exibirTurmas();
+                exibirTurmas(sc);
                 break;
             default:
                 paginaInicial(sc);
@@ -588,8 +650,12 @@ public class Main {
         
         // .add serve como um append, para adicionar à lista geral de turmas e na disciplina
         turmas.add(novaTurma);
+
+        
+
         disciplinaSelecionada.getTurmas().add(novaTurma);
-    
+        
+        salvarDisciplinas();
         System.out.println("\n✅ Turma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome()); 
         modoDisciplina(sc, capacidadeMaxima);
     }
@@ -597,18 +663,27 @@ public class Main {
 
 
     public static void exibirDisciplinas(Scanner sc){
+        carregarDisciplinas();
         System.out.println("\n### Disciplinas disponíveis: ");
+        
         for (Disciplina d : disciplinas){
-            System.out.println("\nCódigo: " + d.getCodigo() + " | Nome: " + d.getNome());
+            System.out.println("\nCódigo: " + d.getCodigo() + " | Nome: " + d.getNome() + " | Carga horária: " + d.getCargaHoraria() + " | prerequisitos: " +d.getPreRequisitos() + " | Turmas: " + d.getTurmas());
         }
+        
+        paginaInicial(sc);
+        
+
+        
     }
 
     
-    public static void exibirTurmas() {
+    public static void exibirTurmas(Scanner sc) {
+        carregarTurmas(null);
         System.out.println("\n### Turmas Cadastradas ");
         for (Turma t : turmas) {
             System.out.println("Código: " + t.getCodigoDaTurma() + " | Professor: " + t.getProfessor() + " | Semestre: " + t.getSemestre() + " | Forma de Avaliação: " + t.getFormaAvaliacao());
         }
+        paginaInicial(sc);
     }
     
     public static void cadastrarDisciplina(Scanner sc) {
@@ -623,13 +698,12 @@ public class Main {
         for(Disciplina p : disciplinas){
             if(p.getCodigo().equals(codigo)){
                 System.out.println("❌ Uma disciplina com esse código já foi cadastrada ");
-                cadastrarDisciplina(sc);
                 
             }
         }
 
         System.out.print("Carga horária (em horas): ");
-        int cargaHoraria = Integer.parseInt(sc.nextLine());
+        String cargaHoraria = sc.nextLine();
     
         System.out.print("Quantos pré-requisitos essa disciplina possui? ");
         int qtdPre = Integer.parseInt(sc.nextLine());
@@ -659,7 +733,8 @@ public class Main {
 
         Disciplina nova = new Disciplina(nome, codigo, cargaHoraria, preRequisitos, turmasVazias);
         disciplinas.add(nova);
-    
+        
+        salvarDisciplinas();
         System.out.println("\n✅ Disciplina cadastrada com sucesso!");
         modoDisciplina(sc,0);
     
@@ -723,7 +798,7 @@ public class Main {
 
 
         if (turmasMatriculadas.isEmpty()) {
-            System.out.println("ℹ️ Aluno não está matriculado em nenhuma turma ");
+            System.out.println("❌ Aluno não está matriculado em nenhuma turma ");
             return;
         }
         

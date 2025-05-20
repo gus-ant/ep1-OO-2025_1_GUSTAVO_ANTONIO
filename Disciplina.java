@@ -1,21 +1,59 @@
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 
 
 // Começo da classe de Disciplina. Criei uma <lista de Turmas> pois uma disciplina pode ter várias turmas.
 public class Disciplina {
     private String nome;
     private String codigo;
-    private int cargaHoraria;
+    private String cargaHoraria;
     private List<String> preRequisitos;
     private List<Turma> turmas;
 
-    public Disciplina(String nome, String codigo, int cargaHoraria, List<String> preRequisitos, List<Turma> turmas) {
+    public Disciplina(String nome, String codigo, String cargaHoraria, List<String> preRequisitos, List<Turma> turmas) {
         this.nome = nome;
         this.codigo = codigo;
         this.cargaHoraria = cargaHoraria;
         this.preRequisitos = preRequisitos;
-        this.turmas = turmas;
+        this.turmas = turmas != null ? turmas : new ArrayList<>();
     }
+
+
+    public Disciplina(String nome, String codigo, String cargaHoraria) {
+        this.nome = nome;
+        this.codigo = codigo;
+        this.cargaHoraria = cargaHoraria;
+    }
+
+
+
+    public static Disciplina fromString(String linha) {
+        String[] partes = linha.split(";");
+
+        if (partes.length < 4) {
+            throw new IllegalArgumentException("Formato inválido: " + linha);
+        }
+
+        String nome = partes[0];
+        String codigo = partes[1];
+        String cargaHoraria = partes[2];
+        List<String> preRequisitos = Arrays.asList(partes[3].split(","));
+
+
+        return new Disciplina(nome, codigo, cargaHoraria, preRequisitos, new ArrayList<>());
+        
+    }
+
+
+    @Override
+    public String toString() {
+        String preReqs = String.join(",", preRequisitos);
+    return nome + ";" + codigo + ";" + cargaHoraria + ";" + preReqs;
+    }
+
 
     public String getNome() {
         return nome;
@@ -33,11 +71,11 @@ public class Disciplina {
         this.codigo = codigo;
     }
 
-    public int getCargaHoraria() {
+    public String getCargaHoraria() {
         return cargaHoraria;
     }
 
-    public void setCargaHoraria(int cargaHoraria) {
+    public void setCargaHoraria(String cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
 
