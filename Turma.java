@@ -20,32 +20,32 @@ public class Turma {
                presencial + ";" + horario + ";" + capacidadeMaxima + ";" + codigoDaTurma + ";" + sala;
     }
 
-    
     public static Turma fromString(String linha, Disciplina disciplina) {
         String[] partes = linha.split(";");
-        if (partes.length < 9) {
+    
+        if (partes.length < 8) {
             throw new IllegalArgumentException("Linha de turma mal formatada: " + linha);
         }
-
+    
         String professor = partes[1];
         String semestre = partes[2];
         String formaAvaliacao = partes[3];
         boolean presencial = Boolean.parseBoolean(partes[4]);
         String horario = partes[5];
         int capacidadeMaxima = Integer.parseInt(partes[6]);
-        String codigoDaTurma = partes[7];
-        String sala = partes[8];
-
-        List<Aluno> alunosMatriculados = new ArrayList<>();
-
+        String codigoTurma = partes[7];
+        String sala = partes.length > 8 ? partes[8] : "";
+    
         if (presencial) {
             return new Turma(professor, semestre, formaAvaliacao, true, horario, capacidadeMaxima,
-                    alunosMatriculados, codigoDaTurma, disciplina, sala);
+                             new ArrayList<>(), codigoTurma, disciplina, sala);
         } else {
             return new Turma(professor, semestre, formaAvaliacao, false, horario, capacidadeMaxima,
-                    alunosMatriculados, codigoDaTurma, disciplina);
+                             new ArrayList<>(), codigoTurma, disciplina);
         }
-    } 
+    }
+    
+    
     
     public String getCodigoDaTurma() {
         return codigoDaTurma;

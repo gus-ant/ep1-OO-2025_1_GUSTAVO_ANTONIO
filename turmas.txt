@@ -1,0 +1,4 @@
+1;Cerda;2020;simples;false;14h;99;1;
+1;GUGU;2024;simples;false;14h;144;2;
+3;CEEE;24;simples;true;14;144;4;i9
+3;CEEE;24;simples;true;14;144;4;
