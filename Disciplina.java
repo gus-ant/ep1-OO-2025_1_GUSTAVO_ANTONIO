@@ -32,20 +32,25 @@ public class Disciplina {
 
     public static Disciplina fromString(String linha) {
         String[] partes = linha.split(";");
-
+    
         if (partes.length < 4) {
             throw new IllegalArgumentException("Formato inválido: " + linha);
         }
-
+    
         String nome = partes[0];
         String codigo = partes[1];
         String cargaHoraria = partes[2];
-        List<String> preRequisitos = Arrays.asList(partes[3].split(","));
-
-
+    
+        List<String> preRequisitos;
+        if (partes[3].equals("0")) {
+            preRequisitos = new ArrayList<>();
+        } else {
+            preRequisitos = Arrays.asList(partes[3].split(","));
+        }
+    
         return new Disciplina(nome, codigo, cargaHoraria, preRequisitos, new ArrayList<>());
-        
     }
+    
 
 
     @Override

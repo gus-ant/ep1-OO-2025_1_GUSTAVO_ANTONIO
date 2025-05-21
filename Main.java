@@ -237,7 +237,7 @@ public class Main {
             }
         }
     
-        if (turmaSelecionada.equals(null)) {
+        if (turmaSelecionada == null) {
             System.out.println("❌ Turma não encontrada.");
             return;
         }
