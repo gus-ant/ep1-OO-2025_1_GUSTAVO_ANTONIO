@@ -4,9 +4,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 // Colocar emojis para facilitar o usuário de ver se os cadastros foram ou não bem sucedidos
@@ -25,8 +26,9 @@ public class Main {
     public static void main(String[] args) {
         
         Scanner sc1 = new Scanner(System.in);
-
         System.out.println("\nBem vindo(a) ao sistema acadêmico da FCTE\n");
+
+        carregarAlunos(turmas, listaAlunos);
 
         paginaInicial(sc1);
     }
@@ -188,7 +190,7 @@ public class Main {
             System.out.println("Erro ao carregar disciplinas: " + e.getMessage());
         }
     
-        // Turmas
+        
         try (BufferedReader br = new BufferedReader(new FileReader("turmas.txt"))) {
             String linha;
     
@@ -210,7 +212,111 @@ public class Main {
     
         return disciplinas;
     }
-    
+
+    public static void salvarAluno(Aluno aluno) {
+    String pasta = "banco_de_dados";
+    new File(pasta).mkdirs();
+
+    String caminho = pasta + "/" + aluno.getMatricula() + "_aluno.txt";
+
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
+        // Linha única representando os dados principais
+        writer.write(
+            aluno.getNome() + ";" +
+            aluno.getMatricula() + ";" +
+            aluno.getCurso() + ";" +
+            aluno.getEmail() + ";" +
+            aluno.getFrequencia() + ";" +
+            String.join(",", aluno.getTurmasAprovadas())
+        );
+        writer.newLine();
+
+        for (Turma turma : aluno.getTurmasMatriculadas()) {
+            writer.write("TURMA:" + turma.getCodigoDaTurma());
+            writer.newLine();
+        }
+
+        for (Map.Entry<Turma, Avaliacao> entry : aluno.getAvaliacoes().entrySet()) {
+            writer.write("AVALIACAO:" + entry.getKey().getCodigoDaTurma() + ";" + entry.getValue().toString());
+            writer.newLine();
+        }
+        
+        for (Map.Entry<Turma, Double> entry : aluno.getFrequencias().entrySet()) {
+            writer.write("FREQ:" + entry.getKey().getCodigoDaTurma() + ";" + entry.getValue());
+            writer.newLine();
+        }
+
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar aluno " + aluno.getNome() + ": " + e.getMessage());
+        }
+    }
+
+    public static void carregarAlunos(List<Turma> turmas, List<Aluno> alunos) {
+    File pasta = new File("banco_de_dados");
+
+    if (pasta.exists() && pasta.isDirectory()) {
+        File[] arquivos = pasta.listFiles((dir, nome) -> nome.endsWith("_aluno.txt"));
+
+        if (arquivos != null) {
+            for (File arq : arquivos) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(arq))) {
+                    String primeiraLinha = reader.readLine();
+                    if (primeiraLinha == null) continue;
+
+                    String[] partes = primeiraLinha.split(";");
+                    String nome = partes[0];
+                    String matricula = partes[1];
+                    String curso = partes[2];
+                    String email = partes[3];
+                    double frequencia = Double.parseDouble(partes[4]);
+                    List<String> turmasAprovadas = Arrays.asList(partes[5].split(","));
+
+                    Aluno aluno = new Aluno(nome, matricula, curso, email);
+                    aluno.setFrequencia(frequencia);
+                    aluno.setTurmasAprovadas(new ArrayList<>(turmasAprovadas));
+
+                    String linha;
+                    while ((linha = reader.readLine()) != null) {
+                        if (linha.startsWith("TURMA:")) {
+                            String codigo = linha.substring(6);
+                            for (Turma t : turmas) {
+                                if (t.getCodigoDaTurma().equals(codigo)) {
+                                    aluno.getTurmasMatriculadas().add(t);
+                                    break;
+                                }
+                            }
+                        } else if (linha.startsWith("AVALIACAO:")) {
+                            String[] av = linha.substring(10).split(";");
+                            String codigo = av[0];
+                            Avaliacao avaliacao = Avaliacao.fromString(av[1]); // precisa implementar esse método!
+                            for (Turma t : turmas) {
+                                if (t.getCodigoDaTurma().equals(codigo)) {
+                                    aluno.getAvaliacoes().put(t, avaliacao);
+                                    break;
+                                }
+                            }
+                            } else if (linha.startsWith("FREQ:")) {
+                                String[] fr = linha.substring(5).split(";");
+                                String codigo = fr[0];
+                                double freq = Double.parseDouble(fr[1]);
+                                for (Turma t : turmas) {
+                                    if (t.getCodigoDaTurma().equals(codigo)) {
+                                        aluno.getFrequencias().put(t, freq);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        alunos.add(aluno);
+                    } catch (IOException | NullPointerException e) {
+                        System.out.println("Erro ao carregar aluno do arquivo " + arq.getName() + ": " + e.getMessage());
+                    }
+                }
+            }
+        }
+    }
+
 
     
 
@@ -999,6 +1105,7 @@ public class Main {
 
             if (novoAluno.verificarCadastro()) {
                 listaAlunos.add(novoAluno);
+                salvarAluno(novoAluno);
                 System.out.println("\n✅ Aluno cadastrado com sucesso!");
                 } else {
                     

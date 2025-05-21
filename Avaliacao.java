@@ -17,6 +17,16 @@ public class Avaliacao {
         this.TipoMedia = 0;
     } 
 
+    
+    public Avaliacao(double p1, double p2, double p3, double lista, double seminario, int tipoMedia) {
+        this.p1 = p1;
+        this.p2 = p2;
+        this.p3 = p3;
+        this.lista = lista;
+        this.seminario = seminario;
+        TipoMedia = tipoMedia;
+    }
+
 
     public Avaliacao() {
         this.p1 = 0;
@@ -26,6 +36,30 @@ public class Avaliacao {
         this.seminario = 0;
         this.TipoMedia = 0;
     }
+
+    @Override
+    public String toString() {
+        return p1 + ";" + p2 + ";" + p3 + ";" + lista + ";" + seminario + ";" + TipoMedia;
+    }
+
+    public static Avaliacao fromString(String linha) {
+        String[] partes = linha.split(";");
+    
+        if (partes.length < 6) {
+            throw new IllegalArgumentException("Formato inválido da avaliação: " + linha);
+        }
+    
+        double p1 = Double.parseDouble(partes[0]);
+        double p2 = Double.parseDouble(partes[1]);
+        double p3 = Double.parseDouble(partes[2]);
+        double lista = Double.parseDouble(partes[3]);
+        double seminario = Double.parseDouble(partes[4]);
+        int tipoMedia = Integer.parseInt(partes[5]);
+    
+        return new Avaliacao(p1, p2, p3, lista, seminario, tipoMedia);
+    }
+    
+
 
     public double CalculoMedia(){
         
