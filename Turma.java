@@ -35,13 +35,14 @@ public class Turma {
         int capacidadeMaxima = Integer.parseInt(partes[6]);
         String codigoTurma = partes[7];
         String sala = partes.length > 8 ? partes[8] : "";
+        Disciplina disciplina1 = disciplina;
     
         if (presencial) {
             return new Turma(professor, semestre, formaAvaliacao, true, horario, capacidadeMaxima,
-                             new ArrayList<>(), codigoTurma, disciplina, sala);
+                             new ArrayList<>(), codigoTurma, disciplina1, sala);
         } else {
             return new Turma(professor, semestre, formaAvaliacao, false, horario, capacidadeMaxima,
-                             new ArrayList<>(), codigoTurma, disciplina);
+                             new ArrayList<>(), codigoTurma, disciplina1);
         }
     }
     

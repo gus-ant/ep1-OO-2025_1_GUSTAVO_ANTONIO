@@ -20,7 +20,7 @@ public class Main {
     public static List<Disciplina> disciplinas = carregarDisciplinas();
     static ArrayList<Aluno> listaAlunos = new ArrayList<>();
     static ArrayList<AlunoEspecial> listaAlunosEspeciais = new ArrayList<>();
-    static List<Turma> turmas = new ArrayList<>();
+    static List<Turma> turmas = carregarTurmas(disciplinas);
 
     public static void main(String[] args) {
         
@@ -62,6 +62,7 @@ public class Main {
                     modoAvaliacaoFrequencia(sc);
                     break;
                 case 4: 
+                    fecharPrograma();
                     break;
             
                 default:
@@ -75,6 +76,10 @@ public class Main {
         }
 
 
+
+    }
+    
+    public static void fecharPrograma(){
 
     }
 
@@ -98,52 +103,74 @@ public class Main {
         
     }
 
-    public static void salvarTurmas(){
-        try (PrintWriter writer = new PrintWriter("turmas.txt")) {
-            for (Turma t : turmas) {
-                writer.println(t.toString());
-            }
-        } catch (IOException e) {
-            System.out.println("Erro ao salvar Turma: " + e.getMessage());
-        }
-    }
 
-    public static void carregarTurmas(Disciplina disciplina) {
-        turmas.clear();
-        
+    public static List<Turma> carregarTurmas(List<Disciplina> listaDisciplinas) {
+        List<Turma> turmasCarregadas = new ArrayList<>();
+    
         File file = new File("turmas.txt");
-        if (!file.exists()) return;
-
+        if (!file.exists()) return turmasCarregadas;
+    
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
-                turmas.add(Turma.fromString(linha, disciplina));
+                String[] partes = linha.split(";");
+                if (partes.length < 8) {
+                    System.out.println("Linha mal formatada: " + linha);
+                    continue;
+                }
+    
+                String codigoDisciplina = partes[0];
+    
+                Disciplina disciplinaEncontrada = null;
+                for (Disciplina d : listaDisciplinas) {
+                    if (d.getCodigo().equals(codigoDisciplina)) {
+                        disciplinaEncontrada = d;
+                        break;
+                    }
+                }
+    
+                if (disciplinaEncontrada == null) {
+                    System.out.println("Disciplina não encontrada para a linha: " + linha);
+                    continue;
+                }
+    
+                Turma turma = Turma.fromString(linha, disciplinaEncontrada);
+                turmasCarregadas.add(turma);
+                disciplinaEncontrada.getTurmas().add(turma);
             }
         } catch (IOException e) {
             System.out.println("Erro ao carregar Turmas: " + e.getMessage());
         }
+    
+        return turmasCarregadas;
     }
+    
+    
 
     public static void salvarDisciplinas(List<Disciplina> disciplinas) {
-        try (BufferedWriter bwDisc = new BufferedWriter(new FileWriter("disciplinas.txt"));
-         BufferedWriter bwTurmas = new BufferedWriter(new FileWriter("turmas.txt"))) {
-
-        for (Disciplina d : disciplinas) {
-            bwDisc.write(d.toString());
-            bwDisc.newLine();
-
-            for (Turma t : d.getTurmas()) {
-                bwTurmas.write(t.toString(d));
-                bwTurmas.newLine();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("disciplinas.txt"))) {
+            for (Disciplina d : disciplinas) {
+                bw.write(d.toString());
+                bw.newLine();
             }
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar disciplinas: " + e.getMessage());
         }
-
-        System.out.println("Dados salvos com sucesso!");
-
-    } catch (IOException e) {
-        System.out.println("Erro ao salvar dados: " + e.getMessage());
     }
+    
+    public static void salvarTurmas(List<Disciplina> disciplinas) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("turmas.txt"))) {
+            for (Disciplina d : disciplinas) {
+                for (Turma t : d.getTurmas()) {
+                    bw.write(t.toString(d));
+                    bw.newLine();
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar turmas: " + e.getMessage());
         }
+    }
+    
 
 
     public static List<Disciplina> carregarDisciplinas() {
@@ -659,35 +686,31 @@ public class Main {
     
         System.out.print("Código da turma (ex: T01): ");
         String codigoDaTurma = sc.nextLine();
-    
+
         List<Aluno> alunosMatriculados = new ArrayList<>();
-        
+
         if (presencial == true){
             System.out.print("Sala: ");
             String sala = sc.nextLine();
+
             Turma novaTurma = new Turma(professor, semestre, formaAvaliacao, presencial, horario,
-                                    capacidadeMaxima, alunosMatriculados, codigoDaTurma, disciplinaSelecionada, sala);
+                                        capacidadeMaxima, alunosMatriculados, codigoDaTurma, disciplinaSelecionada, sala);
             turmas.add(novaTurma);
             disciplinaSelecionada.getTurmas().add(novaTurma);
             salvarDisciplinas(disciplinas);
-        
             System.out.println("\n✅ Turma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome());
+            modoDisciplina(sc, 0);
 
-            modoDisciplina(sc, 0);}
-        
-    
-        Turma novaTurma = new Turma(professor, semestre, formaAvaliacao, presencial, horario,
-                                    capacidadeMaxima, alunosMatriculados, codigoDaTurma, disciplinaSelecionada);
-        
-        // .add serve como um append, para adicionar à lista geral de turmas e na disciplina
-        turmas.add(novaTurma);
-
-        disciplinaSelecionada.getTurmas().add(novaTurma);
-        
-        salvarDisciplinas(disciplinas);
-        System.out.println("\n✅ Turma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome()); 
-        modoDisciplina(sc, capacidadeMaxima);
-    }
+        } else {
+            Turma novaTurma = new Turma(professor, semestre, formaAvaliacao, presencial, horario,
+                                        capacidadeMaxima, alunosMatriculados, codigoDaTurma, disciplinaSelecionada);
+            turmas.add(novaTurma);
+            disciplinaSelecionada.getTurmas().add(novaTurma);
+            salvarDisciplinas(disciplinas);
+            System.out.println("\n✅ Turma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome());
+            modoDisciplina(sc, capacidadeMaxima);
+        }
+}
 
 
 
@@ -697,24 +720,32 @@ public class Main {
         System.out.println("\n### Disciplinas disponíveis: ");
         
         for (Disciplina d : disciplinas){
-            System.out.println("\nCódigo: " + d.getCodigo() + " | Nome: " + d.getNome() + " | Carga horária: " + d.getCargaHoraria() + " | prerequisitos: " +d.getPreRequisitos() + " | Turmas: " + d.getTurmas());
+            System.out.println("\nCódigo: " + d.getCodigo() + " | Nome: " + d.getNome() + " | Carga horária: " + d.getCargaHoraria() + " | prerequisitos: " +d.getPreRequisitos() + " | Turmas: " + d.getTurmas() + " | Pré-requisitos: " + d.getPreRequisitos());
         }
         
         paginaInicial(sc);
-        
-
         
     }
 
     
     public static void exibirTurmas(Scanner sc) {
-        carregarTurmas(null);
+        carregarDisciplinas(); // Carrega a lista de disciplinas
+        carregarTurmas(disciplinas); // Passa a lista para vincular turmas às disciplinas
+    
         System.out.println("\n### Turmas Cadastradas ");
         for (Turma t : turmas) {
-            System.out.println("Código: " + t.getCodigoDaTurma() + " | Professor: " + t.getProfessor() + " | Semestre: " + t.getSemestre() + " | Forma de Avaliação: " + t.getFormaAvaliacao() + " | Disciplina: " + t.getDisciplina());
+            System.out.println(
+                "Código: " + t.getCodigoDaTurma() +
+                " | Professor: " + t.getProfessor() +
+                " | Semestre: " + t.getSemestre() +
+                " | Forma de Avaliação: " + t.getFormaAvaliacao() +
+                " | Disciplina: " + t.getDisciplina().getNome()
+            );
         }
+    
         paginaInicial(sc);
     }
+    
     
     public static void cadastrarDisciplina(Scanner sc) {
         System.out.println("\n### Cadastro de Disciplina ###");
@@ -745,7 +776,7 @@ public class Main {
 
             String pre = sc.nextLine();
             
-            for(Disciplina p1 : disciplinas){
+            for(Disciplina p1 : carregarDisciplinas()){
                 if(p1.getCodigo().equals(pre)){
                     preRequisitos.add(pre);
                     
@@ -914,7 +945,6 @@ public class Main {
 
         
     }
-
 
 
     public static void cadastrarAluno(Scanner sc){

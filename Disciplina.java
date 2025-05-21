@@ -51,6 +51,9 @@ public class Disciplina {
     @Override
     public String toString() {
         String preReqs = String.join(",", preRequisitos);
+        if (preRequisitos.size() == 0) {
+            preReqs = "0";
+        }
     return nome + ";" + codigo + ";" + cargaHoraria + ";" + preReqs;
     }
 
