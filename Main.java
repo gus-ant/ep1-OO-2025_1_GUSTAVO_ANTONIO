@@ -396,7 +396,7 @@ public class Main {
             return;
         }
     
-        // Verifica pré-requisitos
+        
         Disciplina disciplina = turmaSelecionada.getDisciplina();
 
         if (disciplina == null) {
@@ -739,6 +739,10 @@ public class Main {
                 List<String> turmasAprovadas = aluno.getTurmasAprovadas();
                 turmasAprovadas.add(codigo);
 
+                aluno.RemoverTurmas(turma);
+
+                
+        
                 salvarAluno(aluno);
                 //aluno.setTurmasAprovadas(null);
             } else {

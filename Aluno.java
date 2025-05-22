@@ -48,6 +48,11 @@ public class Aluno {
         return false;
     }
 
+    public void RemoverTurmas(Turma turma){
+        this.turmasMatriculadas.remove(turma);
+    }
+
+
     public Map<Turma, Avaliacao> getAvaliacoes() {
         return avaliacoes;
     }

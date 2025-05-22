@@ -3,8 +3,6 @@
 public class AlunoEspecial extends Aluno{
     private int quantidadeMaterias;
 
-
-    
     public AlunoEspecial(String nome, String matricula, String curso, String email) {
         super(nome, matricula, curso, email);
         this.quantidadeMaterias = 0;
