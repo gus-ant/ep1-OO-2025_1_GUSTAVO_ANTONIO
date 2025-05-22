@@ -20,7 +20,7 @@ public class Turma {
                presencial + ";" + horario + ";" + capacidadeMaxima + ";" + codigoDaTurma + ";" + sala;
     }
 
-    public static Turma fromString(String linha, Disciplina disciplina) {
+    public static Turma fromString(String linha, Disciplina disciplina, List<Aluno> alunos) {
         String[] partes = linha.split(";");
     
         if (partes.length < 8) {
@@ -35,16 +35,30 @@ public class Turma {
         int capacidadeMaxima = Integer.parseInt(partes[6]);
         String codigoTurma = partes[7];
         String sala = partes.length > 8 ? partes[8] : "";
-        Disciplina disciplina1 = disciplina;
+    
+        List<Aluno> alunosMatriculados = new ArrayList<>();
+        Turma turma;
     
         if (presencial) {
-            return new Turma(professor, semestre, formaAvaliacao, true, horario, capacidadeMaxima,
-                             new ArrayList<>(), codigoTurma, disciplina1, sala);
+            turma = new Turma(professor, semestre, formaAvaliacao, true, horario, capacidadeMaxima,
+                              alunosMatriculados, codigoTurma, disciplina, sala);
         } else {
-            return new Turma(professor, semestre, formaAvaliacao, false, horario, capacidadeMaxima,
-                             new ArrayList<>(), codigoTurma, disciplina1);
+            turma = new Turma(professor, semestre, formaAvaliacao, false, horario, capacidadeMaxima,
+                              alunosMatriculados, codigoTurma, disciplina);
         }
+    
+        for (Aluno aluno : alunos) {
+            for (Turma t : aluno.getTurmasMatriculadas()) {
+                if (t.getCodigoDaTurma().equals(codigoTurma)) {
+                    alunosMatriculados.add(aluno); 
+                    break;
+                }
+            }
+        }
+    
+        return turma;
     }
+    
     
     
     

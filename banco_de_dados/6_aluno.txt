@@ -1,1 +1,2 @@
 CAUA;6;Terapia;c;0.0;
+TURMA:9

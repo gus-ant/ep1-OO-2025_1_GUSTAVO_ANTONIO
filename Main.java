@@ -21,15 +21,30 @@ public class Main {
     public static List<Disciplina> disciplinas = carregarDisciplinas();
     static ArrayList<Aluno> listaAlunos = new ArrayList<>();
     static ArrayList<AlunoEspecial> listaAlunosEspeciais = new ArrayList<>();
-    static List<Turma> turmas = carregarTurmas(disciplinas);
+    static List<Turma> turmas = carregarTurmas(disciplinas, listaAlunos);
+
+    
 
     public static void main(String[] args) throws IOException{
-        
-        Scanner sc1 = new Scanner(System.in);
-        System.out.println("\nBem vindo(a) ao sistema acadêmico da FCTE\n");
-
         carregarAlunos(turmas, listaAlunos, listaAlunosEspeciais);
 
+
+        for (Aluno aluno : listaAlunos) {
+            for (Turma turmaDoAluno : aluno.getTurmasMatriculadas()) {
+                for (Turma turmaReal : turmas) {
+                    if (turmaReal.getCodigoDaTurma().equals(turmaDoAluno.getCodigoDaTurma())
+                        && turmaReal.getDisciplina().getCodigo().equals(turmaDoAluno.getDisciplina().getCodigo())) {
+                        turmaReal.getAlunosMatriculados().add(aluno);
+                    }
+                }
+            }
+        }
+        
+        
+        Scanner sc1 = new Scanner(System.in);
+        System.out.println("\n Bem vindo(a) ao sistema acadêmico da FCTE\n");
+
+        
         System.out.println(turmas);
 
         paginaInicial(sc1);
@@ -84,7 +99,7 @@ public class Main {
     }
     
     public static void fecharPrograma(){
-
+        
     }
 
     public static Aluno buscarAlunoPorMatricula(String matricula){
@@ -108,7 +123,7 @@ public class Main {
     }
 
 
-    public static List<Turma> carregarTurmas(List<Disciplina> listaDisciplinas) {
+    public static List<Turma> carregarTurmas(List<Disciplina> listaDisciplinas, List<Aluno> listaAlunos) {
         List<Turma> turmasCarregadas = new ArrayList<>();
     
         File file = new File("banco_de_dados/turmas.txt");
@@ -148,7 +163,7 @@ public class Main {
                     continue;
                 }
     
-                Turma turma = Turma.fromString(linha, disciplinaEncontrada);
+                Turma turma = Turma.fromString(linha, disciplinaEncontrada, listaAlunos);
                 turmasCarregadas.add(turma);
                 disciplinaEncontrada.getTurmas().add(turma);
             }
@@ -678,8 +693,9 @@ public class Main {
 
         Turma turma = buscarTurmaPorCodigo(codigo);
         
+
         if(turma == null){
-            System.err.println("❌ Essa turma não existe, tente cadastrar uma nova turma \n");
+            System.err.println("\n❌ Essa turma não existe, tente cadastrar uma nova turma \n");
             modoDisciplina(sc, 0);
         }
 
@@ -688,8 +704,14 @@ public class Main {
     
             Avaliacao avaliacao = new Avaliacao();
     
-            System.out.print("Tipo de média (0 = Normal, 1 = ponderada): ");
-            avaliacao.setTipoMedia(Integer.parseInt(sc.nextLine()));
+            String tipo = turma.getFormaAvaliacao();
+
+            if(tipo.equals("1")){
+                avaliacao.setTipoMedia(1);
+            }
+            else{
+                avaliacao.setTipoMedia(0);
+            }
     
             System.out.print("Nota P1: ");
             avaliacao.setP1(Double.parseDouble(sc.nextLine()));
@@ -717,16 +739,8 @@ public class Main {
                 List<String> turmasAprovadas = aluno.getTurmasAprovadas();
                 turmasAprovadas.add(codigo);
 
-                List<Turma> turma1 = aluno.getTurmasMatriculadas();
-
-                for(Turma t1 : aluno.getTurmasMatriculadas()){
-                    if(t1.equals(turma)){
-                        turma1.remove(t1);
-                        aluno.setTurmasMatriculadas(turma1);
-                    }
-                }
                 salvarAluno(aluno);
-                aluno.setTurmasAprovadas(null);
+                //aluno.setTurmasAprovadas(null);
             } else {
                 System.out.println("Aluno reprovado ❌");
                 List<Turma> turmasMatriculadas = aluno.getTurmasMatriculadas();
@@ -874,7 +888,7 @@ public class Main {
     
     public static void exibirTurmas(Scanner sc) {
         carregarDisciplinas(); // Carrega a lista de disciplinas
-        carregarTurmas(disciplinas); // Passa a lista para vincular turmas às disciplinas
+        carregarTurmas(disciplinas, listaAlunos); // Passa a lista para vincular turmas às disciplinas
     
         System.out.println("\n### Turmas Cadastradas ");
         for (Turma t : turmas) {
@@ -1067,7 +1081,7 @@ public class Main {
                 Turma t1 = buscarTurmaPorCodigo(t);
                 if (t1 != null) {
                     System.out.println("\nCódigo da turma: " + t1.getCodigoDaTurma() +
-                        " | Disciplina: " + t1.getDisciplina().getNome());
+                        " | Disciplina: " + t1.getDisciplina().getNome() + " | Professor: " + t1.getProfessor() + " | Semestre: " + t1.getSemestre());
                 } else {
                     //System.out.println("\n⚠️ Turma com código \"" + t + "\" não encontrada (pode ter sido deletada ou não carregada).");
                 }
@@ -1090,7 +1104,7 @@ public class Main {
 
             }
 
-            System.out.println("\nTurmas que o aluno foi aprovado:");
+            System.out.println("\n✅ Turmas que o aluno foi aprovado:");
 
             if (aluno.getTurmasAprovadas() != null) {
                 for (String t : aluno.getTurmasAprovadas()) {
@@ -1098,7 +1112,7 @@ public class Main {
                     if (t1 != null) {
                         System.out.println("Turma: " + t1.getCodigoDaTurma());
                     } else {
-                        System.out.println("⚠️ Turma \"" + t + "\" não encontrada.");
+                        System.out.println(" Turma \"" + t + "\" não encontrada.");
                     }
                 }
             } else {
