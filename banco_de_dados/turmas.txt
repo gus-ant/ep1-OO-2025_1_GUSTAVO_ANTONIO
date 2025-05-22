@@ -1,0 +1,3 @@
+d;CERDA;23;simples;false;N14;90;9;
+d;CCNA;9;simples;false;12;99;11;
+d;1;12;simples;false;123;7;2;

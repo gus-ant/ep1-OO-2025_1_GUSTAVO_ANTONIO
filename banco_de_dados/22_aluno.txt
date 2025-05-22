@@ -1,0 +1,4 @@
+ADS;22;eng;g;0.0;
+TURMA:9
+TURMA:2
+TURMA:11

@@ -23,12 +23,14 @@ public class Main {
     static ArrayList<AlunoEspecial> listaAlunosEspeciais = new ArrayList<>();
     static List<Turma> turmas = carregarTurmas(disciplinas);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         
         Scanner sc1 = new Scanner(System.in);
         System.out.println("\nBem vindo(a) ao sistema acadêmico da FCTE\n");
 
-        carregarAlunos(turmas, listaAlunos);
+        carregarAlunos(turmas, listaAlunos, listaAlunosEspeciais);
+
+        System.out.println(turmas);
 
         paginaInicial(sc1);
     }
@@ -109,9 +111,19 @@ public class Main {
     public static List<Turma> carregarTurmas(List<Disciplina> listaDisciplinas) {
         List<Turma> turmasCarregadas = new ArrayList<>();
     
-        File file = new File("turmas.txt");
-        if (!file.exists()) return turmasCarregadas;
-    
+        File file = new File("banco_de_dados/turmas.txt");
+
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile(); 
+                System.out.println("Arquivo criado.");
+            } catch (IOException e) {
+                System.err.println("Erro ao criar o arquivo: " + e.getMessage());
+            }
+        }        
+        
+        
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
@@ -150,7 +162,9 @@ public class Main {
     
 
     public static void salvarDisciplinas(List<Disciplina> disciplinas) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("disciplinas.txt"))) {
+
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("banco_de_dados/disciplinas.txt"))) {
             for (Disciplina d : disciplinas) {
                 bw.write(d.toString());
                 bw.newLine();
@@ -161,7 +175,7 @@ public class Main {
     }
     
     public static void salvarTurmas(List<Disciplina> disciplinas) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("turmas.txt"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("banco_de_dados/turmas.txt"))) {
             for (Disciplina d : disciplinas) {
                 for (Turma t : d.getTurmas()) {
                     bw.write(t.toString(d));
@@ -177,8 +191,19 @@ public class Main {
 
     public static List<Disciplina> carregarDisciplinas() {
         List<Disciplina> disciplinas = new ArrayList<>();
+
+        File file = new File("banco_de_dados/disciplinas.txt");
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile(); 
+                System.out.println("Arquivo criado.");
+            } catch (IOException e) {
+                System.err.println("Erro ao criar o arquivo: " + e.getMessage());
+            }
+        }
     
-        try (BufferedReader br = new BufferedReader(new FileReader("disciplinas.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("banco_de_dados/disciplinas.txt"))) {
             String linha;
     
             while ((linha = br.readLine()) != null) {
@@ -188,26 +213,6 @@ public class Main {
     
         } catch (IOException e) {
             System.out.println("Erro ao carregar disciplinas: " + e.getMessage());
-        }
-    
-        
-        try (BufferedReader br = new BufferedReader(new FileReader("turmas.txt"))) {
-            String linha;
-    
-            while ((linha = br.readLine()) != null) {
-                String codigoDisciplina = linha.split(";")[0];
-    
-                for (Disciplina d : disciplinas) {
-                    if (d.getCodigo().equals(codigoDisciplina)) {
-                        Turma t = Turma.fromString(linha, d);
-                        d.getTurmas().add(t);
-                        break;
-                    }
-                }
-            }
-    
-        } catch (IOException e) {
-            System.out.println("Erro ao carregar turmas: " + e.getMessage());
         }
     
         return disciplinas;
@@ -221,6 +226,7 @@ public class Main {
 
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
         // Linha única representando os dados principais
+        
         String turmasAprovadas = aluno.getTurmasAprovadas() == null ? "[]" : String.join(",", aluno.getTurmasAprovadas());
         writer.write(
             aluno.getNome() + ";" +
@@ -254,7 +260,7 @@ public class Main {
         }
     }
 
-    public static void carregarAlunos(List<Turma> turmas, List<Aluno> alunos) {
+    public static void carregarAlunos(List<Turma> turmas, List<Aluno> alunos, List<AlunoEspecial> alunoEspeciais) {
     File pasta = new File("banco_de_dados");
 
     if (pasta.exists() && pasta.isDirectory()) {
@@ -492,7 +498,8 @@ public class Main {
             relatorioPorProfessor(sc, turmas);
             break;
         case 4:
-            return;
+            paginaInicial(sc);
+            break;
         default:
             System.out.println("Opção inválida.");
             //menuExibirRelatorios(sc, turmas, disciplinas, alunos);
@@ -541,6 +548,7 @@ public class Main {
 
         System.out.printf("Aluno: %s | Média: %.2f | Frequência: %.2f%% | %s\n",
                 aluno.getNome(), media, freq, status);
+        menuRelatorios(sc, turmas, disciplinas, alunos);
     }
 
     }
@@ -563,9 +571,11 @@ public class Main {
         }
     
         System.out.println("\n--- Relatório da Disciplina " + d.getNome() + " ---");
+        
         for (Turma turma : d.getTurmas()) {
             System.out.println("Turma: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor());
         }
+        menuRelatorios(sc, turmas, disciplinas, listaAlunos);
     }
     
     
@@ -582,6 +592,8 @@ public class Main {
                                    " | Semestre: " + turma.getSemestre());
             }
         }
+
+        menuRelatorios(sc, turmas, disciplinas, listaAlunos);
     }
     
 
@@ -643,7 +655,7 @@ public class Main {
                                "\nStatus: " + status);
         }
 
-
+        menuRelatorios(sc, turmas, disciplinas, alunos);
     }
 
 
@@ -654,6 +666,7 @@ public class Main {
             }
         }
         return null;
+
     }
 
     
@@ -703,6 +716,15 @@ public class Main {
                 System.out.println("Aluno aprovado ✅");
                 List<String> turmasAprovadas = aluno.getTurmasAprovadas();
                 turmasAprovadas.add(codigo);
+
+                List<Turma> turma1 = aluno.getTurmasMatriculadas();
+
+                for(Turma t1 : aluno.getTurmasMatriculadas()){
+                    if(t1.equals(turma)){
+                        turma1.remove(t1);
+                        aluno.setTurmasMatriculadas(turma1);
+                    }
+                }
                 salvarAluno(aluno);
                 aluno.setTurmasAprovadas(null);
             } else {
@@ -780,7 +802,7 @@ public class Main {
     
         if (disciplinaSelecionada == null) {
             System.out.println("❌ Disciplina não encontrada. Cadastre a disciplina antes.");
-            return;
+            modoDisciplina(sc, 0);
         }
     
         System.out.print("Nome do professor: ");
@@ -817,6 +839,7 @@ public class Main {
                                         capacidadeMaxima, alunosMatriculados, codigoDaTurma, disciplinaSelecionada, sala);
             turmas.add(novaTurma);
             disciplinaSelecionada.getTurmas().add(novaTurma);
+            salvarTurmas(disciplinas);
             salvarDisciplinas(disciplinas);
             System.out.println("\n✅ Turma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome());
             modoDisciplina(sc, 0);
@@ -827,6 +850,7 @@ public class Main {
             turmas.add(novaTurma);
             disciplinaSelecionada.getTurmas().add(novaTurma);
             salvarDisciplinas(disciplinas);
+            salvarTurmas(disciplinas);
             System.out.println("\n✅ Turma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome());
             modoDisciplina(sc, capacidadeMaxima);
         }
@@ -916,6 +940,7 @@ public class Main {
         disciplinas.add(nova);
         
         salvarDisciplinas(disciplinas);
+        salvarTurmas(disciplinas);
         System.out.println("\n✅ Disciplina cadastrada com sucesso!");
         modoDisciplina(sc,0);
     
@@ -1011,7 +1036,7 @@ public class Main {
 
     public static void mostrarAlunos(Scanner sc){
 
-        carregarAlunos(turmas, listaAlunos);
+        carregarAlunos(turmas, listaAlunos, listaAlunosEspeciais);
 
         if(listaAlunos.size() == 0 && listaAlunosEspeciais.size()==0){
             System.out.println("\n❌ Não há alunos cadastrados no momento \n");
@@ -1128,6 +1153,7 @@ public class Main {
             
             if (novoAlunoEspecial.verificarCadastro()) {
                 listaAlunosEspeciais.add(novoAlunoEspecial);
+                salvarAluno(novoAlunoEspecial);
                 System.out.println("✅ Aluno Especial cadastrado com sucesso!");
                 } 
                 else {
