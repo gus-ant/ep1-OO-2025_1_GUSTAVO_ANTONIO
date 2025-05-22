@@ -12,10 +12,8 @@ public class Aluno {
     private List<Turma> turmasMatriculadas;
     private Avaliacao avaliacao;
     private double frequencia;   // Entre 0.0 e 1.0  
-    // Mapa de turma para avaliação
-    private Map<Turma, Avaliacao> avaliacoes;
-    // Mapa de turma para frequência
-    private Map<Turma, Double> frequencias;
+    private Map<Turma, Avaliacao> avaliacoes; // Mapa de turma para avaliação
+    private Map<Turma, Double> frequencias;// Mapa de turma para frequência
     private List<String> turmasAprovadas;
 
     public Aluno(String nome, String matricula, String curso, String email){

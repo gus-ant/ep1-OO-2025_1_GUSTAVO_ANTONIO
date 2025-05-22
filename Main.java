@@ -404,6 +404,8 @@ public class Main {
         
         aluno.getTurmasMatriculadas().add(turmaSelecionada);
         turmaSelecionada.getAlunosMatriculados().add(aluno);
+
+        salvarAluno(aluno);
     
         System.out.println("✅ Aluno matriculado com sucesso na turma: " + turmaSelecionada.getCodigoDaTurma() + " de " + turmaSelecionada.getDisciplina().getNome() + "!");
     }
@@ -693,6 +695,7 @@ public class Main {
                 System.out.println("Aluno aprovado ✅");
                 List<String> turmasAprovadas = aluno.getTurmasAprovadas();
                 turmasAprovadas.add(codigo);
+                salvarAluno(aluno);
                 aluno.setTurmasAprovadas(null);
             } else {
                 System.out.println("Aluno reprovado ❌");
@@ -704,9 +707,12 @@ public class Main {
                         aluno.setTurmasMatriculadas(turmasMatriculadas);
                     }
                 }
+                salvarAluno(aluno);
 
             }
             System.out.println("--------------------------");}
+
+            modoAvaliacaoFrequencia(sc);
         }
     
     
@@ -987,12 +993,17 @@ public class Main {
 
         aluno.getTurmasMatriculadas().remove(turmaParaTrancar);
         turmaParaTrancar.getAlunosMatriculados().remove(aluno);
+        salvarAluno(aluno);
 
         System.out.println("✅ Trancamento realizado com sucesso!");
+
+        modoAluno(sc);
 
     }
 
     public static void mostrarAlunos(Scanner sc){
+
+        carregarAlunos(turmas, listaAlunos);
 
         if(listaAlunos.size() == 0 && listaAlunosEspeciais.size()==0){
             System.out.println("\n❌ Não há alunos cadastrados no momento \n");
@@ -1018,10 +1029,17 @@ public class Main {
 
             System.out.println("\nTurmas que o aluno foi aprovado:");
 
-            for (String t : aluno.getTurmasAprovadas()){
+
+            for (String t : aluno.getTurmasAprovadas()) {
                 Turma t1 = buscarTurmaPorCodigo(t);
-                System.out.println("\nCódigo da turma: " + t1.getCodigoDaTurma() + " | Disciplina: "+ t1.getDisciplina().getNome());
+                if (t1 != null) {
+                    System.out.println("\nCódigo da turma: " + t1.getCodigoDaTurma() +
+                        " | Disciplina: " + t1.getDisciplina().getNome());
+                } else {
+                    System.out.println("\n⚠️ Turma com código \"" + t + "\" não encontrada (pode ter sido deletada ou não carregada).");
+                }
             }
+            
         }
 
         System.out.println("\n-------------\n");
