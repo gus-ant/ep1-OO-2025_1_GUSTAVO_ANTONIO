@@ -221,14 +221,17 @@ public class Main {
 
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
         // Linha única representando os dados principais
+        String turmasAprovadas = aluno.getTurmasAprovadas() == null ? "[]" : String.join(",", aluno.getTurmasAprovadas());
         writer.write(
             aluno.getNome() + ";" +
             aluno.getMatricula() + ";" +
             aluno.getCurso() + ";" +
             aluno.getEmail() + ";" +
             aluno.getFrequencia() + ";" +
-            String.join(",", aluno.getTurmasAprovadas())
+            turmasAprovadas
         );
+
+
         writer.newLine();
 
         for (Turma turma : aluno.getTurmasMatriculadas()) {
@@ -263,13 +266,18 @@ public class Main {
                     String primeiraLinha = reader.readLine();
                     if (primeiraLinha == null) continue;
 
-                    String[] partes = primeiraLinha.split(";");
+                    String[] partes = primeiraLinha.split(";", -1);
+
                     String nome = partes[0];
                     String matricula = partes[1];
                     String curso = partes[2];
                     String email = partes[3];
                     double frequencia = Double.parseDouble(partes[4]);
                     List<String> turmasAprovadas = Arrays.asList(partes[5].split(","));
+                    if (turmasAprovadas == null){
+                        
+                    }
+                    
 
                     Aluno aluno = new Aluno(nome, matricula, curso, email);
                     aluno.setFrequencia(frequencia);
@@ -1027,7 +1035,7 @@ public class Main {
 
             }
 
-            System.out.println("\nTurmas que o aluno foi aprovado:");
+            System.out.println("\n✅ Turmas que o aluno foi aprovado:");
 
 
             for (String t : aluno.getTurmasAprovadas()) {
@@ -1036,7 +1044,7 @@ public class Main {
                     System.out.println("\nCódigo da turma: " + t1.getCodigoDaTurma() +
                         " | Disciplina: " + t1.getDisciplina().getNome());
                 } else {
-                    System.out.println("\n⚠️ Turma com código \"" + t + "\" não encontrada (pode ter sido deletada ou não carregada).");
+                    //System.out.println("\n⚠️ Turma com código \"" + t + "\" não encontrada (pode ter sido deletada ou não carregada).");
                 }
             }
             
@@ -1059,10 +1067,19 @@ public class Main {
 
             System.out.println("\nTurmas que o aluno foi aprovado:");
 
-            for (String t : aluno.getTurmasAprovadas()){
-                Turma t1 = buscarTurmaPorCodigo(t);
-                System.out.println("\nCódigo da turma: " + t1.getCodigoDaTurma() + " | Disciplina: "+ t1.getDisciplina().getNome());
+            if (aluno.getTurmasAprovadas() != null) {
+                for (String t : aluno.getTurmasAprovadas()) {
+                    Turma t1 = buscarTurmaPorCodigo(t);
+                    if (t1 != null) {
+                        System.out.println("Turma: " + t1.getCodigoDaTurma());
+                    } else {
+                        System.out.println("⚠️ Turma \"" + t + "\" não encontrada.");
+                    }
+                }
+            } else {
+                System.out.println(" Nenhuma turma aprovada registrada.");
             }
+            
         }
 
         paginaInicial(sc);
