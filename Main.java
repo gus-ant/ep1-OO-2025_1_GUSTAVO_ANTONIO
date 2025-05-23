@@ -167,7 +167,7 @@ public class Main {
                 }
     
                 if (disciplinaEncontrada == null) {
-                    System.out.println("Disciplina não encontrada para a linha: " + linha);
+                    System.out.println("❌💾 Disciplina não encontrada para a linha: " + linha);
                     continue;
                 }
     
@@ -176,7 +176,7 @@ public class Main {
                 disciplinaEncontrada.getTurmas().add(turma);
             }
         } catch (IOException e) {
-            System.out.println("Erro ao carregar Turmas: " + e.getMessage());
+            System.out.println("❌💾 Erro ao carregar Turmas: " + e.getMessage());
         }
     
         return turmasCarregadas;
@@ -243,103 +243,110 @@ public class Main {
             }
     
         } catch (IOException e) {
-            System.out.println("Erro ao carregar disciplinas: " + e.getMessage());
+            System.out.println("❌💾 Erro ao carregar disciplinas: " + e.getMessage());
         }
     
         return disciplinas;
     }
 
     public static void salvarAluno(Aluno aluno) {
-    String pasta = "banco_de_dados";
-    new File(pasta).mkdirs();
-
-    String caminho = pasta + "/" + aluno.getMatricula() + "_aluno.txt";
-
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
-        // Linha única representando os dados principais
-        
-        String turmasAprovadas = aluno.getTurmasAprovadas() == null ? "[]" : String.join(",", aluno.getTurmasAprovadas());
-        writer.write(
-            aluno.getNome() + ";" +
-            aluno.getMatricula() + ";" +
-            aluno.getCurso() + ";" +
-            aluno.getEmail() + ";" +
-            aluno.getFrequencia() + ";" +
-            turmasAprovadas
-        );
-
-
-        writer.newLine();
-
-        for (Turma turma : aluno.getTurmasMatriculadas()) {
-            writer.write("TURMA:" + turma.getCodigoDaTurma());
+        String pasta = "banco_de_dados";
+        new File(pasta).mkdirs();
+    
+        String caminho = pasta + "/" + aluno.getMatricula() + "_aluno.txt";
+    
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
+            // Determina se é Aluno normal ou Especial
+            String tipo = aluno instanceof AlunoEspecial ? "ESPECIAL" : "NORMAL";
+    
+            String turmasAprovadas = aluno.getTurmasAprovadas() == null
+                ? "[]" : String.join(",", aluno.getTurmasAprovadas());
+    
+            writer.write(
+                tipo + ";" +
+                aluno.getNome() + ";" +
+                aluno.getMatricula() + ";" +
+                aluno.getCurso() + ";" +
+                aluno.getEmail() + ";" +
+                aluno.getFrequencia() + ";" +
+                turmasAprovadas
+            );
             writer.newLine();
-        }
-
-        for (Map.Entry<Turma, Avaliacao> entry : aluno.getAvaliacoes().entrySet()) {
-            writer.write("AVALIACAO:" + entry.getKey().getCodigoDaTurma() + ";" + entry.getValue().toString());
-            writer.newLine();
-        }
-        
-        for (Map.Entry<Turma, Double> entry : aluno.getFrequencias().entrySet()) {
-            writer.write("FREQ:" + entry.getKey().getCodigoDaTurma() + ";" + entry.getValue());
-            writer.newLine();
-        }
-
+    
+            for (Turma turma : aluno.getTurmasMatriculadas()) {
+                writer.write("TURMA:" + turma.getCodigoDaTurma());
+                writer.newLine();
+            }
+    
+            for (Map.Entry<Turma, Avaliacao> entry : aluno.getAvaliacoes().entrySet()) {
+                writer.write("AVALIACAO:" + entry.getKey().getCodigoDaTurma() + ";" + entry.getValue().toString());
+                writer.newLine();
+            }
+    
+            for (Map.Entry<Turma, Double> entry : aluno.getFrequencias().entrySet()) {
+                writer.write("FREQ:" + entry.getKey().getCodigoDaTurma() + ";" + entry.getValue());
+                writer.newLine();
+            }
+    
         } catch (IOException e) {
-            System.out.println("Erro ao salvar aluno " + aluno.getNome() + ": " + e.getMessage());
+            System.out.println("❌💾Erro ao salvar aluno " + aluno.getNome() + ": " + e.getMessage());
         }
     }
+    
 
     public static void carregarAlunos(List<Turma> turmas, List<Aluno> alunos, List<AlunoEspecial> alunoEspeciais) {
-    File pasta = new File("banco_de_dados");
-
-    if (pasta.exists() && pasta.isDirectory()) {
-        File[] arquivos = pasta.listFiles((dir, nome) -> nome.endsWith("_aluno.txt"));
-
-        if (arquivos != null) {
-            for (File arq : arquivos) {
-                try (BufferedReader reader = new BufferedReader(new FileReader(arq))) {
-                    String primeiraLinha = reader.readLine();
-                    if (primeiraLinha == null) continue;
-
-                    String[] partes = primeiraLinha.split(";", -1);
-
-                    String nome = partes[0];
-                    String matricula = partes[1];
-                    String curso = partes[2];
-                    String email = partes[3];
-                    double frequencia = Double.parseDouble(partes[4]);
-                    List<String> turmasAprovadas = Arrays.asList(partes[5].split(","));
-                    if (turmasAprovadas == null){
-                        
-                    }
-                    
-
-                    Aluno aluno = new Aluno(nome, matricula, curso, email);
-                    aluno.setFrequencia(frequencia);
-                    aluno.setTurmasAprovadas(new ArrayList<>(turmasAprovadas));
-
-                    String linha;
-                    while ((linha = reader.readLine()) != null) {
-                        if (linha.startsWith("TURMA:")) {
-                            String codigo = linha.substring(6);
-                            for (Turma t : turmas) {
-                                if (t.getCodigoDaTurma().equals(codigo)) {
-                                    aluno.getTurmasMatriculadas().add(t);
-                                    break;
+        File pasta = new File("banco_de_dados");
+    
+        if (pasta.exists() && pasta.isDirectory()) {
+            File[] arquivos = pasta.listFiles((dir, nome) -> nome.endsWith("_aluno.txt"));
+    
+            if (arquivos != null) {
+                for (File arq : arquivos) {
+                    try (BufferedReader reader = new BufferedReader(new FileReader(arq))) {
+                        String primeiraLinha = reader.readLine();
+                        if (primeiraLinha == null) continue;
+    
+                        String[] partes = primeiraLinha.split(";", -1);
+                        String tipo = partes[0];
+                        String nome = partes[1];
+                        String matricula = partes[2];
+                        String curso = partes[3];
+                        String email = partes[4];
+                        double frequencia = Double.parseDouble(partes[5]);
+                        List<String> turmasAprovadas = Arrays.asList(partes[6].split(","));
+    
+                        Aluno aluno;
+                        if (tipo.equals("ESPECIAL")) {
+                            aluno = new AlunoEspecial(nome, matricula, curso, email);
+                            alunoEspeciais.add((AlunoEspecial) aluno);
+                        } else {
+                            aluno = new Aluno(nome, matricula, curso, email);
+                            alunos.add(aluno);
+                        }
+    
+                        aluno.setFrequencia(frequencia);
+                        aluno.setTurmasAprovadas(new ArrayList<>(turmasAprovadas));
+    
+                        String linha;
+                        while ((linha = reader.readLine()) != null) {
+                            if (linha.startsWith("TURMA:")) {
+                                String codigo = linha.substring(6);
+                                for (Turma t : turmas) {
+                                    if (t.getCodigoDaTurma().equals(codigo)) {
+                                        aluno.getTurmasMatriculadas().add(t);
+                                        break;
+                                    }
                                 }
-                            }
-                        } else if (linha.startsWith("AVALIACAO:")) {
-                            String[] av = linha.substring(10).split(";");
-                            String codigo = av[0];
-                            Avaliacao avaliacao = Avaliacao.fromString(av[1]); // precisa implementar esse método!
-                            for (Turma t : turmas) {
-                                if (t.getCodigoDaTurma().equals(codigo)) {
-                                    aluno.getAvaliacoes().put(t, avaliacao);
-                                    break;
+                            } else if (linha.startsWith("AVALIACAO:")) {
+                                String[] av = linha.substring(10).split(";");
+                                String codigo = av[0];
+                                Avaliacao avaliacao = Avaliacao.fromString(av[1]); // Implementar esse método!
+                                for (Turma t : turmas) {
+                                    if (t.getCodigoDaTurma().equals(codigo)) {
+                                        aluno.getAvaliacoes().put(t, avaliacao);
+                                        break;
+                                    }
                                 }
-                            }
                             } else if (linha.startsWith("FREQ:")) {
                                 String[] fr = linha.substring(5).split(";");
                                 String codigo = fr[0];
@@ -352,16 +359,15 @@ public class Main {
                                 }
                             }
                         }
-
-                        alunos.add(aluno);
+    
                     } catch (IOException | NullPointerException e) {
-                        System.out.println("Erro ao carregar aluno do arquivo " + arq.getName() + ": " + e.getMessage());
+                        System.out.println("❌💾 Erro ao carregar aluno do arquivo " + arq.getName() + ": " + e.getMessage());
                     }
                 }
             }
         }
     }
-
+    
 
     
 
@@ -373,7 +379,7 @@ public class Main {
         Aluno aluno = buscarAlunoPorMatricula(matricula);
     
         if (aluno == null) {
-            System.out.println("❌ Aluno não encontrado.");
+            System.out.println("❌💾 Aluno não encontrado.");
             return;
         }
     
@@ -389,7 +395,7 @@ public class Main {
         }
     
         if (turmaSelecionada == null) {
-            System.out.println("❌ Turma não encontrada.");
+            System.out.println("❌💾 Turma não encontrada.");
             return;
         }
 
@@ -416,7 +422,7 @@ public class Main {
         Disciplina disciplina = turmaSelecionada.getDisciplina();
 
         if (disciplina == null) {
-            System.out.println("❌ Disciplina da turma não encontrada.");
+            System.out.println("❌💾 Disciplina da turma não encontrada.");
 
             modoAluno(sc);
             return;
@@ -523,7 +529,7 @@ public class Main {
             relatorioPorTurma(sc, turmas, alunos);
             break;
         case 2:
-            relatorioPorDisciplina(sc, disciplinas);
+            relatorioPorDisciplina(sc, disciplinas, listaAlunos);
             break;
         case 3:
             relatorioPorProfessor(sc, turmas);
@@ -560,7 +566,7 @@ public class Main {
         }
 
         if (turmaSelecionada == null) {
-            System.out.println("❌ Turma não encontrada.");
+            System.out.println("❌💾 Turma não encontrada.");
             menuRelatorios(sc, turmas, disciplinas, alunos);
         }
 
@@ -587,29 +593,76 @@ public class Main {
 
     }
 
-    public static void relatorioPorDisciplina(Scanner sc, List<Disciplina> disciplinas) {
+    public static void relatorioPorDisciplina(Scanner sc, List<Disciplina> disciplinas, List<Aluno> listaAlunos) {
         System.out.print("Digite o código da disciplina: ");
         String cod = sc.nextLine();
     
-        Disciplina d = null;
+        Disciplina disciplinaEncontrada = null;
         for (Disciplina disc : disciplinas) {
             if (disc.getCodigo().equalsIgnoreCase(cod)) {
-                d = disc;
+                disciplinaEncontrada = disc;
                 break;
             }
         }
     
-        if (d == null) {
-            System.out.println("❌ Disciplina não encontrada.");
+        if (disciplinaEncontrada == null) {
+            System.out.println("❌💾 Disciplina não encontrada.");
             return;
         }
     
-        System.out.println("\n--- Relatório da Disciplina " + d.getNome() + " ---");
-        
-        for (Turma turma : d.getTurmas()) {
-            System.out.println("Turma: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor());
+        System.out.println("\n--- Relatório da Disciplina: " + disciplinaEncontrada.getNome() + " (Código: " + disciplinaEncontrada.getCodigo() + ") ---");
+        System.out.println("Total de Turmas Ofertadas: " + disciplinaEncontrada.getTurmas().size());
+        System.out.println("------------------------------------------");
+    
+        // Para calcular a taxa de aprovação agregada da disciplina
+        int totalAlunosDisciplina = 0;
+        int alunosAprovadosDisciplina = 0;
+    
+        if (disciplinaEncontrada.getTurmas().isEmpty()) {
+            System.out.println("Nenhuma turma cadastrada para esta disciplina.");
+        } else {
+            for (Turma turma : disciplinaEncontrada.getTurmas()) {
+                System.out.println("\n  Detalhes da Turma: " + turma.getCodigoDaTurma());
+                System.out.println("    Professor: " + turma.getProfessor());
+                System.out.println("    Horário: " + turma.getHorario());
+                System.out.println("    Semestre: " + turma.getSemestre());
+    
+                int totalAlunosTurma = 0;
+                int alunosAprovadosTurma = 0;
+    
+                // Supondo que Turma tenha um método getAlunosMatriculados() que retorna List<Aluno>
+                if (turma.getAlunosMatriculados() != null && !turma.getAlunosMatriculados().isEmpty()) {
+                    totalAlunosTurma = turma.getAlunosMatriculados().size();
+                    String codigoDaTurmaAtual = turma.getCodigoDaTurma();
+    
+                    for (Aluno aluno : turma.getAlunosMatriculados()) {
+                        if (aluno.isAprovado(codigoDaTurmaAtual)) { // Usa o método isAprovado da Aluno
+                            alunosAprovadosTurma++;
+                        }
+                    }
+    
+                    double taxaAprovacaoTurma = (totalAlunosTurma > 0) ? ((double) alunosAprovadosTurma / totalAlunosTurma) * 100 : 0;
+                    System.out.printf("    Total de Alunos: %d | Aprovados: %d | Taxa de Aprovação da Turma: %.2f%%\n",
+                                      totalAlunosTurma, alunosAprovadosTurma, taxaAprovacaoTurma);
+    
+                    // Acumula para o total da disciplina
+                    totalAlunosDisciplina += totalAlunosTurma;
+                    alunosAprovadosDisciplina += alunosAprovadosTurma;
+    
+                } else {
+                    System.out.println("    Nenhum aluno matriculado nesta turma ou dados de alunos não disponíveis.");
+                }
+            }
+    
+            // Dados agregados da disciplina
+            System.out.println("\n------------------------------------------");
+            System.out.println("Resumo Geral da Disciplina:");
+            System.out.printf("Total de Alunos em todas as turmas: %d\n", totalAlunosDisciplina);
+            double taxaAprovacaoDisciplina = (totalAlunosDisciplina > 0) ? ((double) alunosAprovadosDisciplina / totalAlunosDisciplina) * 100 : 0;
+            System.out.printf("Taxa de Aprovação Geral da Disciplina: %.2f%%\n", taxaAprovacaoDisciplina);
         }
-        menuRelatorios(sc, turmas, disciplinas, listaAlunos);
+    
+        menuRelatorios(sc, turmas, disciplinas, listaAlunos); // Retorna ao menu de relatórios
     }
     
     
@@ -624,14 +677,33 @@ public class Main {
                 System.out.println("Turma: " + turma.getCodigoDaTurma() +
                                    " | Disciplina: " + turma.getDisciplina().getNome() +
                                    " | Semestre: " + turma.getSemestre());
+                                   int totalAlunos = 0;
+                                   int alunosAprovados = 0;
+                       
+                                   
+                                   if (turma.getAlunosMatriculados() != null && !turma.getAlunosMatriculados().isEmpty()) {
+                                       totalAlunos = turma.getAlunosMatriculados().size();
+                                       String codigoDaTurmaAtual = turma.getCodigoDaTurma(); 
+                                       for (Aluno aluno : turma.getAlunosMatriculados()) {
+                                           if (aluno.isAprovado(codigoDaTurmaAtual)) {
+                                               alunosAprovados++;
+                                           }
+                                       }
+                       
+                                       double taxaAprovacao = (totalAlunos > 0) ? ((double) alunosAprovados / totalAlunos) * 100 : 0;
+                                       System.out.printf("Total de Alunos: %d | Aprovados: %d | Taxa de Aprovação: %.2f%%\n",
+                                                         totalAlunos, alunosAprovados, taxaAprovacao);
+                                   } else {
+                                       System.out.println("❌ Nenhum aluno matriculado nesta turma ou dados de alunos não disponíveis");
+                                   }
+                               }
+                           }
+                       
+                           menuRelatorios(sc, turmas, disciplinas, listaAlunos);
 
         }
-    }
-
-
-    // Certifique-se de que menuRelatorios lida com 'disciplinas' e 'listaAlunos'
-    menuRelatorios(sc, turmas, disciplinas, listaAlunos);
-    }
+   
+    
     
 
     public static void exibirBoletimAluno(Scanner sc, List<Aluno> alunos){
@@ -648,7 +720,7 @@ public class Main {
         }
 
         if (alunoEncontrado == null) {
-            System.out.println("❌ Aluno não encontrado.");
+            System.out.println("❌💾 Aluno não encontrado.");
             return;
         }
     
@@ -843,7 +915,7 @@ public class Main {
         }
     
         if (disciplinaSelecionada == null) {
-            System.out.println("\n❌ Disciplina não encontrada. Cadastre a disciplina antes\n");
+            System.out.println("\n❌💾 Disciplina não encontrada. Cadastre a disciplina antes\n");
             modoDisciplina(sc, 0);
         }
 
@@ -1059,7 +1131,7 @@ public class Main {
         Aluno aluno = buscarAlunoPorMatricula(matricula);
 
         if (aluno.equals(null)){
-            System.out.println("❌ Aluno não encontrado ");
+            System.out.println("❌💾 Aluno não encontrado ");
         }
 
         List<Turma> turmasMatriculadas = aluno.getTurmasMatriculadas();
@@ -1098,8 +1170,6 @@ public class Main {
 
     public static void mostrarAlunos(Scanner sc){
 
-        carregarAlunos(turmas, listaAlunos, listaAlunosEspeciais);
-
         if(listaAlunos.size() == 0 && listaAlunosEspeciais.size()==0){
             System.out.println("\n❌ Não há alunos cadastrados no momento \n");
             modoAluno(sc);
@@ -1122,7 +1192,7 @@ public class Main {
 
             }
 
-            System.out.println("\n✅ Turmas que o aluno foi aprovado:");
+            System.out.println("\n✅ Turmas que o aluno foi aprovado:\n");
 
 
             for (String t : aluno.getTurmasAprovadas()) {
@@ -1152,15 +1222,15 @@ public class Main {
 
             }
 
-            System.out.println("\n✅ Turmas que o aluno foi aprovado:");
+            System.out.println("\n✅ Turmas que o aluno foi aprovado:\n");
 
             if (aluno.getTurmasAprovadas() != null) {
                 for (String t : aluno.getTurmasAprovadas()) {
                     Turma t1 = buscarTurmaPorCodigo(t);
                     if (t1 != null) {
-                        System.out.println("Turma: " + t1.getCodigoDaTurma());
+                        System.out.println("Código da turma: " + t1.getCodigoDaTurma() + " | Professor: " + t1.getProfessor() + " | Horário: " + t1.getHorario());
                     } else {
-                        System.out.println(" Turma \"" + t + "\" não encontrada.");
+                        System.out.println("❌💾 Turma \"" + t + "\" não encontrada.");
                     }
                 }
             } else {

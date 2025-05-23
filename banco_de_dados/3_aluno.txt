@@ -1,2 +1,0 @@
-HAAS;3;eng;g;0.0;
-TURMA:1
