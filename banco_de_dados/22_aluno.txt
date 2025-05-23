@@ -1,3 +1,1 @@
-ADS;22;eng;g;99.0;,9,9,9
-TURMA:2
-TURMA:11
+ADS;22;eng;g;1.0;9

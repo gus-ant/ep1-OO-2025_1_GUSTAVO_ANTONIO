@@ -6,9 +6,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 // Colocar emojis para facilitar o usuário de ver se os cadastros foram ou não bem sucedidos
 
@@ -42,7 +44,7 @@ public class Main {
         
         
         Scanner sc1 = new Scanner(System.in);
-        System.out.println("\nBem vindo(a) ao sistema acadêmico da FCTE\n");
+        System.out.println("\nBem vindo(a) ao sistema acadêmico da FCTE");
 
         paginaInicial(sc1);
     }
@@ -50,7 +52,7 @@ public class Main {
     public static void paginaInicial(Scanner sc){
         
 
-        System.out.println("### Escolha a página que você quer entrar: \n");
+        System.out.println("\n### Escolha a página que você quer entrar: \n");
         System.out.println("Opção 1 - Modo aluno");
         System.out.println("Opção 2 - Modo disciplina/turma");
         System.out.println("Opção 3 - Modo avaliação/frequência");
@@ -100,12 +102,13 @@ public class Main {
 
     public static boolean verificarTurmaDuplicada(String codigo){
         for(Turma t : turmas){
-            if (t.getCodigoDaTurma() == codigo){
+            if (t.getCodigoDaTurma().equals(codigo)){ //  .equals() serve para comparar o conteúdo
                 return true;
             }
         }
         return false;
     }
+    
 
     public static Aluno buscarAlunoPorMatricula(String matricula){
 
@@ -195,16 +198,24 @@ public class Main {
     }
     
     public static void salvarTurmas(List<Disciplina> disciplinas) {
+
+        Set<String> turmasSalvas = new HashSet<>(); // Isso é pra evitar duplicações no turmas.txt
+
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("banco_de_dados/turmas.txt"))) {
             for (Disciplina d : disciplinas) {
                 for (Turma t : d.getTurmas()) {
-                    bw.write(t.toString(d));
-                    bw.newLine();
+                    String linha = t.toString(d);
+                    if (!turmasSalvas.contains(linha)) {
+                        turmasSalvas.add(linha);      
+                        bw.write(linha);              
+                        bw.newLine();
+                    }
                 }
             }
         } catch (IOException e) {
             System.out.println("Erro ao salvar turmas: " + e.getMessage());
         }
+
     }
     
 
@@ -613,10 +624,13 @@ public class Main {
                 System.out.println("Turma: " + turma.getCodigoDaTurma() +
                                    " | Disciplina: " + turma.getDisciplina().getNome() +
                                    " | Semestre: " + turma.getSemestre());
-            }
-        }
 
-        menuRelatorios(sc, turmas, disciplinas, listaAlunos);
+        }
+    }
+
+
+    // Certifique-se de que menuRelatorios lida com 'disciplinas' e 'listaAlunos'
+    menuRelatorios(sc, turmas, disciplinas, listaAlunos);
     }
     
 
@@ -755,22 +769,24 @@ public class Main {
                 //aluno.setTurmasAprovadas(null);
             } else {
                 System.out.println("Aluno reprovado ❌");
-                List<Turma> turmasMatriculadas = aluno.getTurmasMatriculadas();
-                
-                for(Turma t1 : aluno.getTurmasMatriculadas()){
-                    if(t1.equals(turma)){
-                        turmasMatriculadas.remove(t1);
-                        aluno.setTurmasMatriculadas(turmasMatriculadas);
-                    }
-                }
+                aluno.RemoverTurmas(turma);
                 salvarAluno(aluno);
+                carregarAlunos(turmas, listaAlunos, listaAlunosEspeciais);
 
             }
             System.out.println("--------------------------");}
-
-            modoAvaliacaoFrequencia(sc);
+            paginaInicial(sc);;
         }
     
+    public static boolean verificarDuplicacaoDeHorarios(String horario, Disciplina disciplina){
+        //false: tem duplicação
+        for(Turma t : turmas){
+            if(t.getHorario().equals(horario) && t.getDisciplina().equals(disciplina)){
+                return false;
+            }
+        }
+        return true;
+    }
     
 
     public static void modoDisciplina(Scanner sc, int escolhaPagina){
@@ -827,18 +843,28 @@ public class Main {
         }
     
         if (disciplinaSelecionada == null) {
-            System.out.println("❌ Disciplina não encontrada. Cadastre a disciplina antes\n");
+            System.out.println("\n❌ Disciplina não encontrada. Cadastre a disciplina antes\n");
             modoDisciplina(sc, 0);
         }
 
         System.out.print("Código da turma (ex: T01): ");
         String codigoDaTurma = sc.nextLine();
 
-        if (verificarTurmaDuplicada(codigoDaTurma) == false){
-            System.out.println("❌ Já exite uma turma com esse código, tente outro código\n");
+        if (verificarTurmaDuplicada(codigoDaTurma) == true){
+            System.out.println("\n❌ Já exite uma turma com esse código, tente outro código\n");
             modoDisciplina(sc, 0);
             
         }
+
+        System.out.print("Horário(formatado no padrão da documentação, ex: 35T34): ");
+        String horario = sc.nextLine();
+
+        if (verificarDuplicacaoDeHorarios(horario, disciplinaSelecionada) == false){
+            System.out.println("❌ Já exite uma turma dessa Disciplina com esse horário, tente outro código\n");
+            modoDisciplina(sc, 0);
+            
+        }
+    
     
         System.out.print("Nome do professor: ");
         String professor = sc.nextLine();
@@ -855,8 +881,8 @@ public class Main {
         System.out.print("A turma é presencial? (s/n): ");
         boolean presencial = sc.nextLine().equalsIgnoreCase("s");
     
-        System.out.print("Horário(formatado no padrão da documentação, ex: 35T34): ");
-        String horario = sc.nextLine();
+        
+        
     
         System.out.print("Capacidade máxima de alunos: ");
         int capacidadeMaxima = Integer.parseInt(sc.nextLine());
@@ -917,7 +943,9 @@ public class Main {
                 " | Professor: " + t.getProfessor() +
                 " | Semestre: " + t.getSemestre() +
                 " | Forma de Avaliação: " + t.getFormaAvaliacao() +
-                " | Disciplina: " + t.getDisciplina().getNome()
+                " | Disciplina: " + t.getDisciplina().getNome() +
+                " | Horário: " + t.getHorario()
+
             );
         }
     

@@ -1,2 +1,1 @@
-HGUGU;1;c2;gg;99.0;2,2,9
-TURMA:2
+HGUGU;1;c2;gg;1.0;

@@ -1,4 +1,10 @@
 d;CERDA;23;simples;false;N14;90;9;
 d;CCNA;9;simples;false;12;99;11;
 d;1;12;simples;false;123;7;2;
-1;CERDA;25;simples;false;14h;55;5;
+d;ca;5;ponderada;false;12;22;t1;
+d;gugu;;simples;false;222;44;222;
+d;gugu;2;simples;false;122;333;l;
+d;v;122;simples;true;0;90;PO;I10
+1;Jackson;5o semestre;ponderada;true;56M12;144;g;I
+1;he;9 semestre;simples;false;25;33;K;
+1;mota;2;simples;true;8;124;KJLJ;i9
