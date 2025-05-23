@@ -42,10 +42,7 @@ public class Main {
         
         
         Scanner sc1 = new Scanner(System.in);
-        System.out.println("\n Bem vindo(a) ao sistema acadêmico da FCTE\n");
-
-        
-        System.out.println(turmas);
+        System.out.println("\nBem vindo(a) ao sistema acadêmico da FCTE\n");
 
         paginaInicial(sc1);
     }
@@ -53,7 +50,6 @@ public class Main {
     public static void paginaInicial(Scanner sc){
         
 
-        System.out.println("---------------------\n");
         System.out.println("### Escolha a página que você quer entrar: \n");
         System.out.println("Opção 1 - Modo aluno");
         System.out.println("Opção 2 - Modo disciplina/turma");
@@ -100,6 +96,15 @@ public class Main {
     
     public static void fecharPrograma(){
         
+    }
+
+    public static boolean verificarTurmaDuplicada(String codigo){
+        for(Turma t : turmas){
+            if (t.getCodigoDaTurma() == codigo){
+                return true;
+            }
+        }
+        return false;
     }
 
     public static Aluno buscarAlunoPorMatricula(String matricula){
@@ -545,10 +550,11 @@ public class Main {
 
         if (turmaSelecionada == null) {
             System.out.println("❌ Turma não encontrada.");
-            return;
+            menuRelatorios(sc, turmas, disciplinas, alunos);
         }
 
         System.out.println("\n--- Relatório da Turma " + turmaSelecionada.getCodigoDaTurma() + " ---");
+
 
         for (Aluno aluno : turmaSelecionada.getAlunosMatriculados()) {
         Avaliacao av = aluno.getAvaliacao();
@@ -563,8 +569,10 @@ public class Main {
 
         System.out.printf("Aluno: %s | Média: %.2f | Frequência: %.2f%% | %s\n",
                 aluno.getNome(), media, freq, status);
+
         menuRelatorios(sc, turmas, disciplinas, alunos);
     }
+    menuRelatorios(sc, turmas, disciplinas, alunos);
 
     }
 
@@ -819,14 +827,23 @@ public class Main {
         }
     
         if (disciplinaSelecionada == null) {
-            System.out.println("❌ Disciplina não encontrada. Cadastre a disciplina antes.");
+            System.out.println("❌ Disciplina não encontrada. Cadastre a disciplina antes\n");
             modoDisciplina(sc, 0);
+        }
+
+        System.out.print("Código da turma (ex: T01): ");
+        String codigoDaTurma = sc.nextLine();
+
+        if (verificarTurmaDuplicada(codigoDaTurma) == false){
+            System.out.println("❌ Já exite uma turma com esse código, tente outro código\n");
+            modoDisciplina(sc, 0);
+            
         }
     
         System.out.print("Nome do professor: ");
         String professor = sc.nextLine();
     
-        System.out.print("Semestre (ex: 2025.1): ");
+        System.out.print("Semestre (ex: 4º Semestre): ");
         String semestre = sc.nextLine();
     
         System.out.println("### Escolha a forma de avaliação:\n");
@@ -838,14 +855,13 @@ public class Main {
         System.out.print("A turma é presencial? (s/n): ");
         boolean presencial = sc.nextLine().equalsIgnoreCase("s");
     
-        System.out.print("Horário: ");
+        System.out.print("Horário(formatado no padrão da documentação, ex: 35T34): ");
         String horario = sc.nextLine();
     
         System.out.print("Capacidade máxima de alunos: ");
         int capacidadeMaxima = Integer.parseInt(sc.nextLine());
     
-        System.out.print("Código da turma (ex: T01): ");
-        String codigoDaTurma = sc.nextLine();
+        
 
         List<Aluno> alunosMatriculados = new ArrayList<>();
 
