@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -340,7 +341,7 @@ public class Main {
                             } else if (linha.startsWith("AVALIACAO:")) {
                                 String[] av = linha.substring(10).split(";");
                                 String codigo = av[0];
-                                Avaliacao avaliacao = Avaliacao.fromString(av[1]); // Implementar esse método!
+                                Avaliacao avaliacao = Avaliacao.fromString(av[1]); 
                                 for (Turma t : turmas) {
                                     if (t.getCodigoDaTurma().equals(codigo)) {
                                         aluno.getAvaliacoes().put(t, avaliacao);
@@ -710,61 +711,83 @@ public class Main {
         System.out.println("Digite a matrícula do aluno: ");
         String matricula = sc.nextLine();
 
+        System.out.println("👥 Alunos carregados: " + alunos.size());
+        for (Aluno a : alunos) {
+            System.out.println("- " + a.getMatricula());
+        }
+
+
         Aluno alunoEncontrado = null;
+        String matriculaBuscada = matricula.trim();
 
         for (Aluno aluno : alunos) {
-            if (aluno.getMatricula().equalsIgnoreCase(matricula)) {
+            if (aluno.getMatricula().trim().equalsIgnoreCase(matriculaBuscada)) {
                 alunoEncontrado = aluno;
                 break;
             }
         }
 
         if (alunoEncontrado == null) {
+            // Também verifica nos alunos especiais
+            for (AlunoEspecial aluno : listaAlunosEspeciais) {
+                if (aluno.getMatricula().trim().equalsIgnoreCase(matriculaBuscada)) {
+                    alunoEncontrado = aluno;
+                    break;
+                }
+            }
+        }
+
+        if (alunoEncontrado == null) {
             System.out.println("❌💾 Aluno não encontrado.");
-            return;
+            modoAvaliacaoFrequencia(sc);
         }
-    
-        System.out.println("\n--- Boletim de " + alunoEncontrado.getNome() + " ---");
-    
-        List<Turma> turmas = alunoEncontrado.getTurmasMatriculadas();
-        if (turmas.isEmpty()) {
-            System.out.println("❌ O aluno não está matriculado em nenhuma turma.");
-            return;
-        }
-    
-        for (Turma turma : turmas) {
-            Avaliacao avaliacao = alunoEncontrado.getAvaliacao();
-            Double frequencia = alunoEncontrado.getFrequencia();
-    
-            if (avaliacao == null || frequencia == null) {
-                System.out.println("Turma " + turma.getCodigoDaTurma() + " - Dados incompletos.");
-                continue;
-            }
-    
-            double media = avaliacao.CalculoMedia();
-            boolean aprovadoPorNota = media >= 5.0;
-            boolean aprovadoPorFrequencia = frequencia >= 0.75;
-            
-            String status;
 
-            if (!aprovadoPorFrequencia) {
-                status = "❌ Reprovado por falta";
-            } else if (!aprovadoPorNota) {
-                status = "❌ Reprovado por nota";
+        /////teste
+        /// 
+        Map<String, List<String>> turmasPorSemestre = new HashMap<>();
+
+        for (String codigoTurma : alunoEncontrado.getTurmasAprovadas()) {
+            String[] partes = codigoTurma.split("-");
+            if (partes.length >= 2) {
+                String semestre = partes[0];
+                turmasPorSemestre.putIfAbsent(semestre, new ArrayList<>());
+                turmasPorSemestre.get(semestre).add(codigoTurma);
             } else {
-                status = "✅ Aprovado";
+                System.out.println("⚠️ Código de turma inválido (sem semestre): " + codigoTurma);
+                // opcional: adicionar em um grupo 'SEM_SEMESTRE'
+                turmasPorSemestre.putIfAbsent("SEM_SEMESTRE", new ArrayList<>());
+                turmasPorSemestre.get("SEM_SEMESTRE").add(codigoTurma);
             }
-    
-            System.out.println("\nTurma: " + turma.getCodigoDaTurma() +
-                               "\nDisciplina: " + turma.getDisciplina().getNome() +
-                               "\nProfessor: " + turma.getProfessor() +
-                               "\nSemestre: " + turma.getSemestre() +
-                               "\nNota final: " + String.format("%.2f", media) +
-                               "\nFrequência: " + String.format("%.2f", frequencia * 100) + "%" +
-                               "\nStatus: " + status);
+            
         }
 
-        menuRelatorios(sc, turmas, disciplinas, alunos);
+        for (String semestre : turmasPorSemestre.keySet()) {
+            System.out.println("📆 Semestre: " + semestre);
+    
+            for (String codTurma : turmasPorSemestre.get(semestre)) {
+                Turma turmaEncontrada = null;
+    
+                for (Turma turma : turmas) {
+                    if (turma.getCodigoDaTurma().equals(codTurma)) {
+                        turmaEncontrada = turma;
+                        break;
+                    }
+                }
+    
+                if (turmaEncontrada != null) {
+                    System.out.println("✔️ Turma: " + turmaEncontrada.getCodigoDaTurma());
+                    System.out.println("   👨‍🏫 Professor: " + turmaEncontrada.getProfessor());
+                    System.out.println("   ⏱️ Carga Horária: " + turmaEncontrada.getDisciplina().getCargaHoraria() + "h");
+                } else {
+                    System.out.println("❌ Turma com código " + codTurma + " não encontrada.");
+                }
+            }
+        }
+    
+        System.out.println(); // quebra de linha para separar alunos
+    /////
+    /// 
+        modoAvaliacaoFrequencia(sc);
     }
 
 
@@ -996,7 +1019,7 @@ public class Main {
         System.out.println("\n### Disciplinas disponíveis: ");
         
         for (Disciplina d : disciplinas){
-            System.out.println("\nCódigo: " + d.getCodigo() + " | Nome: " + d.getNome() + " | Carga horária: " + d.getCargaHoraria() + " | prerequisitos: " +d.getPreRequisitos() + " | Turmas: " + d.getTurmas() + " | Pré-requisitos: " + d.getPreRequisitos());
+            System.out.println("\nCódigo: " + d.getCodigo() + " | Nome: " + d.getNome() + " | Carga horária: " + d.getCargaHoraria() + " | Pré-requisitos: " + d.getPreRequisitos());
         }
         
         paginaInicial(sc);
@@ -1024,6 +1047,16 @@ public class Main {
         paginaInicial(sc);
     }
     
+    public static boolean verificarExistenciaCodigo(String codigo, List<Disciplina> listaDisciplinas){
+        for(Disciplina p1 : listaDisciplinas){
+            
+            if(p1.getCodigo().equals(codigo)){
+                return true;
+                
+            }
+        }
+        return false;
+    }
     
     public static void cadastrarDisciplina(Scanner sc) {
         System.out.println("\n### Cadastro de Disciplina ###");
@@ -1037,6 +1070,7 @@ public class Main {
         for(Disciplina p : disciplinas){
             if(p.getCodigo().equals(codigo)){
                 System.out.println("❌ Uma disciplina com esse código já foi cadastrada ");
+                modoDisciplina(sc, 0);
                 
             }
         }
@@ -1053,25 +1087,25 @@ public class Main {
             System.out.print("Código do pré-requisito " + (i + 1) + ": ");
 
             String pre = sc.nextLine();
-            
-            for(Disciplina p1 : carregarDisciplinas()){
-                if(p1.getCodigo().equals(pre)){
-                    preRequisitos.add(pre);
-                    
-                }
-                else{
-                    System.out.println("❌ Essa disciplina de pré-requisito não foi cadastrada ");
-                    cadastrarDisciplina(sc);
-                }
-            }
 
-            preRequisitos.add(pre);
+            List<Disciplina> listaDisciplinas = carregarDisciplinas();
+
+            if(verificarExistenciaCodigo(pre, listaDisciplinas)){
+                preRequisitos.add(pre);
+            }
+            
+            else{
+                System.out.println("❌ Essa disciplina de pré-requisito não foi cadastrada ");
+                modoDisciplina(sc, i);
+            }
+            
         }
 
         List<Turma> turmasVazias = new ArrayList<>();
 
         Disciplina nova = new Disciplina(nome, codigo, cargaHoraria, preRequisitos, turmasVazias);
         disciplinas.add(nova);
+        nova.setPreRequisitos(preRequisitos);
         
         salvarDisciplinas(disciplinas);
         salvarTurmas(disciplinas);

@@ -1,1 +1,2 @@
-NORMAL;HENRY;1;terapia;h;0.0;
+NORMAL;HENRY;1;terapia;h;99.0;,2,c1
+TURMA:4
