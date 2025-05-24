@@ -1,6 +1,6 @@
-d;CERDA;2025.1-5;simples;false;N14;90;9;
-d;CCNA;2025.1-5;simples;false;12;99;11;
-1;mota;2025.1-5;simples;true;8;124;KJLJ;i9
-1;Cerda;2024.1-T1;simples;false;35M12;22;t1;
-2;gugu;2024.1-2;simples;false;23N23;66;4;
+d;CERDA;2025.1-1;simples;false;N14;90;9;
+d;CCNA;2025.1-11;simples;false;12;99;11;
+1;mota;2025.1-KJLJ;simples;true;8;124;KJLJ;i9
+1;Cerda;2024.1-t1;simples;false;35M12;22;t1;
+2;gugu;2024.1-4;simples;false;23N23;66;4;
 c;gugu;2025.1-5;simples;false;14;56;c1;

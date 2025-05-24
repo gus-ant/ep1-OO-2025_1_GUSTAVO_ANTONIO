@@ -80,7 +80,7 @@ public class Main {
                     modoAvaliacaoFrequencia(sc);
                     break;
                 case 4: 
-                    fecharPrograma();
+                    System.exit(0);
                     break;
             
                 default:
@@ -97,9 +97,6 @@ public class Main {
 
     }
     
-    public static void fecharPrograma(){
-        
-    }
 
     public static boolean verificarTurmaDuplicada(String codigo){
         for(Turma t : turmas){
@@ -373,10 +370,9 @@ public class Main {
     
 
     public static void matricularAluno(Scanner sc) {
-
         System.out.println("Digite a matrícula do aluno: ");
         String matricula = sc.nextLine();
-
+        
         Aluno aluno = buscarAlunoPorMatricula(matricula);
     
         if (aluno == null) {
@@ -705,18 +701,21 @@ public class Main {
         }
    
     
-    
+    public static Turma buscarTurmaPorCodigo(String codigoTurma, List<Turma> turmas) {
+        for (Turma turma : turmas) {
+            if (turma.getCodigoDaTurma().equalsIgnoreCase(codigoTurma)) {
+                return turma;
+            }
+        }
+        return null;
+    }
+        
+
+        
 
     public static void exibirBoletimAluno(Scanner sc, List<Aluno> alunos){
         System.out.println("Digite a matrícula do aluno: ");
         String matricula = sc.nextLine();
-
-        System.out.println("👥 Alunos carregados: " + alunos.size());
-        for (Aluno a : alunos) {
-            System.out.println("- " + a.getMatricula());
-        }
-
-
         Aluno alunoEncontrado = null;
         String matriculaBuscada = matricula.trim();
 
@@ -747,19 +746,17 @@ public class Main {
         Map<String, List<String>> turmasPorSemestre = new HashMap<>();
 
         for (String codigoTurma : alunoEncontrado.getTurmasAprovadas()) {
-            String[] partes = codigoTurma.split("-");
+            String[] partes = buscarTurmaPorCodigo(codigoTurma).getSemestre().split("-");
             if (partes.length >= 2) {
                 String semestre = partes[0];
                 turmasPorSemestre.putIfAbsent(semestre, new ArrayList<>());
                 turmasPorSemestre.get(semestre).add(codigoTurma);
             } else {
-                System.out.println("⚠️ Código de turma inválido (sem semestre): " + codigoTurma);
-                // opcional: adicionar em um grupo 'SEM_SEMESTRE'
-                turmasPorSemestre.putIfAbsent("SEM_SEMESTRE", new ArrayList<>());
-                turmasPorSemestre.get("SEM_SEMESTRE").add(codigoTurma);
             }
             
         }
+
+        System.out.println("✅ Disciplinas já concluídas pelo Aluno:\n" );
 
         for (String semestre : turmasPorSemestre.keySet()) {
             System.out.println("📆 Semestre: " + semestre);
@@ -775,12 +772,15 @@ public class Main {
                 }
     
                 if (turmaEncontrada != null) {
-                    System.out.println("✔️ Turma: " + turmaEncontrada.getCodigoDaTurma());
-                    System.out.println("   👨‍🏫 Professor: " + turmaEncontrada.getProfessor());
-                    System.out.println("   ⏱️ Carga Horária: " + turmaEncontrada.getDisciplina().getCargaHoraria() + "h");
+                    System.out.println("Disciplina: " + turmaEncontrada.getDisciplina().getNome());
+                    System.out.println("Turma: " + turmaEncontrada.getCodigoDaTurma());
+                    System.out.println("👨‍🏫 Professor: " + turmaEncontrada.getProfessor());
+                    System.out.println("⏱️ Carga Horária: " + turmaEncontrada.getDisciplina().getCargaHoraria() + "h");
+
                 } else {
                     System.out.println("❌ Turma com código " + codTurma + " não encontrada.");
                 }
+                System.out.println(); // quebra de linha para separar alunos
             }
         }
     
@@ -1222,7 +1222,7 @@ public class Main {
             System.out.println("\nTurmas que o aluno está cursando:");
 
             for(Turma turma: aluno.getTurmasMatriculadas()){
-                System.out.println("\nCódigo da turma: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor() + " | Horário: " + turma.getHorario());
+                System.out.println("\nCódigo da turma: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor() + " | Horário: " + turma.getHorario() + " | Semestre: " );
 
             }
 
