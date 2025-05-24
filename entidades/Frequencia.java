@@ -1,3 +1,4 @@
+package entidades;
 public class Frequencia {
     private int numeroTotalDeAulas;
     private int presencas;

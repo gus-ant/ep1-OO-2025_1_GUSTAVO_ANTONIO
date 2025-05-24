@@ -1,3 +1,4 @@
+package entidades;
 public class AlunoEspecial extends Aluno{
     private int quantidadeMaterias;
 

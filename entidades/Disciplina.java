@@ -1,8 +1,8 @@
+package entidades;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 
 
 // Começo da classe de Disciplina. Criei uma <lista de Turmas> pois uma disciplina pode ter várias turmas.

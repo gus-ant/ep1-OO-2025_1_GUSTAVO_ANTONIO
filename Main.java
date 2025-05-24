@@ -13,10 +13,11 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-// Colocar emojis para facilitar o usuário de ver se os cadastros foram ou não bem sucedidos
-
-// Deixe um tempo para pensar nos atributos das classes
-
+import entidades.Aluno;
+import entidades.AlunoEspecial;
+import entidades.Avaliacao;
+import entidades.Disciplina;
+import entidades.Turma;
 
 
 public class Main {
@@ -132,7 +133,7 @@ public class Main {
     public static List<Turma> carregarTurmas(List<Disciplina> listaDisciplinas, List<Aluno> listaAlunos) {
         List<Turma> turmasCarregadas = new ArrayList<>();
     
-        File file = new File("banco_de_dados/turmas.txt");
+        File file = new File("persistencia/turmas.txt");
 
 
         if (!file.exists()) {
@@ -185,7 +186,7 @@ public class Main {
     public static void salvarDisciplinas(List<Disciplina> disciplinas) {
 
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("banco_de_dados/disciplinas.txt"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("persistencia/disciplinas.txt"))) {
             for (Disciplina d : disciplinas) {
                 bw.write(d.toString());
                 bw.newLine();
@@ -199,7 +200,7 @@ public class Main {
 
         Set<String> turmasSalvas = new HashSet<>(); // Isso é pra evitar duplicações no turmas.txt
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("banco_de_dados/turmas.txt"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("persistencia/turmas.txt"))) {
             for (Disciplina d : disciplinas) {
                 for (Turma t : d.getTurmas()) {
                     String linha = t.toString(d);
@@ -221,7 +222,7 @@ public class Main {
     public static List<Disciplina> carregarDisciplinas() {
         List<Disciplina> disciplinas = new ArrayList<>();
 
-        File file = new File("banco_de_dados/disciplinas.txt");
+        File file = new File("persistencia/disciplinas.txt");
 
         if (!file.exists()) {
             try {
@@ -232,7 +233,7 @@ public class Main {
             }
         }
     
-        try (BufferedReader br = new BufferedReader(new FileReader("banco_de_dados/disciplinas.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("persistencia/disciplinas.txt"))) {
             String linha;
     
             while ((linha = br.readLine()) != null) {
@@ -248,7 +249,7 @@ public class Main {
     }
 
     public static void salvarAluno(Aluno aluno) {
-        String pasta = "banco_de_dados";
+        String pasta = "persistencia";
         new File(pasta).mkdirs();
     
         String caminho = pasta + "/" + aluno.getMatricula() + "_aluno.txt";
@@ -293,7 +294,7 @@ public class Main {
     
 
     public static void carregarAlunos(List<Turma> turmas, List<Aluno> alunos, List<AlunoEspecial> alunoEspeciais) {
-        File pasta = new File("banco_de_dados");
+        File pasta = new File("persistencia");
     
         if (pasta.exists() && pasta.isDirectory()) {
             File[] arquivos = pasta.listFiles((dir, nome) -> nome.endsWith("_aluno.txt"));
@@ -608,6 +609,7 @@ public class Main {
                 break;
             }
         }
+
     
         if (disciplinaEncontrada == null) {
             System.out.println("❌💾 Disciplina não encontrada.");
@@ -629,6 +631,7 @@ public class Main {
                 System.out.println("👨‍🏫  Professor: " + turma.getProfessor());
                 System.out.println("⏰  Horário: " + turma.getHorario());
                 System.out.println("📅  Semestre: " + turma.getSemestre());
+                System.out.println("📝  Horário: " + turma.getHorario());
     
                 int totalAlunosTurma = 0;
                 int alunosAprovadosTurma = 0;
@@ -976,7 +979,7 @@ public class Main {
         System.out.print("Nome do professor: ");
         String professor = sc.nextLine();
     
-        System.out.print("Semestre (ex: 2025.1): ");
+        System.out.print("Semestre (Formatado, ex: 2025.1): ");
         String s = sc.nextLine();
 
         String semestre = s.concat("-").concat(codigoDaTurma);
@@ -1043,8 +1046,8 @@ public class Main {
 
     
     public static void exibirTurmas(Scanner sc) {
-        carregarDisciplinas(); // Carrega a lista de disciplinas
-        carregarTurmas(disciplinas, listaAlunos); // Passa a lista para vincular turmas às disciplinas
+        carregarDisciplinas(); 
+        carregarTurmas(disciplinas, listaAlunos);
     
         System.out.println("\n### Turmas Cadastradas ");
         for (Turma t : turmas) {

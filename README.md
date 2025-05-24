@@ -28,7 +28,7 @@ O enunciado do trabalho pode ser encontrado aqui:
    [Descrever aqui as principais pastas do projeto]
 
 3. **Versão do JAVA utilizada:**  
-   [Descrever aqui como versão do JAVA utilizada no projeto. Sugestão: `java 21.0.6`]
+   java 21.0.6
 
 ---
 
@@ -53,15 +53,15 @@ O enunciado do trabalho pode ser encontrado aqui:
 
 ## Principais Funcionalidades Implementadas
 
-- [ ] Cadastro, listagem, matrícula e trancamento de alunos (Normais e Especiais)
-- [ ] Cadastro de disciplinas e criação de turmas (presenciais e remotas)
-- [ ] Matrícula de alunos em turmas, respeitando vagas e pré-requisitos
-- [ ] Lançamento de notas e controle de presença
-- [ ] Cálculo de média final e verificação de aprovação/reprovação
-- [ ] Relatórios de desempenho acadêmico por aluno, turma e disciplina
-- [ ] Persistência de dados em arquivos (.txt ou .csv)
-- [ ] Tratamento de duplicidade de matrículas
-- [ ] Uso de herança, polimorfismo e encapsulamento
+- [x] Cadastro, listagem, matrícula e trancamento de alunos (Normais e Especiais)
+- [x] Cadastro de disciplinas e criação de turmas (presenciais e remotas)
+- [x] Matrícula de alunos em turmas, respeitando vagas e pré-requisitos
+- [x] Lançamento de notas e controle de presença
+- [x] Cálculo de média final e verificação de aprovação/reprovação
+- [x] Relatórios de desempenho acadêmico por aluno, turma e disciplina
+- [x] Persistência de dados em arquivos (.txt ou .csv)
+- [x] Tratamento de duplicidade de matrículas
+- [x] Uso de herança, polimorfismo e encapsulamento
 
 ---
 
