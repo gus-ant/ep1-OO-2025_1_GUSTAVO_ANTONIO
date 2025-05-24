@@ -54,12 +54,12 @@ public class Main {
         
 
         System.out.println("\n### Escolha a página que você quer entrar: \n");
-        System.out.println("Opção 1 - Modo aluno");
-        System.out.println("Opção 2 - Modo disciplina/turma");
-        System.out.println("Opção 3 - Modo avaliação/frequência");
-        System.out.println("Opção 4 - Fechar programa\n");
-        System.out.print("Digite aqui sua opção: ");
-        String es = sc.nextLine(); 
+    System.out.println("1️⃣  Opção 1 - Modo aluno");
+    System.out.println("2️⃣  Opção 2 - Modo disciplina/turma");
+    System.out.println("3️⃣  Opção 3 - Modo avaliação/frequência");
+    System.out.println("4️⃣  Opção 4 - Fechar programa\n");
+    System.out.print("Digite aqui sua opção: ");
+    String es = sc.nextLine();
 
         if (es.isEmpty()) {
             System.out.println("❌ Entrada inválida. Por favor, digite um número.");
@@ -464,14 +464,14 @@ public class Main {
         int escolhaPagina;
     
         System.out.println("---------------------\n");
-        System.out.println("Bem-vindo(a) ao modo Avaliação/Frequência\n");
-    
+        System.out.println("Bem-vindo(a) ao modo Avaliação/Frequência 📈\n"); 
+
         System.out.println("### Escolha o que você quer fazer:\n");
-        System.out.println("Opção 1 - Lançar notas dos alunos");
-        System.out.println("Opção 2 - Exibir boletim de um aluno");
-        System.out.println("Opção 3 - Gerar relatórios");
-        System.out.println("Opção 4 - Voltar para a página inicial\n");
-    
+        System.out.println("1️⃣  Opção 1 - Lançar notas dos alunos");     
+        System.out.println("2️⃣  Opção 2 - Exibir boletim de um aluno");  
+        System.out.println("3️⃣  Opção 3 - Gerar relatórios");              
+        System.out.println("4️⃣  Opção 4 - Voltar para a página inicial\n"); 
+
         System.out.print("Digite aqui sua opção: ");
         escolhaPagina = Integer.parseInt(sc.nextLine());
 
@@ -511,11 +511,11 @@ public class Main {
     public static void menuRelatorios(Scanner sc, List<Turma> turmas, List<Disciplina> disciplinas, List<Aluno> alunos){
         // É preciso fazer esse menu para acessar o relatório de aluno, turma e Disciplina
 
-        System.out.println("\n### Página de Relatórios \n");
-        System.out.println("Opção 1 - Relatório por Turma");
-        System.out.println("Opção 2 - Relatório por Disciplina");
-        System.out.println("Opção 3 - Relatório por Professor");
-        System.out.println("Opção 4 - Voltar");
+        System.out.println("\n### Página de Relatórios 📊 \n");
+        System.out.println("1️⃣  Opção 1 - Relatório por Turma");      
+        System.out.println("2️⃣  Opção 2 - Relatório por Disciplina"); 
+        System.out.println("3️⃣  Opção 3 - Relatório por Professor");    
+        System.out.println("4️⃣  Opção 4 - Voltar\n");               
 
         System.out.print("Digite aqui sua opção: ");
         int opcao = Integer.parseInt(sc.nextLine());
@@ -550,45 +550,52 @@ public class Main {
 
     }
 
-    public static void relatorioPorTurma(Scanner sc, List<Turma> turmas, List<Aluno> alunos){
+    public static void relatorioPorTurma(Scanner sc, List<Turma> turmas, List<Aluno> alunos) {
         System.out.print("Digite o código da turma: ");
         String codigo = sc.nextLine();
-
-        Turma turmaSelecionada = null;
+    
+        Turma turmaEncontrada = null;
+    
         for (Turma t : turmas) {
             if (t.getCodigoDaTurma().equalsIgnoreCase(codigo)) {
-                turmaSelecionada = t;
+                turmaEncontrada = t;
                 break;
             }
         }
-
-        if (turmaSelecionada == null) {
-            System.out.println("❌💾 Turma não encontrada.");
-            menuRelatorios(sc, turmas, disciplinas, alunos);
+    
+        if (turmaEncontrada == null) {
+            System.out.println("❌ Turma não encontrada com o código: " + codigo);
+            return;
         }
-
-        System.out.println("\n--- Relatório da Turma " + turmaSelecionada.getCodigoDaTurma() + " ---");
-
-
-        for (Aluno aluno : turmaSelecionada.getAlunosMatriculados()) {
-        Avaliacao av = aluno.getAvaliacao();
-        Double freq = aluno.getFrequencia();
-
-        if (av == null || freq == null) continue;
-
-        double media = av.CalculoMedia();
-        boolean notaOk = media >= 5.0;
-        boolean freqOk = freq >= 0.75;
-        String status = (!freqOk) ? "❌ Reprovado por falta" : (!notaOk ? "❌ Reprovado por nota" : "✅ Aprovado");
-
-        System.out.printf("Aluno: %s | Média: %.2f | Frequência: %.2f%% | %s\n",
-                aluno.getNome(), media, freq, status);
+    
+        System.out.println("\n📄 Relatório da turma " + turmaEncontrada.getCodigoDaTurma());
+    
+        
+        System.out.println("\n📚 Disciplina: " + turmaEncontrada.getDisciplina().getNome());
+        System.out.println("📅 Semestre: " + turmaEncontrada.getSemestre());
+        System.out.println("👨‍🏫 Professor: " + turmaEncontrada.getProfessor());
+        System.out.println("🏫 Modalidade: " + (turmaEncontrada.isPresencial() ? "Presencial" : "Remota"));
+        if (turmaEncontrada.isPresencial()){
+            System.out.println("📍 Sala: " + turmaEncontrada.getSala());
+        }
+        System.out.println("⏰ Horário: " + turmaEncontrada.getHorario());
+        System.out.println("👥 Capacidade máxima: " + turmaEncontrada.getCapacidadeMaxima());
+        System.out.println("🧪 Forma de Avaliação: " + turmaEncontrada.getFormaAvaliacao());
+    
+        System.out.println("📋 Alunos Matriculados (" + turmaEncontrada.getAlunosMatriculados().size() + "):");
+        if (turmaEncontrada.getAlunosMatriculados().isEmpty()) {
+            System.out.println("❌ Nenhum aluno matriculado nesta turma.");
+        } else {
+            for (Aluno aluno : turmaEncontrada.getAlunosMatriculados()) {
+                System.out.println("- " + aluno.getNome() + " (Matrícula: " + aluno.getMatricula() + ")");
+            }
+        }
+    
+        System.out.println("---------------------------------------------\n");
 
         menuRelatorios(sc, turmas, disciplinas, alunos);
     }
-    menuRelatorios(sc, turmas, disciplinas, alunos);
-
-    }
+    
 
     public static void relatorioPorDisciplina(Scanner sc, List<Disciplina> disciplinas, List<Aluno> listaAlunos) {
         System.out.print("Digite o código da disciplina: ");
@@ -607,11 +614,10 @@ public class Main {
             return;
         }
     
-        System.out.println("\n--- Relatório da Disciplina: " + disciplinaEncontrada.getNome() + " (Código: " + disciplinaEncontrada.getCodigo() + ") ---");
+        System.out.println("\n--- Relatório da Disciplina: " + disciplinaEncontrada.getNome() + "  ---");
         System.out.println("Total de Turmas Ofertadas: " + disciplinaEncontrada.getTurmas().size());
         System.out.println("------------------------------------------");
     
-        // Para calcular a taxa de aprovação agregada da disciplina
         int totalAlunosDisciplina = 0;
         int alunosAprovadosDisciplina = 0;
     
@@ -620,9 +626,9 @@ public class Main {
         } else {
             for (Turma turma : disciplinaEncontrada.getTurmas()) {
                 System.out.println("\n  Detalhes da Turma: " + turma.getCodigoDaTurma());
-                System.out.println("    Professor: " + turma.getProfessor());
-                System.out.println("    Horário: " + turma.getHorario());
-                System.out.println("    Semestre: " + turma.getSemestre());
+                System.out.println("👨‍🏫  Professor: " + turma.getProfessor());
+                System.out.println("⏰  Horário: " + turma.getHorario());
+                System.out.println("📅  Semestre: " + turma.getSemestre());
     
                 int totalAlunosTurma = 0;
                 int alunosAprovadosTurma = 0;
@@ -746,6 +752,12 @@ public class Main {
         Map<String, List<String>> turmasPorSemestre = new HashMap<>();
 
         for (String codigoTurma : alunoEncontrado.getTurmasAprovadas()) {
+            Turma turma = buscarTurmaPorCodigo(codigoTurma);
+            if (turma == null) {
+                System.out.println(" Turma com código " + codigoTurma + " não encontrada.");
+                // faça o resto normalmente
+            } 
+            else{
             String[] partes = buscarTurmaPorCodigo(codigoTurma).getSemestre().split("-");
             if (partes.length >= 2) {
                 String semestre = partes[0];
@@ -755,8 +767,8 @@ public class Main {
             }
             
         }
-
-        System.out.println("✅ Disciplinas já concluídas pelo Aluno:\n" );
+    }
+        System.out.println("\n✅ Disciplinas já concluídas pelo Aluno " + alunoEncontrado.getNome() + "\n" );
 
         for (String semestre : turmasPorSemestre.keySet()) {
             System.out.println("📆 Semestre: " + semestre);
@@ -772,10 +784,10 @@ public class Main {
                 }
     
                 if (turmaEncontrada != null) {
-                    System.out.println("Disciplina: " + turmaEncontrada.getDisciplina().getNome());
-                    System.out.println("Turma: " + turmaEncontrada.getCodigoDaTurma());
-                    System.out.println("👨‍🏫 Professor: " + turmaEncontrada.getProfessor());
-                    System.out.println("⏱️ Carga Horária: " + turmaEncontrada.getDisciplina().getCargaHoraria() + "h");
+                    System.out.println(" Disciplina: " + turmaEncontrada.getDisciplina().getNome());
+                    System.out.println(" Turma: " + turmaEncontrada.getCodigoDaTurma());
+                    System.out.println(" Professor: " + turmaEncontrada.getProfessor());
+                    System.out.println(" Carga Horária: " + turmaEncontrada.getDisciplina().getCargaHoraria() + "h");
 
                 } else {
                     System.out.println("❌ Turma com código " + codTurma + " não encontrada.");
@@ -889,14 +901,14 @@ public class Main {
         escolhaPagina = 0;
         
         System.out.println("---------------------\n");
-        System.out.println("Bem vindo(a) ao modo Disciplina e Turma\n");
+        System.out.println("Bem-vindo(a) ao modo Disciplina e Turma 🏫\n");
 
-        System.out.println("### Escolha que você quer fazer: \n");
-        System.out.println("Opção 1 - Cadastrar disciplinas");
-        System.out.println("Opção 2 - Criar turmas");
-        System.out.println("Opção 3 - Exibir todas as disciplinas");
-        System.out.println("Opção 4 - Exibir todas as turmas cadastradas");
-        System.out.println("Opção 5 - Voltar para a página inicial");
+        System.out.println("### Escolha o que você quer fazer:\n");
+        System.out.println("1️⃣  Opção 1 - Cadastrar disciplinas");         
+        System.out.println("2️⃣  Opção 2 - Criar turmas");                
+        System.out.println("3️⃣  Opção 3 - Exibir todas as disciplinas");    
+        System.out.println("4️⃣  Opção 4 - Exibir todas as turmas cadastradas"); 
+        System.out.println("5️⃣  Opção 5 - Voltar para a página inicial"); 
 
         System.out.print("\nDigite aqui sua opção: ");
 
@@ -964,8 +976,11 @@ public class Main {
         System.out.print("Nome do professor: ");
         String professor = sc.nextLine();
     
-        System.out.print("Semestre (ex: 4º Semestre): ");
-        String semestre = sc.nextLine();
+        System.out.print("Semestre (ex: 2025.1): ");
+        String s = sc.nextLine();
+
+        String semestre = s.concat("-").concat(codigoDaTurma);
+
     
         System.out.println("### Escolha a forma de avaliação:\n");
         System.out.println("1 - Média simples (P1 + P2 + P3 + L + S) / 5");
@@ -1120,16 +1135,14 @@ public class Main {
         int escolhaPagina;
 
         System.out.println("---------------------\n");
-        System.out.println("Bem vindo(a) ao modo aluno\n");
+        System.out.println("Bem-vindo(a) ao modo aluno 🧑‍🎓\n"); 
 
-        System.out.println("### Escolha que você quer fazer:\n");
-        System.out.println("Opção 1 - Cadastrar aluno");
-        System.out.println("Opção 2 - Trancar disciplinas");
-        System.out.println("Opção 3 - Exibir todos os alunos");
-        System.out.println("Opção 4 - Matricular aluno em uma turma");
-        System.out.println("Opção 5 - Voltar para a página Inicial\n");
-
-
+        System.out.println("### Escolha o que você quer fazer:\n");
+        System.out.println("1️⃣  Opção 1 - Cadastrar aluno");          
+        System.out.println("2️⃣  Opção 2 - Trancar disciplinas");          
+        System.out.println("3️⃣  Opção 3 - Exibir todos os alunos");      
+        System.out.println("4️⃣  Opção 4 - Matricular aluno em uma turma"); 
+        System.out.println("5️⃣  Opção 5 - Voltar para a página Inicial\n");
         System.out.print("Digite aqui sua opção: ");
 
         escolhaPagina = Integer.parseInt(sc.nextLine());
