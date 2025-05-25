@@ -6,7 +6,7 @@ Desenvolvimento de um sistema acadêmico para gerenciar alunos, disciplinas, pro
 
 ## Diagrama de ideias iniciais do projeto
 
-![Diagrama](imagens/graphviz(1).svg)
+![Diagrama](imagens/graphviz(2).png)
 
 O enunciado do trabalho pode ser encontrado aqui:
 - [Trabalho 1 - Sistema Acadêmico](https://github.com/lboaventura25/OO-T06_2025.1_UnB_FCTE/blob/main/trabalhos/ep1/README.md)
