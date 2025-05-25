@@ -19,10 +19,10 @@ O enunciado do trabalho pode ser encontrado aqui:
 ## Instruções para Compilação e Execução
 
 1. **Compilação:**  
-   [Descrever aqui como compilar o projeto. Exemplo: `javac Main.java` ou o script usado]
+   Clonar repositorio na IDE, de preferencia VS Code com o comando: `git clone https://github.com/gus-ant/ep1-OO-2025_1_GUSTAVO_ANTONIO.git`
 
 2. **Execução:**  
-   [Descrever aqui como executar o projeto. Exemplo: `java Main` ou o script usado]
+   Executar o arquivo Main.java no botão `run`
 
 3. **Estrutura de Pastas:**  
 
@@ -30,14 +30,23 @@ O enunciado do trabalho pode ser encontrado aqui:
    │
    ├── Main.java
    │   
-   ├── entidades/            ← Suas classes de domínio
+   ├── entidades/              ← Classes de domínio
    │           ├── Aluno.java
+   │           ├── AlunoEspecial.java
+   │           ├── Avaliacao.java
+   │           ├── Frequencia.java
    │           ├── Turma.java
    │           └── Disciplina.java
    | 
-   ├─── persistencia/         ← Salvamento/carregamento de dados
-   |           ├─── AlunoDAO.java
-   |           ├─── TurmaDAO.java                          ← Diretório de saída compilado (gerado automaticamente)
+   ├─── persistencia/          ← Salvamento de dados
+   |           ├─── matrícula_aluno.txt
+   |           ├─── disciplinas.txt
+   |           └─── turmas.txt     
+   | 
+   ├─── imagens/               ← Imagens do README.md
+   |           ├─── Modo_aluno.png
+   |           ├─── Modo_avaliacao.png
+   |           └─── Pagina_inicial.png                       
    │
    └── README.md
 
