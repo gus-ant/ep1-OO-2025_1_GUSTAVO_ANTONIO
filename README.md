@@ -4,6 +4,8 @@
 
 Desenvolvimento de um sistema acadêmico para gerenciar alunos, disciplinas, professores, turmas, avaliações e frequência, utilizando os conceitos de orientação a objetos (herança, polimorfismo e encapsulamento) e persistência de dados em arquivos.
 
+## Diagrama de ideias iniciais do projeto
+
 ![Diagrama](imagens/graphviz.svg)
 
 O enunciado do trabalho pode ser encontrado aqui:
