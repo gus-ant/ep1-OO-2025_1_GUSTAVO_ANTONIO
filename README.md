@@ -22,7 +22,7 @@ O enunciado do trabalho pode ser encontrado aqui:
    Clonar repositorio na IDE, de preferencia VS Code com o comando: `git clone https://github.com/gus-ant/ep1-OO-2025_1_GUSTAVO_ANTONIO.git`
 
 2. **Execução:**  
-   Executar o arquivo Main.java no botão `run`
+   Executar o arquivo Main.java no botão `Run Java`
 
 3. **Estrutura de Pastas:**  
 ```
@@ -53,7 +53,7 @@ O enunciado do trabalho pode ser encontrado aqui:
 ```
 
 3. **Versão do JAVA utilizada:**  
-   java 21.0.6
+   `java 21.0.6`
 
 ---
 
@@ -90,12 +90,31 @@ O enunciado do trabalho pode ser encontrado aqui:
 
 ---
 
-## Observações (Extras ou Dificuldades)
+## Observações (Extras e Dificuldades)
 
-- [Espaço para o aluno comentar qualquer funcionalidade extra que implementou, dificuldades enfrentadas, ou considerações importantes.]
+### Extras:
+
+- Implementação de tratamento de exceções em todo o menu com `try-catch` e validações por todo o menu para prevenir travamentos do sistema por erros.
+
+- Se arquivos de turmas ou disciplinas não existirem no banco de dados, o sistema os cria automaticamente, garantindo que o sistema continue funcionando mesmo em casos de entrada inválida ou dados ausentes.
+
+- Uso estratégico de emojis nos menus e mensagens para melhorar a experiência do usuário para facilitar a leitura visual e tornar a interação mais intuitiva. Exemplos: `✅ aprovado`, `❌ reprovado`, `📆 semestre`.
+
+- Os dados de alunos, turmas e disciplinas são salvos imediatamente após qualquer modificação, minimizando riscos de perda de dados caso o programa seja encerrado inesperadamente.
+
+
+### Dificuldades:
+
+- Dificuldade inicial em aplicar boas práticas de separação de responsabilidades dentro do código.
+
+- Muito tempo foi gasto para achar formas sustentáveis de salvar, carregar e modificar as listas de alunos por existirem Alunos normais e especiais.
+
+- Desafio em criar funções reutilizáveis, como `buscarTurmaPorCodigo`, que às vezes retornava null e causava erros em chamadas futuras.
+
+- Inicialmente, dificuldade em extrair e organizar os dados de turmas aprovadas por semestre, tendo necessidade de criar um `Map<String, List<String>>` para classificar por semestre e manipular os dados corretamente.
 
 ---
 
 ## Contato
 
-- Email: gus.ant.rod.10@gmail.com
+- Email: `gus.ant.rod.10@gmail.com`

@@ -403,8 +403,7 @@ public class Main {
                 return;
             }
         }
-    
-        // Verificar se o aluno já está matriculado
+        
         if (aluno.getTurmasMatriculadas().contains(turmaSelecionada)) {
             System.out.println("❌ Aluno já matriculado nesta turma.");
             return;
@@ -537,8 +536,6 @@ public class Main {
             break;
         default:
             System.out.println("Opção inválida.");
-            //menuExibirRelatorios(sc, turmas, disciplinas, alunos);
-
         }
     
 
@@ -637,14 +634,14 @@ public class Main {
     
                 int totalAlunosTurma = 0;
                 int alunosAprovadosTurma = 0;
-    
-                // Supondo que Turma tenha um método getAlunosMatriculados() que retorna List<Aluno>
+                
                 if (turma.getAlunosMatriculados() != null && !turma.getAlunosMatriculados().isEmpty()) {
                     totalAlunosTurma = turma.getAlunosMatriculados().size();
                     String codigoDaTurmaAtual = turma.getCodigoDaTurma();
     
                     for (Aluno aluno : turma.getAlunosMatriculados()) {
-                        if (aluno.isAprovado(codigoDaTurmaAtual)) { // Usa o método isAprovado da Aluno
+                        if (aluno.isAprovado(codigoDaTurmaAtual)) {
+                            
                             alunosAprovadosTurma++;
                         }
                     }
@@ -653,7 +650,7 @@ public class Main {
                     System.out.printf("    Total de Alunos: %d | Aprovados: %d | Taxa de Aprovação da Turma: %.2f%%\n",
                                       totalAlunosTurma, alunosAprovadosTurma, taxaAprovacaoTurma);
     
-                    // Acumula para o total da disciplina
+                                      
                     totalAlunosDisciplina += totalAlunosTurma;
                     alunosAprovadosDisciplina += alunosAprovadosTurma;
     
@@ -662,7 +659,6 @@ public class Main {
                 }
             }
     
-            // Dados agregados da disciplina
             System.out.println("\n------------------------------------------");
             System.out.println("Resumo Geral da Disciplina:");
             System.out.printf("Total de Alunos em todas as turmas: %d\n", totalAlunosDisciplina);
@@ -738,7 +734,6 @@ public class Main {
         }
 
         if (alunoEncontrado == null) {
-            // Também verifica nos alunos especiais
             for (AlunoEspecial aluno : listaAlunosEspeciais) {
                 if (aluno.getMatricula().trim().equalsIgnoreCase(matriculaBuscada)) {
                     alunoEncontrado = aluno;
@@ -797,11 +792,11 @@ public class Main {
                 } else {
                     System.out.println("❌ Turma com código " + codTurma + " não encontrada.");
                 }
-                System.out.println(); // quebra de linha para separar alunos
+                System.out.println(); 
             }
         }
     
-        System.out.println(); // quebra de linha para separar alunos
+        System.out.println(); 
     /////
     /// 
         modoAvaliacaoFrequencia(sc);
@@ -952,7 +947,6 @@ public class Main {
         System.out.print("Código da disciplina para esta turma: ");
         String codigoDisciplina = sc.nextLine();
     
-        // Procurar disciplina
         Disciplina disciplinaSelecionada = null;
         for (Disciplina d : disciplinas) {
             if (d.getCodigo().equalsIgnoreCase(codigoDisciplina)) {
