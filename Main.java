@@ -523,13 +523,13 @@ public class Main {
         try{
         switch (opcao) {
         case 1:
-            relatorioPorTurma(sc, turmas, alunos);
+            relatorioPorTurma(sc, turmas, disciplinas, alunos);;
             break;
         case 2:
             relatorioPorDisciplina(sc, disciplinas, listaAlunos);
             break;
         case 3:
-            relatorioPorProfessor(sc, turmas);
+            relatorioPorProfessor(sc, turmas, disciplinas, alunos);
             break;
         case 4:
             paginaInicial(sc);
@@ -548,7 +548,7 @@ public class Main {
 
     }
 
-    public static void relatorioPorTurma(Scanner sc, List<Turma> turmas, List<Aluno> alunos) {
+    public static void relatorioPorTurma(Scanner sc, List<Turma> turmas, List<Disciplina> disciplinas, List<Aluno> alunos) {
         System.out.print("Digite o código da turma: ");
         String codigo = sc.nextLine();
     
@@ -563,36 +563,60 @@ public class Main {
     
         if (turmaEncontrada == null) {
             System.out.println("❌ Turma não encontrada com o código: " + codigo);
-            menuRelatorios(sc, turmas, disciplinas, alunos);;
+            menuRelatorios(sc, turmas, disciplinas, alunos);
+            return;
         }
     
         System.out.println("\n📄 Relatório da turma " + turmaEncontrada.getCodigoDaTurma());
-    
-        
-        System.out.println("\n📚 Disciplina: " + turmaEncontrada.getDisciplina().getNome());
+        System.out.println("📚 Disciplina: " + turmaEncontrada.getDisciplina().getNome());
         System.out.println("📅 Semestre: " + turmaEncontrada.getSemestre());
         System.out.println("👨‍🏫 Professor: " + turmaEncontrada.getProfessor());
         System.out.println("🏫 Modalidade: " + (turmaEncontrada.isPresencial() ? "Presencial" : "Remota"));
-        if (turmaEncontrada.isPresencial()){
+        
+        if (turmaEncontrada.isPresencial()) {
             System.out.println("📍 Sala: " + turmaEncontrada.getSala());
         }
+    
         System.out.println("⏰ Horário: " + turmaEncontrada.getHorario());
         System.out.println("👥 Capacidade máxima: " + turmaEncontrada.getCapacidadeMaxima());
         System.out.println("🧪 Forma de Avaliação: " + turmaEncontrada.getFormaAvaliacao());
-
-        System.out.println(turmaEncontrada.getAlunosMatriculados());
     
-        System.out.println("📋 Alunos Matriculados (" + turmaEncontrada.getAlunosMatriculados().size() + "):");
-        if (turmaEncontrada.getAlunosMatriculados().isEmpty()) {
-            System.out.println("❌ Nenhum aluno matriculado nesta turma.");
-        } else {
-            for (Aluno aluno : turmaEncontrada.getAlunosMatriculados()) {
-                System.out.println("- " + aluno.getNome() + " (Matrícula: " + aluno.getMatricula() + ")");
+        // Análise de alunos usando lista global
+        int totalAlunos = 0;
+        int aprovados = 0;
+    
+        List<Aluno> alunosDaTurma = new ArrayList<>();
+    
+        for (Aluno aluno : alunos) {
+            if (aluno.getTurmasAprovadas().contains(codigo)) {
+                aprovados++;
+                totalAlunos++;
+                alunosDaTurma.add(aluno);
+            } else if (aluno.getTurmasMatriculadas().contains(turmaEncontrada)) {
+                totalAlunos++;
+                alunosDaTurma.add(aluno);
             }
         }
     
+        double taxaAprovacao = (totalAlunos > 0)
+            ? ((double) aprovados / totalAlunos) * 100
+            : 0;
+    
+        System.out.println("📋 Alunos da turma (" + totalAlunos + "):");
+        if (alunosDaTurma.isEmpty()) {
+            System.out.println("❌ Nenhum aluno encontrado para esta turma.");
+        } else {
+            for (Aluno aluno : alunosDaTurma) {
+                boolean foiAprovado = aluno.getTurmasAprovadas().contains(codigo);
+                System.out.println("- " + aluno.getNome() +
+                                   " (Matrícula: " + aluno.getMatricula() + ")" +
+                                   (foiAprovado ? " ✅ Aprovado" : " 🕒 Em andamento"));
+            }
+        }
+    
+        System.out.printf("📈 Taxa de Aprovação: %.2f%%\n", taxaAprovacao);
         System.out.println("---------------------------------------------\n");
-
+    
         menuRelatorios(sc, turmas, disciplinas, alunos);
     }
     
@@ -608,11 +632,10 @@ public class Main {
                 break;
             }
         }
-
     
         if (disciplinaEncontrada == null) {
             System.out.println("❌💾 Disciplina não encontrada.");
-            menuRelatorios(sc, turmas, disciplinas, listaAlunos);;
+            return;
         }
     
         System.out.println("\n--- Relatório da Disciplina: " + disciplinaEncontrada.getNome() + "  ---");
@@ -630,82 +653,96 @@ public class Main {
                 System.out.println("👨‍🏫  Professor: " + turma.getProfessor());
                 System.out.println("⏰  Horário: " + turma.getHorario());
                 System.out.println("📅  Semestre: " + turma.getSemestre());
-                System.out.println("📝  Horário: " + turma.getHorario());
     
                 int totalAlunosTurma = 0;
                 int alunosAprovadosTurma = 0;
-                
-                if (turma.getAlunosMatriculados() != null && !turma.getAlunosMatriculados().isEmpty()) {
-                    totalAlunosTurma = turma.getAlunosMatriculados().size();
-                    String codigoDaTurmaAtual = turma.getCodigoDaTurma();
+                String codigoTurma = turma.getCodigoDaTurma();
     
-                    for (Aluno aluno : turma.getAlunosMatriculados()) {
-                        if (aluno.isAprovado(codigoDaTurmaAtual)) {
-                            
-                            alunosAprovadosTurma++;
-                        }
+                for (Aluno aluno : listaAlunos) {
+                    // Se ele já foi aprovado nesta turma, considera
+                    if (aluno.getTurmasAprovadas().contains(codigoTurma)) {
+                        alunosAprovadosTurma++;
+                        totalAlunosTurma++;
                     }
-    
-                    double taxaAprovacaoTurma = (totalAlunosTurma > 0) ? ((double) alunosAprovadosTurma / totalAlunosTurma) * 100 : 0;
-                    System.out.printf("    Total de Alunos: %d | Aprovados: %d | Taxa de Aprovação da Turma: %.2f%%\n",
-                                      totalAlunosTurma, alunosAprovadosTurma, taxaAprovacaoTurma);
-    
-                                      
-                    totalAlunosDisciplina += totalAlunosTurma;
-                    alunosAprovadosDisciplina += alunosAprovadosTurma;
-    
-                } else {
-                    System.out.println("    Nenhum aluno matriculado nesta turma ou dados de alunos não disponíveis.");
+                    // Se ele ainda estiver matriculado, também conta como presente na turma
+                    else if (aluno.getTurmasMatriculadas().contains(turma)) {
+                        totalAlunosTurma++;
+                    }
                 }
+    
+                double taxaAprovacaoTurma = (totalAlunosTurma > 0)
+                    ? ((double) alunosAprovadosTurma / totalAlunosTurma) * 100
+                    : 0;
+    
+                System.out.printf("    Total de Alunos: %d | Aprovados: %d | Taxa de Aprovação da Turma: %.2f%%\n",
+                    totalAlunosTurma, alunosAprovadosTurma, taxaAprovacaoTurma);
+    
+                totalAlunosDisciplina += totalAlunosTurma;
+                alunosAprovadosDisciplina += alunosAprovadosTurma;
             }
     
             System.out.println("\n------------------------------------------");
             System.out.println("Resumo Geral da Disciplina:");
             System.out.printf("Total de Alunos em todas as turmas: %d\n", totalAlunosDisciplina);
-            double taxaAprovacaoDisciplina = (totalAlunosDisciplina > 0) ? ((double) alunosAprovadosDisciplina / totalAlunosDisciplina) * 100 : 0;
+            double taxaAprovacaoDisciplina = (totalAlunosDisciplina > 0)
+                ? ((double) alunosAprovadosDisciplina / totalAlunosDisciplina) * 100
+                : 0;
             System.out.printf("Taxa de Aprovação Geral da Disciplina: %.2f%%\n", taxaAprovacaoDisciplina);
         }
     
-        menuRelatorios(sc, turmas, disciplinas, listaAlunos); 
+        menuRelatorios(sc, turmas, disciplinas, listaAlunos);
     }
-    
-    
-    public static void relatorioPorProfessor(Scanner sc, List<Turma> turmas) {
-        System.out.print("Digite o nome do professor: ");
-        String nome = sc.nextLine();
-    
-        System.out.println("\n--- Relatório do Professor " + nome + " ---");
-    
-        for (Turma turma : turmas) {
-            if (turma.getProfessor().equalsIgnoreCase(nome)) {
-                System.out.println("Turma: " + turma.getCodigoDaTurma() +
-                                   " | Disciplina: " + turma.getDisciplina().getNome() +
-                                   " | Semestre: " + turma.getSemestre());
-                                   int totalAlunos = 0;
-                                   int alunosAprovados = 0;
-                       
-                                   
-                                   if (turma.getAlunosMatriculados() != null && !turma.getAlunosMatriculados().isEmpty()) {
-                                       totalAlunos = turma.getAlunosMatriculados().size();
-                                       String codigoDaTurmaAtual = turma.getCodigoDaTurma(); 
-                                       for (Aluno aluno : turma.getAlunosMatriculados()) {
-                                           if (aluno.isAprovado(codigoDaTurmaAtual)) {
-                                               alunosAprovados++;
-                                           }
-                                       }
-                       
-                                       double taxaAprovacao = (totalAlunos > 0) ? ((double) alunosAprovados / totalAlunos) * 100 : 0;
-                                       System.out.printf("Total de Alunos: %d | Aprovados: %d | Taxa de Aprovação: %.2f%%\n",
-                                                         totalAlunos, alunosAprovados, taxaAprovacao);
-                                   } else {
-                                       System.out.println("❌ Nenhum aluno matriculado nesta turma ou dados de alunos não disponíveis");
-                                   }
-                               }
-                           }
-                       
-                           menuRelatorios(sc, turmas, disciplinas, listaAlunos);
 
+    
+
+ public static void relatorioPorProfessor(Scanner sc, List<Turma> turmas, List<Disciplina> disciplinas, List<Aluno> listaAlunos) {
+    System.out.print("Digite o nome do professor para o relatório: ");
+    String nome = sc.nextLine();
+
+    System.out.println("\n📊 Relatório do professor " + nome.toUpperCase() + "\n");
+
+    boolean encontrouProfessor = false;
+
+    for (Turma turma : turmas) {
+        if (turma.getProfessor().equalsIgnoreCase(nome)) {
+            encontrouProfessor = true;
+
+            System.out.println("--- Turma: " + turma.getCodigoDaTurma() +
+                               " | Disciplina: " + turma.getDisciplina().getNome() +
+                               " | Semestre: " + turma.getSemestre() + " ---");
+
+            int totalAlunos = 0;
+            int alunosAprovados = 0;
+            String codigoTurma = turma.getCodigoDaTurma();
+
+            for (Aluno aluno : listaAlunos) {
+                // Verifica se o aluno foi aprovado nesta turma
+                if (aluno.getTurmasAprovadas().contains(codigoTurma)) {
+                    alunosAprovados++;
+                    totalAlunos++;
+                }
+                // Verifica se o aluno ainda está matriculado nela
+                else if (aluno.getTurmasMatriculadas().contains(turma)) {
+                    totalAlunos++;
+                }
+            }
+
+            double taxaAprovacao = (totalAlunos > 0)
+                ? ((double) alunosAprovados / totalAlunos) * 100
+                : 0;
+
+            System.out.printf("🧑‍🎓 Total de Alunos: %d | ✅ Aprovados: %d | 📈 Taxa de Aprovação: %.2f%%\n\n",
+                              totalAlunos, alunosAprovados, taxaAprovacao);
         }
+    }
+
+    if (!encontrouProfessor) {
+        System.out.println("❌ Professor '" + nome + "' não encontrado em nenhuma turma. Verifique o nome e tente novamente.\n");
+    }
+
+    menuRelatorios(sc, turmas, disciplinas, listaAlunos);
+}
+
    
     
     public static Turma buscarTurmaPorCodigo(String codigoTurma, List<Turma> turmas) {
@@ -874,12 +911,13 @@ public class Main {
                 aluno.RemoverTurmas(turma);
 
                 
-        
+                salvarTurmas(disciplinas);
                 salvarAluno(aluno);
                 //aluno.setTurmasAprovadas(null);
             } else {
                 System.out.println("Aluno reprovado ❌");
                 aluno.RemoverTurmas(turma);
+                salvarTurmas(disciplinas);
                 salvarAluno(aluno);
                 carregarAlunos(turmas, listaAlunos, listaAlunosEspeciais);
 

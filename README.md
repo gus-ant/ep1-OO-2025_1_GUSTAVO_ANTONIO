@@ -19,7 +19,8 @@ O enunciado do trabalho pode ser encontrado aqui:
 ## Instruções para Compilação e Execução
 
 1. **Compilação:**  
-   Clonar repositorio na IDE, de preferencia VS Code com o comando: `git clone https://github.com/gus-ant/ep1-OO-2025_1_GUSTAVO_ANTONIO.git`
+   Clonar repositorio na IDE, de preferencia VS Code com o comando: 
+   `git clone https://github.com/gus-ant/ep1-OO-2025_1_GUSTAVO_ANTONIO.git`
 
 2. **Execução:**  
    Executar o arquivo Main.java no botão `Run Java`
@@ -117,4 +118,4 @@ O enunciado do trabalho pode ser encontrado aqui:
 
 ## Contato
 
-- Email: `gus.ant.rod.10@gmail.com`
+- Email: gus.ant.rod.10@gmail.com

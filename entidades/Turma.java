@@ -12,8 +12,11 @@ public class Turma {
     private String horario;
     private int capacidadeMaxima;
     private List<Aluno> alunosMatriculados; // aluno(objetos), não nomes
+    private List<Aluno> alunosAprovados;
     private String codigoDaTurma;
     private Disciplina disciplina;
+
+    
 
     // Sobrecarga para turma presencial
     public Turma(String professor, String semestre, String formaAvaliacao, boolean presencial,
@@ -159,6 +162,14 @@ public class Turma {
 
     public void setDisciplina(Disciplina nomeDisciplina) {
         this.disciplina = nomeDisciplina;
+    }
+
+    public List<Aluno> getAlunosAprovados() {
+        return alunosAprovados;
+    }
+
+    public void setAlunosAprovados(List<Aluno> alunosAprovados) {
+        this.alunosAprovados = alunosAprovados;
     }
 
     
