@@ -566,7 +566,7 @@ public class Main {
     
         if (turmaEncontrada == null) {
             System.out.println("❌ Turma não encontrada com o código: " + codigo);
-            return;
+            menuRelatorios(sc, turmas, disciplinas, alunos);;
         }
     
         System.out.println("\n📄 Relatório da turma " + turmaEncontrada.getCodigoDaTurma());
@@ -582,6 +582,8 @@ public class Main {
         System.out.println("⏰ Horário: " + turmaEncontrada.getHorario());
         System.out.println("👥 Capacidade máxima: " + turmaEncontrada.getCapacidadeMaxima());
         System.out.println("🧪 Forma de Avaliação: " + turmaEncontrada.getFormaAvaliacao());
+
+        System.out.println(turmaEncontrada.getAlunosMatriculados());
     
         System.out.println("📋 Alunos Matriculados (" + turmaEncontrada.getAlunosMatriculados().size() + "):");
         if (turmaEncontrada.getAlunosMatriculados().isEmpty()) {
@@ -613,7 +615,7 @@ public class Main {
     
         if (disciplinaEncontrada == null) {
             System.out.println("❌💾 Disciplina não encontrada.");
-            return;
+            menuRelatorios(sc, turmas, disciplinas, listaAlunos);;
         }
     
         System.out.println("\n--- Relatório da Disciplina: " + disciplinaEncontrada.getNome() + "  ---");
@@ -668,7 +670,7 @@ public class Main {
             System.out.printf("Taxa de Aprovação Geral da Disciplina: %.2f%%\n", taxaAprovacaoDisciplina);
         }
     
-        menuRelatorios(sc, turmas, disciplinas, listaAlunos); // Retorna ao menu de relatórios
+        menuRelatorios(sc, turmas, disciplinas, listaAlunos); 
     }
     
     
@@ -831,8 +833,11 @@ public class Main {
             modoDisciplina(sc, 0);
         }
 
+
+
         for (Aluno aluno : turma.getAlunosMatriculados()) {
             System.out.println("Aluno: " + aluno.getNome());
+            
     
             Avaliacao avaliacao = new Avaliacao();
     
@@ -884,9 +889,13 @@ public class Main {
                 carregarAlunos(turmas, listaAlunos, listaAlunosEspeciais);
 
             }
-            System.out.println("--------------------------");}
-            paginaInicial(sc);;
+            System.out.println("--------------------------");
         }
+
+        
+
+            paginaInicial(sc);;
+    }
     
     public static boolean verificarDuplicacaoDeHorarios(String horario, Disciplina disciplina){
         //false: tem duplicação
@@ -1235,10 +1244,10 @@ public class Main {
             System.out.println("Nome: " + aluno.getNome() + " | Email: " + aluno.getEmail() + " | Matrícula: " 
             + aluno.getMatricula() + " | Curso: " + aluno.getCurso() );
         
-            System.out.println("\nTurmas que o aluno está cursando:");
+            System.out.println("\n📝 Turmas que o aluno está cursando:\n");
 
             for(Turma turma: aluno.getTurmasMatriculadas()){
-                System.out.println("\nCódigo da turma: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor() + " | Horário: " + turma.getHorario() + " | Semestre: " );
+                System.out.println("Disciplina: " +turma.getDisciplina().getNome() + " | Código: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor() + " | Horário: " + turma.getHorario() + " | Semestre: " );
 
             }
 
@@ -1248,8 +1257,7 @@ public class Main {
             for (String t : aluno.getTurmasAprovadas()) {
                 Turma t1 = buscarTurmaPorCodigo(t);
                 if (t1 != null) {
-                    System.out.println("\nCódigo da turma: " + t1.getCodigoDaTurma() +
-                        " | Disciplina: " + t1.getDisciplina().getNome() + " | Professor: " + t1.getProfessor() + " | Semestre: " + t1.getSemestre());
+                    System.out.println("Disciplina: " + t1.getDisciplina().getNome() +" | Código da turma: " + t1.getCodigoDaTurma() + " | Professor: " + t1.getProfessor() + " | Semestre: " + t1.getSemestre());
                 } else {
                     //System.out.println("\n⚠️ Turma com código \"" + t + "\" não encontrada (pode ter sido deletada ou não carregada).");
                 }
@@ -1265,10 +1273,10 @@ public class Main {
             System.out.println("Nome: " + aluno.getNome() + " | Email: " + aluno.getEmail() + " | Matrícula: " 
             + aluno.getMatricula() + " | Curso: " + aluno.getCurso() );
         
-            System.out.println("\nTurmas que o aluno está cursando:");
+            System.out.println("\n📝 Turmas que o aluno está cursando:\n");
 
             for(Turma turma: aluno.getTurmasMatriculadas()){
-                System.out.println("\nCódigo da turma: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor() + " | Horário: " + turma.getHorario());
+                System.out.println("Disciplina: " +turma.getDisciplina().getNome() +" | Código da turma: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor() + " | Horário: " + turma.getHorario());
 
             }
 
@@ -1278,7 +1286,7 @@ public class Main {
                 for (String t : aluno.getTurmasAprovadas()) {
                     Turma t1 = buscarTurmaPorCodigo(t);
                     if (t1 != null) {
-                        System.out.println("Código da turma: " + t1.getCodigoDaTurma() + " | Professor: " + t1.getProfessor() + " | Horário: " + t1.getHorario());
+                        System.out.println("Disciplina: " + t1.getDisciplina().getNome() +" | Código da turma: " + t1.getCodigoDaTurma() + " | Professor: " + t1.getProfessor() + " | Horário: " + t1.getHorario());
                     } else {
                         System.out.println("❌💾 Turma \"" + t + "\" não encontrada.");
                     }

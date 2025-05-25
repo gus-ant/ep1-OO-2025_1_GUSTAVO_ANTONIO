@@ -25,7 +25,21 @@ O enunciado do trabalho pode ser encontrado aqui:
    [Descrever aqui como executar o projeto. Exemplo: `java Main` ou o script usado]
 
 3. **Estrutura de Pastas:**  
-   [Descrever aqui as principais pastas do projeto]
+
+   ep1-OO-2025_1_GUSTAVO_ANTONIO
+   │
+   ├── Main.java
+   │   
+   ├── entidades/            ← Suas classes de domínio
+   │           ├── Aluno.java
+   │           ├── Turma.java
+   │           └── Disciplina.java
+   | 
+   ├─── persistencia/         ← Salvamento/carregamento de dados
+   |           ├─── AlunoDAO.java
+   |           ├─── TurmaDAO.java                          ← Diretório de saída compilado (gerado automaticamente)
+   │
+   └── README.md
 
 3. **Versão do JAVA utilizada:**  
    java 21.0.6
@@ -41,13 +55,13 @@ O enunciado do trabalho pode ser encontrado aqui:
 ## Prints da Execução
 
 1. Menu Principal:  
-   ![Inserir Print 1](caminho/do/print1.png)
+   ![Pagina_inicial](imagens/Pagina_inicial.png)
 
 2. Cadastro de Aluno:  
-   ![Inserir Print 2](caminho/do/print2.png)
+   ![Modo_aluno](imagens/Modo_aluno.png)
 
 3. Relatório de Frequência/Notas:  
-   ![Inserir Print 3](caminho/do/print3.png)
+   ![Modo_avaliacao](imagens/Modo_avaliacao.png)
 
 ---
 
