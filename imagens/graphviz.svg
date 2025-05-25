@@ -1,0 +1,220 @@
+<svg width="1080pt" height="1080pt" viewBox="0.00 0.00 1080.00 1080.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.939685 0.939685) rotate(0) translate(4 1145.32)">
+<title>UML_Diagram</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-1145.32 1145.32,-1145.32 1145.32,4 -4,4"/>
+<!-- Aluno -->
+<g id="node1" class="node">
+<title>Aluno</title>
+<polygon fill="none" stroke="black" points="367.42,-439.12 367.42,-469.92 601.29,-469.92 601.29,-439.12 367.42,-439.12"/>
+<text text-anchor="start" x="374.42" y="-451.32" font-family="Times,serif" font-weight="bold" font-size="14.00">Aluno</text>
+<polygon fill="none" stroke="black" points="367.42,-408.32 367.42,-439.12 601.29,-439.12 601.29,-408.32 367.42,-408.32"/>
+<text text-anchor="start" x="374.42" y="-419.52" font-family="Times,serif" font-size="14.00">nome: String</text>
+<polygon fill="none" stroke="black" points="367.42,-377.52 367.42,-408.32 601.29,-408.32 601.29,-377.52 367.42,-377.52"/>
+<text text-anchor="start" x="374.42" y="-388.72" font-family="Times,serif" font-size="14.00">matricula: String</text>
+<polygon fill="none" stroke="black" points="367.42,-346.72 367.42,-377.52 601.29,-377.52 601.29,-346.72 367.42,-346.72"/>
+<text text-anchor="start" x="374.42" y="-357.92" font-family="Times,serif" font-size="14.00">avaliacoes: Map&lt;Turma, Avaliacao&gt;</text>
+<polygon fill="none" stroke="black" points="367.42,-315.92 367.42,-346.72 601.29,-346.72 601.29,-315.92 367.42,-315.92"/>
+<text text-anchor="start" x="374.42" y="-327.12" font-family="Times,serif" font-size="14.00">frequencias: Map&lt;Turma, Frequencia&gt;</text>
+<polygon fill="none" stroke="black" points="367.42,-285.12 367.42,-315.92 601.29,-315.92 601.29,-285.12 367.42,-285.12"/>
+<text text-anchor="start" x="374.42" y="-296.32" font-family="Times,serif" font-size="14.00">turmasMatriculadas: [Turma]</text>
+<polygon fill="none" stroke="black" points="367.42,-254.32 367.42,-285.12 601.29,-285.12 601.29,-254.32 367.42,-254.32"/>
+<text text-anchor="start" x="374.42" y="-265.52" font-family="Times,serif" font-size="14.00">frequencia: double</text>
+<polygon fill="none" stroke="black" points="367.42,-223.52 367.42,-254.32 601.29,-254.32 601.29,-223.52 367.42,-223.52"/>
+<text text-anchor="start" x="374.42" y="-234.72" font-family="Times,serif" font-size="14.00">turmasAprovadas: [String]</text>
+<polygon fill="none" stroke="black" points="367.42,-192.72 367.42,-223.52 601.29,-223.52 601.29,-192.72 367.42,-192.72"/>
+<text text-anchor="start" x="374.42" y="-204.92" font-family="Times,serif" font-style="italic" font-size="14.00">-- Métodos --</text>
+<polygon fill="none" stroke="black" points="367.42,-161.92 367.42,-192.72 601.29,-192.72 601.29,-161.92 367.42,-161.92"/>
+<text text-anchor="start" x="374.42" y="-173.12" font-family="Times,serif" font-size="14.00">getNome()</text>
+<polygon fill="none" stroke="black" points="367.42,-131.12 367.42,-161.92 601.29,-161.92 601.29,-131.12 367.42,-131.12"/>
+<text text-anchor="start" x="374.42" y="-142.32" font-family="Times,serif" font-size="14.00">getMatricula()</text>
+<polygon fill="none" stroke="black" points="367.42,-100.32 367.42,-131.12 601.29,-131.12 601.29,-100.32 367.42,-100.32"/>
+<text text-anchor="start" x="374.42" y="-111.52" font-family="Times,serif" font-size="14.00">isAprovado(String)</text>
+<polygon fill="none" stroke="black" points="367.42,-69.52 367.42,-100.32 601.29,-100.32 601.29,-69.52 367.42,-69.52"/>
+<text text-anchor="start" x="374.42" y="-80.72" font-family="Times,serif" font-size="14.00">matricularEmTurma(Turma)</text>
+<polygon fill="none" stroke="black" points="367.42,-38.72 367.42,-69.52 601.29,-69.52 601.29,-38.72 367.42,-38.72"/>
+<text text-anchor="start" x="374.42" y="-49.92" font-family="Times,serif" font-size="14.00">removerTurmas(Turma)</text>
+</g>
+<!-- AlunoEspecial -->
+<g id="node2" class="node">
+<title>AlunoEspecial</title>
+<polygon fill="none" stroke="black" points="8,-899.12 8,-929.92 150.71,-929.92 150.71,-899.12 8,-899.12"/>
+<text text-anchor="start" x="36.18" y="-911.32" font-family="Times,serif" font-weight="bold" font-size="14.00">AlunoEspecial</text>
+<polygon fill="none" stroke="black" points="8,-868.32 8,-899.12 150.71,-899.12 150.71,-868.32 8,-868.32"/>
+<text text-anchor="start" x="15" y="-879.52" font-family="Times,serif" font-size="14.00">motivoEspecial: String</text>
+<polygon fill="none" stroke="black" points="8,-837.52 8,-868.32 150.71,-868.32 150.71,-837.52 8,-837.52"/>
+<text text-anchor="start" x="15" y="-849.72" font-family="Times,serif" font-style="italic" font-size="14.00">-- Métodos --</text>
+<polygon fill="none" stroke="black" points="8,-806.72 8,-837.52 150.71,-837.52 150.71,-806.72 8,-806.72"/>
+<text text-anchor="start" x="15" y="-817.92" font-family="Times,serif" font-size="14.00">getMotivoEspecial()</text>
+</g>
+<!-- Aluno&#45;&gt;AlunoEspecial -->
+<g id="edge1" class="edge">
+<title>Aluno-&gt;AlunoEspecial</title>
+<path fill="none" stroke="black" d="M359.49,-398.65C303.29,-467.03 238.47,-551.61 188.35,-633.32 157.2,-684.11 129.01,-745.26 109.11,-792.3"/>
+<polygon fill="none" stroke="black" points="105.96,-790.76 105.32,-801.33 112.41,-793.46 105.96,-790.76"/>
+</g>
+<!-- Avaliacao -->
+<g id="node3" class="node">
+<title>Avaliacao</title>
+<polygon fill="none" stroke="black" points="225.11,-991.52 225.11,-1022.32 347.59,-1022.32 347.59,-991.52 225.11,-991.52"/>
+<text text-anchor="start" x="256.8" y="-1003.72" font-family="Times,serif" font-weight="bold" font-size="14.00">Avaliacao</text>
+<polygon fill="none" stroke="black" points="225.11,-960.72 225.11,-991.52 347.59,-991.52 347.59,-960.72 225.11,-960.72"/>
+<text text-anchor="start" x="232.11" y="-971.92" font-family="Times,serif" font-size="14.00">nota1: double</text>
+<polygon fill="none" stroke="black" points="225.11,-929.92 225.11,-960.72 347.59,-960.72 347.59,-929.92 225.11,-929.92"/>
+<text text-anchor="start" x="232.11" y="-941.12" font-family="Times,serif" font-size="14.00">nota2: double</text>
+<polygon fill="none" stroke="black" points="225.11,-899.12 225.11,-929.92 347.59,-929.92 347.59,-899.12 225.11,-899.12"/>
+<text text-anchor="start" x="232.11" y="-910.32" font-family="Times,serif" font-size="14.00">nota3: double</text>
+<polygon fill="none" stroke="black" points="225.11,-868.32 225.11,-899.12 347.59,-899.12 347.59,-868.32 225.11,-868.32"/>
+<text text-anchor="start" x="232.11" y="-879.52" font-family="Times,serif" font-size="14.00">mediaFinal: double</text>
+<polygon fill="none" stroke="black" points="225.11,-837.52 225.11,-868.32 347.59,-868.32 347.59,-837.52 225.11,-837.52"/>
+<text text-anchor="start" x="232.11" y="-849.72" font-family="Times,serif" font-style="italic" font-size="14.00">-- Métodos --</text>
+<polygon fill="none" stroke="black" points="225.11,-806.72 225.11,-837.52 347.59,-837.52 347.59,-806.72 225.11,-806.72"/>
+<text text-anchor="start" x="232.11" y="-817.92" font-family="Times,serif" font-size="14.00">calcularMedia()</text>
+<polygon fill="none" stroke="black" points="225.11,-775.92 225.11,-806.72 347.59,-806.72 347.59,-775.92 225.11,-775.92"/>
+<text text-anchor="start" x="232.11" y="-787.12" font-family="Times,serif" font-size="14.00">getMediaFinal()</text>
+<polygon fill="none" stroke="black" points="225.11,-745.12 225.11,-775.92 347.59,-775.92 347.59,-745.12 225.11,-745.12"/>
+<text text-anchor="start" x="232.11" y="-756.32" font-family="Times,serif" font-size="14.00">calculoMedia()</text>
+<polygon fill="none" stroke="black" points="225.11,-714.32 225.11,-745.12 347.59,-745.12 347.59,-714.32 225.11,-714.32"/>
+<text text-anchor="start" x="232.11" y="-725.52" font-family="Times,serif" font-size="14.00">aprovado(double)</text>
+</g>
+<!-- Aluno&#45;&gt;Avaliacao -->
+<g id="edge4" class="edge">
+<title>Aluno-&gt;Avaliacao</title>
+<path fill="none" stroke="black" d="M413.71,-473.67C389.62,-548.12 363.09,-630.12 340.51,-699.93"/>
+<polygon fill="black" stroke="black" points="337.44,-709.42 336.24,-698.52 338.6,-705.82 340.52,-699.9 340.52,-699.9 340.52,-699.9 338.6,-705.82 344.8,-701.29 337.44,-709.42"/>
+<text text-anchor="middle" x="417.47" y="-548.12" font-family="Times,serif" font-size="14.00">avaliacoes</text>
+</g>
+<!-- Frequencia -->
+<g id="node4" class="node">
+<title>Frequencia</title>
+<polygon fill="none" stroke="black" points="421.62,-945.32 421.62,-976.12 579.09,-976.12 579.09,-945.32 421.62,-945.32"/>
+<text text-anchor="start" x="466.53" y="-957.52" font-family="Times,serif" font-weight="bold" font-size="14.00">Frequencia</text>
+<polygon fill="none" stroke="black" points="421.62,-914.52 421.62,-945.32 579.09,-945.32 579.09,-914.52 421.62,-914.52"/>
+<text text-anchor="start" x="428.62" y="-925.72" font-family="Times,serif" font-size="14.00">numeroTotalDeAulas: int</text>
+<polygon fill="none" stroke="black" points="421.62,-883.72 421.62,-914.52 579.09,-914.52 579.09,-883.72 421.62,-883.72"/>
+<text text-anchor="start" x="428.62" y="-894.92" font-family="Times,serif" font-size="14.00">presencas: int</text>
+<polygon fill="none" stroke="black" points="421.62,-852.92 421.62,-883.72 579.09,-883.72 579.09,-852.92 421.62,-852.92"/>
+<text text-anchor="start" x="428.62" y="-865.12" font-family="Times,serif" font-style="italic" font-size="14.00">-- Métodos --</text>
+<polygon fill="none" stroke="black" points="421.62,-822.12 421.62,-852.92 579.09,-852.92 579.09,-822.12 421.62,-822.12"/>
+<text text-anchor="start" x="428.62" y="-833.32" font-family="Times,serif" font-size="14.00">registrarPresenca()</text>
+<polygon fill="none" stroke="black" points="421.62,-791.32 421.62,-822.12 579.09,-822.12 579.09,-791.32 421.62,-791.32"/>
+<text text-anchor="start" x="428.62" y="-802.52" font-family="Times,serif" font-size="14.00">aprovadoPorFrequencia()</text>
+<polygon fill="none" stroke="black" points="421.62,-760.52 421.62,-791.32 579.09,-791.32 579.09,-760.52 421.62,-760.52"/>
+<text text-anchor="start" x="428.62" y="-771.72" font-family="Times,serif" font-size="14.00">calcularFrequencia()</text>
+</g>
+<!-- Aluno&#45;&gt;Frequencia -->
+<g id="edge5" class="edge">
+<title>Aluno-&gt;Frequencia</title>
+<path fill="none" stroke="black" d="M477.23,-473.55C476.66,-497.3 476.17,-521.12 475.84,-543.92 474.85,-610.7 480.04,-685.03 485.9,-745.57"/>
+<polygon fill="black" stroke="black" points="486.88,-755.5 481.42,-745.99 486.51,-751.74 485.9,-745.55 485.9,-745.55 485.9,-745.55 486.51,-751.74 490.37,-745.1 486.88,-755.5"/>
+<text text-anchor="middle" x="508.09" y="-548.12" font-family="Times,serif" font-size="14.00">frequencias</text>
+</g>
+<!-- Turma -->
+<g id="node6" class="node">
+<title>Turma</title>
+<polygon fill="none" stroke="black" points="683.29,-1068.52 683.29,-1099.32 859.42,-1099.32 859.42,-1068.52 683.29,-1068.52"/>
+<text text-anchor="start" x="750.35" y="-1080.72" font-family="Times,serif" font-weight="bold" font-size="14.00">Turma</text>
+<polygon fill="none" stroke="black" points="683.29,-1037.72 683.29,-1068.52 859.42,-1068.52 859.42,-1037.72 683.29,-1037.72"/>
+<text text-anchor="start" x="690.29" y="-1048.92" font-family="Times,serif" font-size="14.00">professor: String</text>
+<polygon fill="none" stroke="black" points="683.29,-1006.92 683.29,-1037.72 859.42,-1037.72 859.42,-1006.92 683.29,-1006.92"/>
+<text text-anchor="start" x="690.29" y="-1018.12" font-family="Times,serif" font-size="14.00">semestre: String</text>
+<polygon fill="none" stroke="black" points="683.29,-976.12 683.29,-1006.92 859.42,-1006.92 859.42,-976.12 683.29,-976.12"/>
+<text text-anchor="start" x="690.29" y="-987.32" font-family="Times,serif" font-size="14.00">formaAvaliacao: String</text>
+<polygon fill="none" stroke="black" points="683.29,-945.32 683.29,-976.12 859.42,-976.12 859.42,-945.32 683.29,-945.32"/>
+<text text-anchor="start" x="690.29" y="-956.52" font-family="Times,serif" font-size="14.00">sala: String</text>
+<polygon fill="none" stroke="black" points="683.29,-914.52 683.29,-945.32 859.42,-945.32 859.42,-914.52 683.29,-914.52"/>
+<text text-anchor="start" x="690.29" y="-925.72" font-family="Times,serif" font-size="14.00">horario: String</text>
+<polygon fill="none" stroke="black" points="683.29,-883.72 683.29,-914.52 859.42,-914.52 859.42,-883.72 683.29,-883.72"/>
+<text text-anchor="start" x="690.29" y="-894.92" font-family="Times,serif" font-size="14.00">presencial: boolean</text>
+<polygon fill="none" stroke="black" points="683.29,-852.92 683.29,-883.72 859.42,-883.72 859.42,-852.92 683.29,-852.92"/>
+<text text-anchor="start" x="690.29" y="-864.12" font-family="Times,serif" font-size="14.00">capacidadeMaxima: int</text>
+<polygon fill="none" stroke="black" points="683.29,-822.12 683.29,-852.92 859.42,-852.92 859.42,-822.12 683.29,-822.12"/>
+<text text-anchor="start" x="690.29" y="-833.32" font-family="Times,serif" font-size="14.00">alunosMatriculados: [Aluno]</text>
+<polygon fill="none" stroke="black" points="683.29,-791.32 683.29,-822.12 859.42,-822.12 859.42,-791.32 683.29,-791.32"/>
+<text text-anchor="start" x="690.29" y="-802.52" font-family="Times,serif" font-size="14.00">codigoDaTurma: String</text>
+<polygon fill="none" stroke="black" points="683.29,-760.52 683.29,-791.32 859.42,-791.32 859.42,-760.52 683.29,-760.52"/>
+<text text-anchor="start" x="690.29" y="-771.72" font-family="Times,serif" font-size="14.00">disciplina: Disciplina</text>
+<polygon fill="none" stroke="black" points="683.29,-729.72 683.29,-760.52 859.42,-760.52 859.42,-729.72 683.29,-729.72"/>
+<text text-anchor="start" x="690.29" y="-741.92" font-family="Times,serif" font-style="italic" font-size="14.00">-- Métodos --</text>
+<polygon fill="none" stroke="black" points="683.29,-698.92 683.29,-729.72 859.42,-729.72 859.42,-698.92 683.29,-698.92"/>
+<text text-anchor="start" x="690.29" y="-710.12" font-family="Times,serif" font-size="14.00">matricularAluno(Aluno)</text>
+<polygon fill="none" stroke="black" points="683.29,-668.12 683.29,-698.92 859.42,-698.92 859.42,-668.12 683.29,-668.12"/>
+<text text-anchor="start" x="690.29" y="-679.32" font-family="Times,serif" font-size="14.00">getAlunosMatriculados()</text>
+<polygon fill="none" stroke="black" points="683.29,-637.32 683.29,-668.12 859.42,-668.12 859.42,-637.32 683.29,-637.32"/>
+<text text-anchor="start" x="690.29" y="-648.52" font-family="Times,serif" font-size="14.00">getProfessor()</text>
+</g>
+<!-- Aluno&#45;&gt;Turma -->
+<g id="edge6" class="edge">
+<title>Aluno-&gt;Turma</title>
+<path fill="none" stroke="black" d="M561.89,-473.89C573.69,-503.37 586.26,-532.99 599.17,-560.72 620.29,-606.1 645.54,-653.85 670.11,-697.81"/>
+<polygon fill="black" stroke="black" points="674.91,-706.36 666.09,-699.85 673.06,-703.07 670.02,-697.64 670.02,-697.64 670.02,-697.64 673.06,-703.07 673.94,-695.44 674.91,-706.36"/>
+<text text-anchor="middle" x="654.76" y="-548.12" font-family="Times,serif" font-size="14.00">turmasMatriculadas</text>
+</g>
+<!-- Disciplina -->
+<g id="node5" class="node">
+<title>Disciplina</title>
+<polygon fill="none" stroke="black" points="991.39,-991.52 991.39,-1022.32 1133.32,-1022.32 1133.32,-991.52 991.39,-991.52"/>
+<text text-anchor="start" x="1032.4" y="-1003.72" font-family="Times,serif" font-weight="bold" font-size="14.00">Disciplina</text>
+<polygon fill="none" stroke="black" points="991.39,-960.72 991.39,-991.52 1133.32,-991.52 1133.32,-960.72 991.39,-960.72"/>
+<text text-anchor="start" x="998.39" y="-971.92" font-family="Times,serif" font-size="14.00">nome: String</text>
+<polygon fill="none" stroke="black" points="991.39,-929.92 991.39,-960.72 1133.32,-960.72 1133.32,-929.92 991.39,-929.92"/>
+<text text-anchor="start" x="998.39" y="-941.12" font-family="Times,serif" font-size="14.00">ementa: String</text>
+<polygon fill="none" stroke="black" points="991.39,-899.12 991.39,-929.92 1133.32,-929.92 1133.32,-899.12 991.39,-899.12"/>
+<text text-anchor="start" x="998.39" y="-910.32" font-family="Times,serif" font-size="14.00">codigo: String</text>
+<polygon fill="none" stroke="black" points="991.39,-868.32 991.39,-899.12 1133.32,-899.12 1133.32,-868.32 991.39,-868.32"/>
+<text text-anchor="start" x="998.39" y="-879.52" font-family="Times,serif" font-size="14.00">preRequisitos: [String]</text>
+<polygon fill="none" stroke="black" points="991.39,-837.52 991.39,-868.32 1133.32,-868.32 1133.32,-837.52 991.39,-837.52"/>
+<text text-anchor="start" x="998.39" y="-848.72" font-family="Times,serif" font-size="14.00">turmas: [Turma]</text>
+<polygon fill="none" stroke="black" points="991.39,-806.72 991.39,-837.52 1133.32,-837.52 1133.32,-806.72 991.39,-806.72"/>
+<text text-anchor="start" x="998.39" y="-818.92" font-family="Times,serif" font-style="italic" font-size="14.00">-- Métodos --</text>
+<polygon fill="none" stroke="black" points="991.39,-775.92 991.39,-806.72 1133.32,-806.72 1133.32,-775.92 991.39,-775.92"/>
+<text text-anchor="start" x="998.39" y="-787.12" font-family="Times,serif" font-size="14.00">getNome()</text>
+<polygon fill="none" stroke="black" points="991.39,-745.12 991.39,-775.92 1133.32,-775.92 1133.32,-745.12 991.39,-745.12"/>
+<text text-anchor="start" x="998.39" y="-756.32" font-family="Times,serif" font-size="14.00">getCodigo()</text>
+<polygon fill="none" stroke="black" points="991.39,-714.32 991.39,-745.12 1133.32,-745.12 1133.32,-714.32 991.39,-714.32"/>
+<text text-anchor="start" x="998.39" y="-725.52" font-family="Times,serif" font-size="14.00">getPreRequisitos()</text>
+</g>
+<!-- Disciplina&#45;&gt;Turma -->
+<g id="edge7" class="edge">
+<title>Disciplina-&gt;Turma</title>
+<path fill="none" stroke="black" d="M983.63,-883.4C970.59,-885.37 957.18,-887.06 944.46,-888.12 923.05,-889.91 900.21,-889.18 878.36,-887.19"/>
+<polygon fill="black" stroke="black" points="868.6,-886.21 879,-882.73 872.36,-886.59 878.55,-887.21 878.55,-887.21 878.55,-887.21 872.36,-886.59 878.1,-891.69 868.6,-886.21"/>
+<text text-anchor="middle" x="925.4" y="-875.52" font-family="Times,serif" font-size="14.00">turmas</text>
+</g>
+<!-- Turma&#45;&gt;Aluno -->
+<g id="edge2" class="edge">
+<title>Turma-&gt;Aluno</title>
+<path fill="none" stroke="black" d="M758.61,-633.33C750.9,-602.02 739.89,-571.31 724.35,-543.92 700.04,-501.05 671.97,-509.96 638.35,-473.92 630.85,-465.88 623.42,-457.46 616.12,-448.79"/>
+<polygon fill="black" stroke="black" points="609.93,-441.35 619.78,-446.16 612.34,-444.26 616.32,-449.04 616.32,-449.04 616.32,-449.04 612.34,-444.26 612.86,-451.92 609.93,-441.35"/>
+<text text-anchor="middle" x="787.71" y="-548.12" font-family="Times,serif" font-size="14.00">alunosMatriculados</text>
+</g>
+<!-- Turma&#45;&gt;Disciplina -->
+<g id="edge3" class="edge">
+<title>Turma-&gt;Disciplina</title>
+<path fill="none" stroke="black" d="M867.04,-868.32C900.97,-868.32 939.02,-868.32 972.45,-868.32"/>
+<polygon fill="black" stroke="black" points="982.38,-868.32 972.38,-872.82 978.6,-868.32 972.38,-868.32 972.38,-868.32 972.38,-868.32 978.6,-868.32 972.38,-863.82 982.38,-868.32"/>
+<text text-anchor="middle" x="925.4" y="-852.72" font-family="Times,serif" font-size="14.00">disciplina</text>
+</g>
+<!-- Main -->
+<g id="node7" class="node">
+<title>Main</title>
+<polygon fill="none" stroke="black" points="675.27,-362.12 675.27,-392.92 807.43,-392.92 807.43,-362.12 675.27,-362.12"/>
+<text text-anchor="start" x="725.41" y="-374.32" font-family="Times,serif" font-weight="bold" font-size="14.00">Main</text>
+<polygon fill="none" stroke="black" points="675.27,-331.32 675.27,-362.12 807.43,-362.12 807.43,-331.32 675.27,-331.32"/>
+<text text-anchor="start" x="682.27" y="-343.52" font-family="Times,serif" font-style="italic" font-size="14.00">-- Métodos --</text>
+<polygon fill="none" stroke="black" points="675.27,-300.52 675.27,-331.32 807.43,-331.32 807.43,-300.52 675.27,-300.52"/>
+<text text-anchor="start" x="682.27" y="-311.72" font-family="Times,serif" font-size="14.00">carregarDisciplinas()</text>
+<polygon fill="none" stroke="black" points="675.27,-269.72 675.27,-300.52 807.43,-300.52 807.43,-269.72 675.27,-269.72"/>
+<text text-anchor="start" x="682.27" y="-280.92" font-family="Times,serif" font-size="14.00">carregarTurmas()</text>
+<polygon fill="none" stroke="black" points="675.27,-238.92 675.27,-269.72 807.43,-269.72 807.43,-238.92 675.27,-238.92"/>
+<text text-anchor="start" x="682.27" y="-250.12" font-family="Times,serif" font-size="14.00">carregarAlunos()</text>
+<polygon fill="none" stroke="black" points="675.27,-208.12 675.27,-238.92 807.43,-238.92 807.43,-208.12 675.27,-208.12"/>
+<text text-anchor="start" x="682.27" y="-219.32" font-family="Times,serif" font-size="14.00">menuInicial()</text>
+<polygon fill="none" stroke="black" points="675.27,-177.32 675.27,-208.12 807.43,-208.12 807.43,-177.32 675.27,-177.32"/>
+<text text-anchor="start" x="682.27" y="-188.52" font-family="Times,serif" font-size="14.00">modoAluno()</text>
+<polygon fill="none" stroke="black" points="675.27,-146.52 675.27,-177.32 807.43,-177.32 807.43,-146.52 675.27,-146.52"/>
+<text text-anchor="start" x="682.27" y="-157.72" font-family="Times,serif" font-size="14.00">modoDisciplina()</text>
+<polygon fill="none" stroke="black" points="675.27,-115.72 675.27,-146.52 807.43,-146.52 807.43,-115.72 675.27,-115.72"/>
+<text text-anchor="start" x="682.27" y="-126.92" font-family="Times,serif" font-size="14.00">modoAvaliacao()</text>
+</g>
+</g>
+</svg>

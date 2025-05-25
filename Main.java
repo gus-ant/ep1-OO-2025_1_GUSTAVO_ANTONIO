@@ -581,7 +581,6 @@ public class Main {
         System.out.println("👥 Capacidade máxima: " + turmaEncontrada.getCapacidadeMaxima());
         System.out.println("🧪 Forma de Avaliação: " + turmaEncontrada.getFormaAvaliacao());
     
-        // Análise de alunos usando lista global
         int totalAlunos = 0;
         int aprovados = 0;
     
@@ -659,12 +658,12 @@ public class Main {
                 String codigoTurma = turma.getCodigoDaTurma();
     
                 for (Aluno aluno : listaAlunos) {
-                    // Se ele já foi aprovado nesta turma, considera
+                    //se ele já foi aprovado nesta turma, considera
                     if (aluno.getTurmasAprovadas().contains(codigoTurma)) {
                         alunosAprovadosTurma++;
                         totalAlunosTurma++;
                     }
-                    // Se ele ainda estiver matriculado, também conta como presente na turma
+                    
                     else if (aluno.getTurmasMatriculadas().contains(turma)) {
                         totalAlunosTurma++;
                     }
@@ -716,12 +715,11 @@ public class Main {
             String codigoTurma = turma.getCodigoDaTurma();
 
             for (Aluno aluno : listaAlunos) {
-                // Verifica se o aluno foi aprovado nesta turma
+                
                 if (aluno.getTurmasAprovadas().contains(codigoTurma)) {
                     alunosAprovados++;
                     totalAlunos++;
                 }
-                // Verifica se o aluno ainda está matriculado nela
                 else if (aluno.getTurmasMatriculadas().contains(turma)) {
                     totalAlunos++;
                 }
