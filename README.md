@@ -25,7 +25,7 @@ O enunciado do trabalho pode ser encontrado aqui:
    Executar o arquivo Main.java no botão `run`
 
 3. **Estrutura de Pastas:**  
-
+```
    ep1-OO-2025_1_GUSTAVO_ANTONIO
    │
    ├── Main.java
@@ -49,6 +49,8 @@ O enunciado do trabalho pode ser encontrado aqui:
    |           └─── Pagina_inicial.png                       
    │
    └── README.md
+
+```
 
 3. **Versão do JAVA utilizada:**  
    java 21.0.6
