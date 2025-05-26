@@ -26,9 +26,7 @@ public class Aluno {
         this.avaliacoes = new HashMap<>();
         this.frequencias = new HashMap<>();
         this.turmasAprovadas = new ArrayList<>();
-        // Deixar a parte de alunos em turmas para ser guardada na turma
-        // Quando pegar os dados da turma, sobre quantos alunos tem e a frequencia de cada um, colocar 
-        // Esse é o formato para criar um Array de objetos no método construtor segundo o professor
+        
     }
 
     

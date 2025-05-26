@@ -97,7 +97,60 @@ O enunciado do trabalho pode ser encontrado aqui:
 
 ## Observações (Extras e Dificuldades)
 
-### Extras:
+## Extras:
+
+- **Importante**: Para garantir padronização e facilitar a leitura e comparação de horários entre turmas, o programa utiliza esse formato para representar os dias, turnos e horários:
+
+### Formato geral: DIASTURNOHORÁRIOS
+
+    DIAS: Dígitos de 1 a 7 representando os dias da semana:
+
+        2 = Segunda-feira
+
+        3 = Terça-feira
+
+        4 = Quarta-feira
+
+        5 = Quinta-feira
+
+        6 = Sexta-feira
+
+        (opcionalmente, 1 = Domingo e 7 = Sábado se necessário)
+
+    TURNO:
+
+        M = Manhã
+
+        T = Tarde
+
+        N = Noite
+
+    HORÁRIOS: Dígitos representando os horários da aula dentro do turno (ex: 1º, 2º, 3º horário...)
+
+#### Exemplos:
+
+   - 23N23: Aulas segunda e terça à noite, nos 2º e 3º horários.
+
+   - 246M24: Aulas segunda, quarta e sexta de manhã, nos 2º e 4º horários.
+
+   - 46T34: Aulas quarta e sexta à tarde, nos 3º e 4º horários.
+
+   - Observação: Turmas com horários conflitantes (mesmo dia, turno e horário) não devem aceitar matrícula duplicada de um mesmo aluno.
+
+### Formato do Semestre:
+
+O formato de semestre segue sempre o padrão:
+AAAA.S
+
+   - AAAA: Ano com 4 dígitos (ex: 2024)
+
+   - S: Semestre (1 para o primeiro semestre, 2 para o segundo)
+
+#### Exemplo:
+
+   - 2024.2: Segundo semestre de 2024
+
+   - Somente turmas dentro de um semestre ativo devem permitir matrícula e avaliação.
 
 - Implementação de tratamento de exceções em todo o menu com `try-catch` e validações por todo o menu para prevenir travamentos do sistema por erros.
 
@@ -108,7 +161,7 @@ O enunciado do trabalho pode ser encontrado aqui:
 - Os dados de alunos, turmas e disciplinas são salvos imediatamente após qualquer modificação, minimizando riscos de perda de dados caso o programa seja encerrado inesperadamente.
 
 
-### Dificuldades:
+## Dificuldades:
 
 - Dificuldade inicial em aplicar boas práticas de separação de responsabilidades dentro do código.
 
