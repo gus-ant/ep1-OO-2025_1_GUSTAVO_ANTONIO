@@ -1,9 +1,2 @@
-d;CERDA;2025.1-1;simples;false;N14;90;9;
-d;CCNA;2025.1-11;simples;false;12;99;11;
-1;mota;2025.1-KJLJ;simples;true;8;124;KJLJ;i9
-1;Cerda;2024.1-t1;simples;false;35M12;22;t1;
-2;gugu;2024.1-4;simples;false;23N23;66;4;
-2;gugu;2024.2-T2;simples;false;34T12;88;T2;
-c;gugu;2025.1-5;simples;false;14;56;c1;
-POO1;Lucas;2025.1-T01;ponderada;true;24T12;80;T01;I9
-APC1;Fabricio;2025.1-A1;simples;false;24M12;90;A1;
+apc1;Fabricio;2024.2-TA1;simples;true;246M12;90;TA1;I9
+poo1;Lucas;2025.1-TP1;simples;true;24T12;80;TP1;I10

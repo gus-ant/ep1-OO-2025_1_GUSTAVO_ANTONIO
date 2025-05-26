@@ -387,7 +387,7 @@ public class Main {
     
         if (aluno == null) {
             System.out.println("❌💾 Aluno não encontrado.");
-            return;
+            modoAluno(sc);
         }
     
         System.out.println("Digite o código da turma: ");
@@ -1256,8 +1256,9 @@ public class Main {
 
         Aluno aluno = buscarAlunoPorMatricula(matricula);
 
-        if (aluno.equals(null)){
-            System.out.println("❌💾 Aluno não encontrado ");
+        if (aluno == null) {
+            System.out.println("❌💾 Aluno não encontrado.");
+            modoAluno(sc);
         }
 
         List<Turma> turmasMatriculadas = aluno.getTurmasMatriculadas();
@@ -1265,7 +1266,7 @@ public class Main {
 
         if (turmasMatriculadas.isEmpty()) {
             System.out.println("❌ Aluno não está matriculado em nenhuma turma ");
-            return;
+            modoAluno(sc);;
         }
         
         System.out.println("\n📚 Turmas matriculadas:");
@@ -1279,7 +1280,7 @@ public class Main {
 
         if (escolha < 1 || escolha > turmasMatriculadas.size()) {
             System.out.println("❌ Escolha inválida");
-            return;
+            modoAluno(sc);
         }
 
         Turma turmaParaTrancar = turmasMatriculadas.get(escolha - 1);
@@ -1314,7 +1315,7 @@ public class Main {
             System.out.println("\n📝 Turmas que o aluno está cursando:\n");
 
             for(Turma turma: aluno.getTurmasMatriculadas()){
-                System.out.println("Disciplina: " +turma.getDisciplina().getNome() + " | Código: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor() + " | Horário: " + turma.getHorario() + " | Semestre: " );
+                System.out.println("Disciplina: " +turma.getDisciplina().getNome() + " | Código: " + turma.getCodigoDaTurma() + " | Professor: " + turma.getProfessor() + " | Horário: " + turma.getHorario() + " | Semestre: " + turma.getSemestre() );
 
             }
 

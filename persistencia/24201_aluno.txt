@@ -1,2 +1,1 @@
-NORMAL;Gustavo Antonio;24201;Engenharias;g@gmail.com;99.0;T01
-TURMA:A1
+NORMAL;Gustavo Antonio;24201;Engenharia de Software;g@gmail.com;89.0;TA1
