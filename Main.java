@@ -455,7 +455,7 @@ public class Main {
         for (String cod : preRequisitos) {
             boolean encontrou = false;
             for (String codTurmaAprovada : aluno.getTurmasAprovadas()) {
-                Turma turmaAprovada = acharTurmaPorCodigo(codTurmaAprovada); // você precisa dessa função
+                Turma turmaAprovada = acharTurmaPorCodigo(codTurmaAprovada); 
                 if (turmaAprovada != null && turmaAprovada.getDisciplina().getCodigo().equalsIgnoreCase(cod)) {
                     encontrou = true;
                     break;
@@ -533,7 +533,7 @@ public class Main {
     }
 
     public static void menuRelatorios(Scanner sc, List<Turma> turmas, List<Disciplina> disciplinas, List<Aluno> alunos){
-        // É preciso fazer esse menu para acessar o relatório de aluno, turma e Disciplina
+       
 
         System.out.println("\n### Página de Relatórios 📊 \n");
         System.out.println("1️⃣  Opção 1 - Relatório por Turma");      
