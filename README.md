@@ -95,11 +95,9 @@ O enunciado do trabalho pode ser encontrado aqui:
 
 ---
 
-## Observações (Extras e Dificuldades)
+## **Importante**: 
 
-## Extras:
-
-- **Importante**: Para garantir padronização e facilitar a leitura e comparação de horários entre turmas, o programa utiliza esse formato para representar os dias, turnos e horários:
+Para garantir padronização e facilitar a leitura e comparação de horários entre turmas, o programa utiliza esse formato para representar os dias, turnos e horários:
 
 ### Formato geral: DIASTURNOHORÁRIOS
 
@@ -151,6 +149,12 @@ AAAA.S
    - 2024.2: Segundo semestre de 2024
 
    - Somente turmas dentro de um semestre ativo devem permitir matrícula e avaliação.
+
+---
+
+## Observações (Extras e Dificuldades)
+
+## Extras:
 
 - Implementação de tratamento de exceções em todo o menu com `try-catch` e validações por todo o menu para prevenir travamentos do sistema por erros.
 
