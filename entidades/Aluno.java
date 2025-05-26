@@ -35,7 +35,7 @@ public class Aluno {
     public boolean isAprovado(String codigoTurma) {
         return this.turmasAprovadas.contains(codigoTurma);
     }
-
+    
     
     public boolean verificarCadastro() {
         return nome != null && !nome.trim().isEmpty() &&

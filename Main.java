@@ -368,6 +368,15 @@ public class Main {
     }
     
 
+    public static Turma acharTurmaPorCodigo(String codigo) {
+        for (Turma t : turmas) {
+            if (t.getCodigoDaTurma().equalsIgnoreCase(codigo)) {
+                return t;
+            }
+        }
+        return null;
+    }
+    
     
 
     public static void matricularAluno(Scanner sc) {
@@ -391,12 +400,26 @@ public class Main {
                 break;
             }
         }
-    
+        
         if (turmaSelecionada == null) {
             System.out.println("❌💾 Turma não encontrada.");
             return;
         }
 
+
+        Disciplina disciplinaDaTurma = turmaSelecionada.getDisciplina();
+        String codigoDisciplina = disciplinaDaTurma.getCodigo();
+
+        for (String codigoTurmaAprovada : aluno.getTurmasAprovadas()) {
+            Turma turmaAprovada = buscarTurmaPorCodigo(codigoTurmaAprovada);
+            if (turmaAprovada != null) {
+                Disciplina disciplinaAprovada = turmaAprovada.getDisciplina();
+                if (disciplinaAprovada.getCodigo().equals(codigoDisciplina)) {
+                    System.out.println("❌ O aluno já foi aprovado na disciplina '" + disciplinaDaTurma.getNome() + "', Matrícula não permitida.");
+                    return;
+                }
+            }
+        }
         if (aluno instanceof AlunoEspecial) {
             if (aluno.getTurmasMatriculadas().size() >= 2) {
                 System.out.println("❌ Alunos especiais só pode se matricular em até 2 turmas.");
@@ -431,8 +454,9 @@ public class Main {
     
         for (String cod : preRequisitos) {
             boolean encontrou = false;
-            for (Turma turmaCursada : aluno.getTurmasMatriculadas()) {
-                if (turmaCursada.getDisciplina().getCodigo().equalsIgnoreCase(cod)) {
+            for (String codTurmaAprovada : aluno.getTurmasAprovadas()) {
+                Turma turmaAprovada = acharTurmaPorCodigo(codTurmaAprovada); // você precisa dessa função
+                if (turmaAprovada != null && turmaAprovada.getDisciplina().getCodigo().equalsIgnoreCase(cod)) {
                     encontrou = true;
                     break;
                 }
@@ -442,7 +466,7 @@ public class Main {
                 break;
             }
         }
-    
+
         if (!temTodosOsPreRequisitos) {
             System.out.println("❌ Aluno não possui os pré-requisitos para esta disciplina.");
             return;
@@ -909,13 +933,12 @@ public class Main {
                 aluno.RemoverTurmas(turma);
 
                 
-                salvarTurmas(disciplinas);
                 salvarAluno(aluno);
                 //aluno.setTurmasAprovadas(null);
             } else {
                 System.out.println("Aluno reprovado ❌");
                 aluno.RemoverTurmas(turma);
-                salvarTurmas(disciplinas);
+
                 salvarAluno(aluno);
                 carregarAlunos(turmas, listaAlunos, listaAlunosEspeciais);
 
@@ -1066,9 +1089,19 @@ public class Main {
             System.out.println("\n✅ Turma cadastrada com sucesso na disciplina " + disciplinaSelecionada.getNome());
             modoDisciplina(sc, capacidadeMaxima);
         }
-}
+    }
 
-
+    public static Disciplina acharDisciplinaPorString(String d){
+        for(Disciplina disciplina: carregarDisciplinas()){
+            if(disciplina.getCodigo().equals(d)){
+                return disciplina;
+            }
+            else{
+                
+            }
+        }
+        return null;
+    }   
 
     public static void exibirDisciplinas(Scanner sc){
 
@@ -1076,7 +1109,11 @@ public class Main {
         System.out.println("\n### Disciplinas disponíveis: ");
         
         for (Disciplina d : disciplinas){
-            System.out.println("\nCódigo: " + d.getCodigo() + " | Nome: " + d.getNome() + " | Carga horária: " + d.getCargaHoraria() + " | Pré-requisitos: " + d.getPreRequisitos());
+            System.out.println("\nCódigo: " + d.getCodigo() + " | Nome: " + d.getNome() + " | Carga horária: " + d.getCargaHoraria());
+            System.out.println("Pré-requisitos: ");
+            for(String disciplina: d.getPreRequisitos()){
+                System.out.println(acharDisciplinaPorString(disciplina).getNome());
+            }
         }
         
         paginaInicial(sc);
