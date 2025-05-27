@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// É uma classe mãe para criar as outras classes de aluno especial e aluno normal
+// É uma classe mãe para criar a de aluno especial 
 public class Aluno {
     private String nome;
     private String matricula;
@@ -12,9 +12,9 @@ public class Aluno {
     private String email;
     private List<Turma> turmasMatriculadas;
     private Avaliacao avaliacao;
-    private double frequencia;   // Entre 0.0 e 1.0  
+    private double frequencia;    
     private Map<Turma, Avaliacao> avaliacoes; // Mapa de turma para avaliação
-    private Map<Turma, Double> frequencias;// Mapa de turma para frequência
+    private Map<Turma, Double> frequencias; // Mapa de turma para frequência
     private List<String> turmasAprovadas;
 
     public Aluno(String nome, String matricula, String curso, String email){
@@ -42,7 +42,7 @@ public class Aluno {
                matricula != null && !matricula.trim().isEmpty() &&
                curso != null && !curso.trim().isEmpty() &&
                email != null && !email.trim().isEmpty();
-               // .trim tira espaços em branco da string 
+              
     }
 
     public boolean matricularEmTurma(Turma turma){
@@ -122,7 +122,7 @@ public class Aluno {
         return turmasMatriculadas;
     }
 
-    // O professor ensinou a usar add, OBS.: depois estude como usar add
+    
     public void adicionarTurma(Turma turma){
         this.turmasMatriculadas.add(turma);
     }

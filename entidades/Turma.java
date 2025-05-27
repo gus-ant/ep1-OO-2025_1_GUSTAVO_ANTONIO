@@ -2,7 +2,6 @@ package entidades;
 import java.util.ArrayList;
 import java.util.List;
 
-// Na turma, existe uma lista de alunos(objetos), que estão matriculados
 public class Turma {
     private String professor;
     private String semestre;
@@ -11,7 +10,7 @@ public class Turma {
     private String sala; 
     private String horario;
     private int capacidadeMaxima;
-    private List<Aluno> alunosMatriculados; // aluno(objetos), não nomes
+    private List<Aluno> alunosMatriculados;
     private List<Aluno> alunosAprovados;
     private String codigoDaTurma;
     private Disciplina disciplina;
@@ -92,9 +91,7 @@ public class Turma {
         }
     
         return turma;
-    }
-    
-    
+    }  
     
     
     public String getCodigoDaTurma() {

@@ -101,7 +101,7 @@ public class Main {
 
     public static boolean verificarTurmaDuplicada(String codigo){
         for(Turma t : turmas){
-            if (t.getCodigoDaTurma().equals(codigo)){ //  .equals() serve para comparar o conteúdo
+            if (t.getCodigoDaTurma().equals(codigo)){ 
                 return true;
             }
         }
@@ -198,8 +198,7 @@ public class Main {
     
     public static void salvarTurmas(List<Disciplina> disciplinas) {
 
-        Set<String> turmasSalvas = new HashSet<>(); // Isso é pra evitar duplicações no turmas.txt
-
+        Set<String> turmasSalvas = new HashSet<>(); 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("persistencia/turmas.txt"))) {
             for (Disciplina d : disciplinas) {
                 for (Turma t : d.getTurmas()) {
@@ -255,7 +254,7 @@ public class Main {
         String caminho = pasta + "/" + aluno.getMatricula() + "_aluno.txt";
     
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
-            // Determina se é Aluno normal ou Especial
+           
             String tipo = aluno instanceof AlunoEspecial ? "ESPECIAL" : "NORMAL";
     
             String turmasAprovadas = aluno.getTurmasAprovadas() == null
@@ -470,7 +469,6 @@ public class Main {
         if (!temTodosOsPreRequisitos) {
             System.out.println("❌ Aluno não possui os pré-requisitos para esta disciplina.");
             return;
-            // No java, a negação é "!""
         }
     
         
@@ -499,8 +497,7 @@ public class Main {
         System.out.print("Digite aqui sua opção: ");
         escolhaPagina = Integer.parseInt(sc.nextLine());
 
-
-        // Uso de try exception
+        
         try {
     
         switch (escolhaPagina) {
@@ -682,7 +679,7 @@ public class Main {
                 String codigoTurma = turma.getCodigoDaTurma();
     
                 for (Aluno aluno : listaAlunos) {
-                    //se ele já foi aprovado nesta turma, considera
+                    
                     if (aluno.getTurmasAprovadas().contains(codigoTurma)) {
                         alunosAprovadosTurma++;
                         totalAlunosTurma++;
@@ -806,15 +803,13 @@ public class Main {
             modoAvaliacaoFrequencia(sc);
         }
 
-        /////teste
-        /// 
         Map<String, List<String>> turmasPorSemestre = new HashMap<>();
 
         for (String codigoTurma : alunoEncontrado.getTurmasAprovadas()) {
             Turma turma = buscarTurmaPorCodigo(codigoTurma);
             if (turma == null) {
                 System.out.println(" Turma com código " + codigoTurma + " não encontrada.");
-                // faça o resto normalmente
+                
             } 
             else{
             String[] partes = buscarTurmaPorCodigo(codigoTurma).getSemestre().split("-");
@@ -856,8 +851,6 @@ public class Main {
         }
     
         System.out.println(); 
-    /////
-    /// 
         modoAvaliacaoFrequencia(sc);
     }
 
@@ -934,7 +927,6 @@ public class Main {
 
                 
                 salvarAluno(aluno);
-                //aluno.setTurmasAprovadas(null);
             } else {
                 System.out.println("Aluno reprovado ❌");
                 aluno.RemoverTurmas(turma);
@@ -952,7 +944,7 @@ public class Main {
     }
     
     public static boolean verificarDuplicacaoDeHorarios(String horario, Disciplina disciplina){
-        //false: tem duplicação
+        
         for(Turma t : turmas){
             if(t.getHorario().equals(horario) && t.getDisciplina().equals(disciplina)){
                 return false;
@@ -1327,7 +1319,6 @@ public class Main {
                 if (t1 != null) {
                     System.out.println("Disciplina: " + t1.getDisciplina().getNome() +" | Código da turma: " + t1.getCodigoDaTurma() + " | Professor: " + t1.getProfessor() + " | Semestre: " + t1.getSemestre());
                 } else {
-                    //System.out.println("\n⚠️ Turma com código \"" + t + "\" não encontrada (pode ter sido deletada ou não carregada).");
                 }
             }
             
@@ -1356,7 +1347,6 @@ public class Main {
                     if (t1 != null) {
                         System.out.println("Disciplina: " + t1.getDisciplina().getNome() +" | Código da turma: " + t1.getCodigoDaTurma() + " | Professor: " + t1.getProfessor() + " | Horário: " + t1.getHorario());
                     } else {
-                        System.out.println("❌💾 Turma \"" + t + "\" não encontrada.");
                     }
                 }
             } else {

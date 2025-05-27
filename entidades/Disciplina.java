@@ -13,6 +13,8 @@ public class Disciplina {
     private List<String> preRequisitos;
     private List<Turma> turmas;
 
+    
+    // Sobrecarga para turma presencial
     public Disciplina(String nome, String codigo, String cargaHoraria, List<String> preRequisitos, List<Turma> turmas) {
         this.nome = nome;
         this.codigo = codigo;
@@ -21,7 +23,7 @@ public class Disciplina {
         this.turmas = turmas != null ? turmas : new ArrayList<>();
     }
 
-
+    // Sobrecarga para turma presencial
     public Disciplina(String nome, String codigo, String cargaHoraria) {
         this.nome = nome;
         this.codigo = codigo;
@@ -53,7 +55,7 @@ public class Disciplina {
     }
     
 
-
+    // Polimorfismo por sobrescrita para formatar dados e transformar em String para salvar
     @Override
     public String toString() {
         String preReqs = String.join(",", preRequisitos);
