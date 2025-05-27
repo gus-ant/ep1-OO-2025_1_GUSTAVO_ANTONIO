@@ -1,2 +1,0 @@
-apc1;Fabricio;2024.2-TA1;simples;true;246M12;90;TA1;I9
-poo1;Lucas;2025.1-TP1;simples;true;24T12;80;TP1;I10

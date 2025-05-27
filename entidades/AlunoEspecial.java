@@ -7,7 +7,7 @@ public class AlunoEspecial extends Aluno{
         this.quantidadeMaterias = 0;
     }
 
-    // Sobrecarga por sobrescrita para formatar dados e transformar em String para salvar
+    // Polimorfismo por sobrescrita 
     @Override 
     public boolean matricularEmTurma(Turma turma) {
         if(quantidadeMaterias >= 2){

@@ -29,9 +29,7 @@ public class Aluno {
         
     }
 
-    
 
-    // Verifica se o código da turma está presente na lista de turmas aprovadas do aluno.
     public boolean isAprovado(String codigoTurma) {
         return this.turmasAprovadas.contains(codigoTurma);
     }

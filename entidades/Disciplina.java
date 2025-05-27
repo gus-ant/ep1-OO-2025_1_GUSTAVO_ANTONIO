@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 
-// Começo da classe de Disciplina. Criei uma <lista de Turmas> pois uma disciplina pode ter várias turmas.
 public class Disciplina {
     private String nome;
     private String codigo;
@@ -13,8 +12,7 @@ public class Disciplina {
     private List<String> preRequisitos;
     private List<Turma> turmas;
 
-    
-    // Sobrecarga para turma presencial
+    // Professor, retirei o outro método construtor mostrado no vídeo pois vi que ele não tinha uso necessário no código, portanto agora só existem 4 usos de Polimorfismo
     public Disciplina(String nome, String codigo, String cargaHoraria, List<String> preRequisitos, List<Turma> turmas) {
         this.nome = nome;
         this.codigo = codigo;
@@ -23,15 +21,6 @@ public class Disciplina {
         this.turmas = turmas != null ? turmas : new ArrayList<>();
     }
 
-    // Sobrecarga para turma presencial
-    public Disciplina(String nome, String codigo, String cargaHoraria) {
-        this.nome = nome;
-        this.codigo = codigo;
-        this.cargaHoraria = cargaHoraria;
-    }
-
-
-    
 
     public static Disciplina fromString(String linha) {
         String[] partes = linha.split(";");

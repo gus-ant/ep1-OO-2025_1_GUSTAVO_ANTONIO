@@ -1,2 +1,0 @@
-APC;apc1;90;0
-Orientacao a objetos;poo1;60;apc1

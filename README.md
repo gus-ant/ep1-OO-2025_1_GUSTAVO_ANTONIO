@@ -64,7 +64,7 @@ O enunciado do trabalho pode ser encontrado aqui:
 
 ## Vídeo de Demonstração
 
-- [Inserir o link para o vídeo no YouTube/Drive aqui]
+- [\[Link para o vídeo de apresentação rápida no YouTube}\]](https://www.youtube.com/watch?v=pljg22xsYks)
 
 ---
 
@@ -78,6 +78,8 @@ O enunciado do trabalho pode ser encontrado aqui:
 
 3. Relatório de Frequência/Notas:  
    ![Modo_avaliacao](imagens/Modo_avaliacao.png)
+   ![Pagina_relatorios](imagens/Pagina_relatorios.png)
+   
 
 ---
 
