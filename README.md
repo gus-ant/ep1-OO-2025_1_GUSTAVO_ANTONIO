@@ -20,16 +20,34 @@ O enunciado do trabalho pode ser encontrado aqui:
 
 ---
 
-## Instruções para Compilação e Execução
+## Instruções para Clonagem e Execução
+### Pré-requisitos
+- **Java JDK 17+** instalado
+- **Visual Studio Code** instalado
+- Extensão **"Extension Pack for Java"** da Microsoft (disponível na aba de extensões do VS Code)
 
-1. **Compilação:**  
-   Clonar repositorio na IDE, de preferencia VS Code com o comando: 
+
+1. **Clonagem:**  
+   Clonar repositorio na IDE, de preferencia VS Code com o comando:
+   
    `git clone https://github.com/gus-ant/ep1-OO-2025_1_GUSTAVO_ANTONIO.git`
 
-2. **Execução:**  
-   Executar o arquivo Main.java no botão `Run Java`
+   Depois, abra a pasta clonada no VS Code com:
+   
+   `cd ep1-OO-2025_1_GUSTAVO_ANTONIO`
 
-3. **Estrutura de Pastas:**  
+
+3. **Execução:**  
+   Abra o arquivo `Main.java` no VS Code
+
+   Clique no botão `Run Java` no canto superior direito ou pressione Ctrl + F5
+   
+   O menu principal será exibido no terminal do VS Code
+
+4. **Versão do JAVA utilizada:**  
+   `java 21.0.6`
+
+5. **Estrutura de Pastas:**  
 ```
    ep1-OO-2025_1_GUSTAVO_ANTONIO
    │
@@ -56,9 +74,6 @@ O enunciado do trabalho pode ser encontrado aqui:
    └── README.md
 
 ```
-
-3. **Versão do JAVA utilizada:**  
-   `java 21.0.6`
 
 ---
 
